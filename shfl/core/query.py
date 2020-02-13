@@ -3,7 +3,7 @@ import abc
 
 class Query(abc.ABC):
     """
-    This class represents a query over data
+    This class represents a query over private data
     """
 
     @abc.abstractmethod

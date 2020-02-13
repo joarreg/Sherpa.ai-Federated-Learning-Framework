@@ -20,7 +20,7 @@ class DataDistribution(abc.ABC):
 
     def get_federated_data(self, identifier, num_nodes, percent=100, weights=None, mistaken=0):
         """
-        Method that split the whole data between the clients_ids
+        Method that split the whole data between the established number of nodes
 
         Parameters
         ----------

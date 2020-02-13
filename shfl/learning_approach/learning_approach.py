@@ -7,11 +7,11 @@ class LearningApproach(abc.ABC):
 
     Attributes
     ----------
-    federated_data: FederatedData
+    _federated_data: FederatedData
         Federated data to use
-    model_builder: function
-        function that builds a TrainableModel
-    aggregator: str
+    _model: ~TrainableModel
+        Central model
+    _aggregator: str
         federated aggregator function
     """
     def __init__(self, model_builder, federated_data, aggregator):

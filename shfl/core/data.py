@@ -2,6 +2,25 @@ from shfl.core.node import DataNode
 
 
 def federate_array(identifier, array, num_data_nodes):
+    """
+    Create ~FederatedData from a numpy array.
+
+    The array will be divided using the first dimension.
+
+    Parameters
+    ----------
+    identifier : str
+        Unique identifier that will be used for the FederatedData
+    array : numpy array
+        Numpy array with any number of dimensions
+    num_data_nodes: int
+        Number of nodes to use
+
+    Returns
+    -------
+    ~FederatedData
+        FederatedData with an array of size len(array)/num_data_nodes in every node.
+    """
     split_size = len(array) / float(num_data_nodes)
     last = 0.0
 
@@ -15,7 +34,16 @@ def federate_array(identifier, array, num_data_nodes):
 
 class FederatedData:
     """
-        Class representing data across different nodes
+    Class representing data across different data nodes.
+
+    Every identifier for FederatedData objects only can be used once.
+
+    Attributes
+    ----------
+    _data_nodes : list
+        List containing data nodes that are part of the federated data
+    _identifier : str
+        Unique identifier for the federated data
     """
 
     __used_identifiers = set()
@@ -26,6 +54,9 @@ class FederatedData:
         self._data_nodes = []
         self._identifier = identifier
         FederatedData.__used_identifiers.add(identifier)
+
+    def __del__(self):
+        FederatedData.__used_identifiers.remove(self._identifier)
 
     def __getitem__(self, item):
         return self._data_nodes[item]
@@ -48,6 +79,13 @@ class FederatedData:
 class LabeledData:
     """
         Class to represent labeled data
+
+    Attributes
+    ----------
+    _data : object
+        Object representing data for a sample
+    _label : object
+        Label for this sample
     """
     def __init__(self, data, label):
         self._data = data

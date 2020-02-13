@@ -20,11 +20,11 @@ def test_federate_array_size_private_data():
     data_size = 10000
     num_clients = 10
     array = np.random.rand(data_size)
-    federated_array = shfl.core.data.federate_array("my_array2", array, num_clients)
+    federated_array = shfl.core.data.federate_array("my_array", array, num_clients)
     for data_node in federated_array:
-        assert len(data_node.query_private_data(Get(), "my_array2")) == data_size/num_clients
+        assert len(data_node.query_private_data(Get(), "my_array")) == data_size/num_clients
 
-    assert federated_array[0].query_private_data(Get(), "my_array2")[0] == array[0]
+    assert federated_array[0].query_private_data(Get(), "my_array")[0] == array[0]
 
 
 def test_federated_data():
@@ -39,7 +39,7 @@ def test_federated_data():
 
 def test_federated_data_identifier():
     data_size = 10
-    federated_data = FederatedData("my_federated_data2")
+    federated_data = FederatedData("my_federated_data")
     array = np.random.rand(data_size)
     federated_data.add_data_node(DataNode(), array)
     with pytest.raises(KeyError):
@@ -47,9 +47,9 @@ def test_federated_data_identifier():
 
 
 def test_federated_data_repeated_identifier():
-    FederatedData("my_federated_data3")
+    my_data = FederatedData("my_federated_data")
     with pytest.raises(ValueError):
-        FederatedData("my_federated_data3")
+        FederatedData("my_federated_data")
 
 
 def test_labeled_data():

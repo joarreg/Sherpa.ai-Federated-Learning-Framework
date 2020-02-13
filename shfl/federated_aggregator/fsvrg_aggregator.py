@@ -5,18 +5,18 @@ from shfl.federated_aggregator.federated_aggregator import FederatedAggregator
 
 class AvgFedAggregator(FederatedAggregator):
     """
-        Implementation of Average Federated Aggregator
+    Implementation of Average Federated Aggregator
     """
 
     def aggregate_weights(self, clients_params):
         """
-            Method that aggregates the weights of the client models.
+        Method that aggregates the weights of the client models.
 
-            Returns
-            _______
+        Returns
+        _______
 
-            numpy matrix:
-                Aggregated weights
+        numpy matrix:
+            Aggregated weights
 
         """
         clients_params_array = np.array(clients_params)

@@ -1,6 +1,6 @@
 class DataNode:
     """
-    This class represents an independent node
+    This class represents an independent data node
     """
 
     def __init__(self):
@@ -41,12 +41,36 @@ class DataNode:
 
     @model.setter
     def model(self, model):
+        """
+        Sets the model to use in the node
+
+        Parameters
+        ----------
+        model: ~TrainableModel
+            Instance of a class implementing ~TrainableModel
+        """
         self._model = model
 
     def set_model_params(self, model_params):
+        """
+        Sets the model to use in the node
+
+        Parameters
+        ----------
+        model_params: object
+            Parameters to set in the model
+        """
         self._model.set_model_params(model_params)
 
     def train_model(self, training_data_key):
+        """
+        Train the model that has been previously set in the data node
+
+        Parameters
+        ----------
+        training_data_key: str
+            String identifying the private data to use for this model
+        """
         labeled_data = self._private_data.get(training_data_key)
         self._model.train(labeled_data.data, labeled_data.label)
 
