@@ -1,7 +1,8 @@
 import numpy as np
 import random
 import abc
-from shfl.core.data import LabeledData, FederatedData
+from shfl.core.data import LabeledData
+from shfl.core.federated_operation import FederatedData
 from shfl.core.node import DataNode
 
 

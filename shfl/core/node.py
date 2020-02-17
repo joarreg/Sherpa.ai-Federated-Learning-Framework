@@ -72,6 +72,8 @@ class DataNode:
             String identifying the private data to use for this model
         """
         labeled_data = self._private_data.get(training_data_key)
+        if not hasattr(labeled_data, 'data') or not hasattr(labeled_data, 'label'):
+            raise ValueError("Private data needs to have 'data' and 'label' to train a model")
         self._model.train(labeled_data.data, labeled_data.label)
 
     def predict(self, data):
