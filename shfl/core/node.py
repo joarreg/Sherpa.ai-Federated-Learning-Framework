@@ -1,6 +1,3 @@
-from shfl.core.data import LabeledData
-
-
 class DataNode:
     """
     This class represents an independent data node
