@@ -1,6 +1,7 @@
 import numpy as np
 from unittest.mock import Mock
 import pytest
+
 from shfl.core.node import DataNode
 from shfl.core.query import Get
 from shfl.core.data import LabeledData

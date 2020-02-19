@@ -1,7 +1,7 @@
-from .learning_approach import LearningApproach
-
 from sklearn.metrics import accuracy_score
+
 from shfl.core.query import Get
+from shfl.learning_approach.learning_approach import LearningApproach
 
 
 class FederatedGovernment(LearningApproach):

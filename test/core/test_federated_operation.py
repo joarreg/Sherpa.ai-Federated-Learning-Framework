@@ -2,7 +2,6 @@ import numpy as np
 import pytest
 
 import shfl.core.federated_operation
-from shfl.core.data import LabeledData
 from shfl.core.node import DataNode
 from shfl.core.query import Get
 from shfl.core.federated_operation import FederatedTransformation, FederatedData

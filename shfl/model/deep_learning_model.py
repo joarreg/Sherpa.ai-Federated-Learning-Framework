@@ -1,6 +1,6 @@
 from abc import ABC
-
 from keras.callbacks import EarlyStopping
+
 from shfl.model.model import TrainableModel
 
 
