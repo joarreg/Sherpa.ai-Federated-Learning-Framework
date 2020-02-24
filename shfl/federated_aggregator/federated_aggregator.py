@@ -23,4 +23,3 @@ class FederatedAggregator(abc.ABC):
         """
         Abstract method that aggregates the weights of the client models.
         """
-        pass
