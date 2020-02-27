@@ -55,46 +55,24 @@ def test_make_data_federated():
     assert (np.sort(all_data.ravel()) == np.sort(train_data[idx,].ravel())).all()
     assert (np.sort(all_label) == np.sort(train_label[idx])).all()
 
+    #test make federated data with replacement
+    federated_data, federated_label = data_distribution.make_data_federated(train_data,
+                                                                            train_label,
+                                                                            num_nodes,
+                                                                            percent,
+                                                                            weights,
+                                                                            sampling="with_replacement")
+    all_data = np.concatenate(federated_data)
+    all_label = np.concatenate(federated_label)
 
-def test_get_federated_data():
-    data = TestDataBase()
-    data.load_data()
+    idx = []
+    for data in all_data:
+        idx.append(np.where((data == train_data).all(axis=1))[0][0])
 
-    dt = IidDataDistribution(data)
+    for i, weight in enumerate(weights):
+        assert federated_data[i].shape[0] == int(weight * int(percent * train_data.shape[0] / 100))
 
-    # Identifier and num nodes is checked in core test.
-    # Percent and weight is checked in idd and no_idd test.
-    # So here, we only test mistaken param.
-    mistaken = 50
-    num_nodes = 4
-    federated_data, test_data, test_label = dt.get_federated_data("id001", num_nodes, mistaken=mistaken)
-
-    x_c = []
-    y_c = []
-    for i in range(federated_data.num_nodes()):
-        x_c.append(federated_data[i].query_private_data(Get(), "id001").data)
-        y_c.append(federated_data[i].query_private_data(Get(), "id001").label)
-
-    x_c = np.array(x_c)
-    y_c = np.array(y_c)
-
-    train_data, train_labels = dt._database.train
-    validation_data, validation_labels = dt._database.validation
-
-    x = np.concatenate([train_data, validation_data], axis=0)
-    y = np.concatenate([train_labels, validation_labels], axis=0)
-
-    num_mistaken = 0
-    for i, node in enumerate(x_c):
-        labels_node = []
-        for data in node:
-            assert data in x
-            labels_node.append(y[np.where((data == x).all(axis=1))[0][0]])
-        if not (labels_node == y_c[i]).all():
-            num_mistaken = num_mistaken + 1
-
-    assert np.array_equal(np.sort(x.ravel()), np.sort(x_c.ravel()))
-    assert np.array_equal(test_data.ravel(), dt._database.test[0].ravel())
-    assert np.array_equal(test_label, dt._database.test[1])
-    assert num_mistaken / num_nodes * 100 == mistaken
-    assert num_mistaken / num_nodes * 100 > 0
+    assert all_data.shape[0] == int(percent * train_data.shape[0] / 100)
+    assert num_nodes == federated_data.shape[0] == federated_label.shape[0]
+    assert (np.sort(all_data.ravel()) == np.sort(train_data[idx,].ravel())).all()
+    assert (np.sort(all_label) == np.sort(train_label[idx])).all()
