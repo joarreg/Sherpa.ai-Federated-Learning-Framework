@@ -45,6 +45,28 @@ class FederatedData:
     def num_nodes(self):
         return len(self._data_nodes)
 
+    def configure_data_access(self, data_access_definition):
+        """
+        Creates policy to access data
+        """
+        for data_node in self._data_nodes:
+            data_node.configure_private_data_access(self._identifier, data_access_definition)
+
+    def query(self):
+        """
+        Queries over every node and returns the answer of every node in a list
+
+        Returns
+        -------
+        list
+           List containing responses for every node
+        """
+        answer = []
+        for data_node in self._data_nodes:
+            answer.append(data_node.query_private_data(self._identifier))
+
+        return answer
+
 
 class FederatedTransformation(abc.ABC):
     """
@@ -58,47 +80,6 @@ class FederatedTransformation(abc.ABC):
         data : object
             The object that have to be modified
         """
-
-
-def apply_federated_transformation(federated_data, federated_transformation):
-    """
-    Applies the federated transformation over this federated data
-
-    Original federated data will be modified.
-
-    Parameters
-    ----------
-    federated_data : ~FederatedData
-        ~FederatedData to use in the transformation
-    federated_transformation : ~FederatedTransformation
-        ~FederatedTransformation that will be applied over this data
-
-    """
-    for data_node in federated_data:
-        data_node.apply_data_transformation(federated_data.identifier, federated_transformation)
-
-
-def query_federated_data(federated_data, query):
-    """
-    Apply the federated query over every node and returns the answer of every node in a list
-
-    Parameters
-    ----------
-    federated_data : ~FederatedData
-        ~FederatedData to use in the query
-    query : ~Query
-        ~Query that will be applied over this data
-
-    Returns
-    -------
-    list
-       List containing responses for every node
-    """
-    answer = []
-    for data_node in federated_data:
-        answer.append(data_node.query_private_data(query, federated_data.identifier))
-
-    return answer
 
 
 def federate_array(identifier, array, num_data_nodes):
@@ -130,3 +111,21 @@ def federate_array(identifier, array, num_data_nodes):
         last = last + split_size
 
     return federated_array
+
+
+def apply_federated_transformation(federated_data, federated_transformation):
+    """
+    Applies the federated transformation over this federated data
+
+    Original federated data will be modified.
+
+    Parameters
+    ----------
+    federated_data : ~FederatedData
+        ~FederatedData to use in the transformation
+    federated_transformation : ~FederatedTransformation
+        ~FederatedTransformation that will be applied over this data
+
+    """
+    for data_node in federated_data:
+        data_node.apply_data_transformation(federated_data.identifier, federated_transformation)

@@ -22,7 +22,7 @@ class Query(abc.ABC):
         """
 
 
-class Get(Query):
+class IdentityFunction(Query):
 
     def get(self, data):
         return data

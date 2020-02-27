@@ -1,6 +1,8 @@
 import numpy as np
+import pytest
 
 from shfl.core.data import LabeledData
+from shfl.core.data import DataAccessDefinition
 
 
 def test_labeled_data():
@@ -18,3 +20,7 @@ def test_labeled_data():
     labeled_data.label = new_label
     assert labeled_data.label == new_label
 
+
+def test_data_access_definition_bad_contruction():
+    with pytest.raises(ValueError):
+        DataAccessDefinition()

@@ -1,6 +1,5 @@
 from sklearn.metrics import accuracy_score
 
-from shfl.core.query import Get
 from shfl.learning_approach.learning_approach import LearningApproach
 
 
@@ -47,7 +46,7 @@ class FederatedGovernment(LearningApproach):
         """
         weights = []
         for data_node in self._federated_data:
-            weights.append(data_node.query_model_params(Get()))
+            weights.append(data_node.query_model_params())
 
         aggregated_weights = self._aggregator.aggregate_weights(weights)
 

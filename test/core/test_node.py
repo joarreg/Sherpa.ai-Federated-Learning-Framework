@@ -3,8 +3,9 @@ from unittest.mock import Mock
 import pytest
 
 from shfl.core.node import DataNode
-from shfl.core.query import Get
+from shfl.core.query import IdentityFunction
 from shfl.core.data import LabeledData
+from shfl.core.data import UnprotectedAccess
 
 
 def test_private_data():
@@ -18,7 +19,8 @@ def test_query_private_data():
     random_array = np.random.rand(30)
     data_node = DataNode()
     data_node.set_private_data("random_array", random_array)
-    data = data_node.query_private_data(Get(), "random_array")
+    data_node.configure_private_data_access("random_array", UnprotectedAccess())
+    data = data_node.query_private_data("random_array")
     for i in range(len(random_array)):
         assert data[i] == random_array[i]
 
@@ -29,7 +31,8 @@ def test_query_model_params():
     model_mock = Mock()
     model_mock.get_model_params.return_value = random_array
     data_node.model = model_mock
-    model_params = data_node.query_model_params(Get())
+    data_node.configure_model_params_access(UnprotectedAccess())
+    model_params = data_node.query_model_params()
     for i in range(len(random_array)):
         assert model_params[i] == random_array[i]
 

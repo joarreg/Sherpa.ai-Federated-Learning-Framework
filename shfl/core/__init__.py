@@ -4,8 +4,14 @@ from __future__ import print_function
 
 from shfl.core import federated_operation
 from shfl.core.data import LabeledData
+from shfl.core.data import DataAccessDefinition
+from shfl.core.data import UnprotectedAccess
 from shfl.core.federated_operation import FederatedData
 from shfl.core.federated_operation import FederatedTransformation
 from shfl.core.node import DataNode
 from shfl.core.query import Query
-from shfl.core.query import Get
+from shfl.core.query import IdentityFunction
+from shfl.core.dp_mechanism import DifferentialPrivacyMechanism
+from shfl.core.dp_mechanism import UnrandomizedMechanism
+from shfl.core.dp_mechanism import RandomizeBinaryProperty
+
