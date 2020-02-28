@@ -1,5 +1,7 @@
 import copy
 
+from shfl.core.data import UnprotectedAccess
+
 
 class DataNode:
     """
@@ -8,7 +10,9 @@ class DataNode:
 
     def __init__(self):
         self._private_data = {}
+        self._private_data_access_policies = {}
         self._model = None
+        self._model_access_policy = UnprotectedAccess()
 
     @property
     def private_data(self):
@@ -27,14 +31,25 @@ class DataNode:
     def set_private_data(self, name, data):
         self._private_data[name] = copy.deepcopy(data)
 
+    def configure_private_data_access(self, name, data_access_definition):
+        self._private_data_access_policies[name] = copy.deepcopy(data_access_definition)
+
+    def configure_model_params_access(self, data_access_definition):
+        self._model_access_policy = copy.deepcopy(data_access_definition)
+
     def apply_data_transformation(self, private_property, federated_transformation):
         federated_transformation.apply(self._private_data[private_property])
 
-    def query_private_data(self,  query, private_property):
-        return query.get(self._private_data[private_property])
+    def query_private_data(self, private_property):
+        if private_property not in self._private_data_access_policies:
+            raise ValueError("Data access must be configured before query data")
 
-    def query_model_params(self, query):
-        return query.get(self._model.get_model_params())
+        data_access_policy = self._private_data_access_policies[private_property]
+        data = data_access_policy.query.get(self._private_data[private_property])
+        return data_access_policy.dp_mechanism.randomize(data)
+
+    def query_model_params(self):
+        return self._model_access_policy.query.get(self._model.get_model_params())
 
     @property
     def model(self):

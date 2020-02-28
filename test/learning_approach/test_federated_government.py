@@ -4,7 +4,7 @@ from unittest.mock import Mock
 from shfl.learning_approach.federated_government import FederatedGovernment
 from shfl.data_base.data_base import DataBase
 from shfl.data_distribution.data_distribution_iid import IidDataDistribution
-from shfl.core.query import Get
+from shfl.core.data import UnprotectedAccess
 
 
 class TestDataBase(DataBase):
@@ -92,8 +92,9 @@ def test_train_all_clients():
 
     fdg.train_all_clients()
 
+    fdg._federated_data.configure_data_access(UnprotectedAccess())
     for node in fdg._federated_data:
-        labeled_data = node.query_private_data(Get(), 'id001')
+        labeled_data = node.query_private_data('id001')
         node._model.train.assert_called_once_with(labeled_data.data, labeled_data.label)
 
 

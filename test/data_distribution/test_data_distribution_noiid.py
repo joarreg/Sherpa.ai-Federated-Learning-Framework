@@ -3,7 +3,7 @@ import random
 
 from shfl.data_base.data_base import DataBase
 from shfl.data_distribution.data_distribution_non_iid import NonIidDataDistribution
-from shfl.core.query import Get
+from shfl.core.data import UnprotectedAccess
 
 
 class TestDataBase(DataBase):
@@ -93,9 +93,10 @@ def test_get_federated_data():
 
     x_c = []
     y_c = []
+    federated_data.configure_data_access(UnprotectedAccess())
     for i in range(federated_data.num_nodes()):
-        x_c.append(federated_data[i].query_private_data(Get(), "id001").data)
-        y_c.append(federated_data[i].query_private_data(Get(), "id001").label)
+        x_c.append(federated_data[i].query_private_data("id001").data)
+        y_c.append(federated_data[i].query_private_data("id001").label)
 
     x_c = np.array(x_c)
     y_c = np.array(y_c)
