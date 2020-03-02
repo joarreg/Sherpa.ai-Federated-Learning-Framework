@@ -26,33 +26,38 @@ class UnrandomizedMechanism(DifferentialPrivacyMechanism):
 
 class RandomizeBinaryProperty(DifferentialPrivacyMechanism):
     """
-    This class uses simple mechanism to add noise for binary data.
+    This class uses simple mechanism to add randomness for binary data. This algorithm is described
+    by Dwork in her work "The algorithmic Foundations of Differential Privacy".
+    1.- Flip a coin
+    2.- If tails, then respond truthfully.
+    3.- If heads, then flip a second coin and respond "Yes" if heads and "No" if tails.
 
     Attributes
     ----------
-    _noise : float
-        Probability to use a random response instead of true value
-    _mean : float
-        Mean of the random response
+    _prob_head_first : float
+        Probability to use a random response instead of true value. This is equivalent to prob_head of the first coin
+        flip algorithm described by Dwork.
+    _prob_head_second : float
+        Probability of respond true when random answer is provided. Equivalent to prob_head in the second coin flip
+        in the algorithm.
     """
-    def __init__(self, noise=0.5, mean=0.5):
-        self._noise = noise
-        self._mean = mean
+    def __init__(self, prob_head_first=0.5, prob_head_second=0.5):
+        self._prob_head_first = prob_head_first
+        self._prob_head_second = prob_head_second
 
     def randomize(self, data):
         """
-        Answers with the truth with probability p_head and with random value with probability 1 - p_head
+        Implements the two coin flip algorithm described by Dwork.
         """
         if data != 0 and data != 1:
             raise ValueError("RandomizeBinaryProperty works with binary data, but input is not binary")
 
-        coin_flip = np.random.rand()
-        if coin_flip > self._noise:
+        random_value = np.random.rand()
+        if random_value > self._prob_head_first:
             return int(data)
 
-        # Second coin flip
-        coin_flip = np.random.rand()
-        if coin_flip > self._mean:
+        random_value = np.random.rand()
+        if random_value > self._prob_head_second:
             return 0
 
         return 1
