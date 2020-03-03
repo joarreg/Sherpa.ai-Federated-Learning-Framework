@@ -30,4 +30,4 @@ Use [GitHub issues](https://github.com/sherpaai/Sherpa.FL/issues) for tracking r
 
 ## Questions
 
-Please direct questions to [Sherpa Developers Slack](https://XXX).
+Please direct questions to [Sherpa Developers Slack](https://sherpa-developers-invitation.herokuapp.com/).
