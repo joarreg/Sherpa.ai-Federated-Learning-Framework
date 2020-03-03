@@ -14,11 +14,11 @@ Sherpa.ai is focused on democratizing Federated Learning by providing methodolog
 
 ## Installation
 
-See the [install](docs/install.md) documentation for instructions on how to install Sherpa.Fl.
+See the [install](docs/install.md) documentation for instructions on how to install Sherpa.FL.
 
 ## Getting Started
 
-See the [get started](docs/get_started.md) documentation for a brief introduction to using Sherpa.Fl.
+See the [get started](docs/get_started.md) documentation for a brief introduction to using Sherpa.FL.
 
 ## Contributing
 
