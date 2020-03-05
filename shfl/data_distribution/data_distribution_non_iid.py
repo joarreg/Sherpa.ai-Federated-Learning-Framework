@@ -1,4 +1,5 @@
 import numpy as np
+import tensorflow as tf
 import random
 
 from shfl.data_distribution.data_distribution import DataDistribution
@@ -47,7 +48,6 @@ class NonIidDataDistribution(DataDistribution):
 
             random_labels.append(labels_to_use)
 
-        print(random_labels)
         return random_labels
 
     def make_data_federated(self, data, labels, num_nodes, percent, weights):
@@ -83,7 +83,7 @@ class NonIidDataDistribution(DataDistribution):
         federated_label = []
 
         # We generate random classes for each client
-        total_labels = np.unique(labels)
+        total_labels = np.unique(labels.argmax(axis=-1))
         random_classes = self.choose_labels(num_nodes, len(total_labels))
 
         # Select percent
@@ -93,9 +93,9 @@ class NonIidDataDistribution(DataDistribution):
         for i in range(0, num_nodes):
             labels_to_use = random_classes[i]
 
-            idx = np.array([True if i in labels_to_use else False for i in labels])
+            idx = np.array([True if i in labels_to_use else False for i in labels.argmax(axis=-1)])
+            data_aux = data[idx]
             labels_aux = labels[idx]
-            data_aux = data[idx, ]
 
             randomize = np.arange(len(labels_aux))
             np.random.shuffle(randomize)

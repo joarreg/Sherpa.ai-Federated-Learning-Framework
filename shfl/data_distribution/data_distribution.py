@@ -10,7 +10,6 @@ from shfl.private.node import DataNode
 class DataDistribution(abc.ABC):
     """
     Interface for data distribution
-
     Attributes
     ----------
     _database:
@@ -23,7 +22,6 @@ class DataDistribution(abc.ABC):
     def get_federated_data(self, identifier, num_nodes, percent=100, weights=None, mistaken=0):
         """
         Method that split the whole data between the established number of nodes
-
         Parameters
         ----------
         identifier : str
@@ -36,7 +34,6 @@ class DataDistribution(abc.ABC):
             Array of weights for weighted distribution (default is None)
         mistaken: int
             Number of mistaken clients
-
         Return
         ------
         Federated data
@@ -77,7 +74,6 @@ class DataDistribution(abc.ABC):
     def make_data_federated(self, data, labels, num_nodes, percent, weights):
         """
         Method that makes data and labels argument federated in an iid scenario.
-
         Parameters
         ----------
         data: array
