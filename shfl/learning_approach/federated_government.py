@@ -6,15 +6,6 @@ from shfl.learning_approach.learning_approach import LearningApproach
 class FederatedGovernment(LearningApproach):
     """
     Class used to represent Federated Government.
-
-    Attributes
-    ----------
-    federated_data: FederatedData
-        Federated data involved in the process
-    model_builder: function
-        function that builds a TrainableModel
-    aggregator: str
-        federated aggregator function
     """
     def get_global_model_accuracy(self, data_test, label_test):
         prediction = self._model.predict(data_test)

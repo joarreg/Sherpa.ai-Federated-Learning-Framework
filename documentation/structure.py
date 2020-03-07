@@ -2,6 +2,7 @@ from shfl import differential_privacy
 from shfl import private
 from shfl import model
 from shfl import data_base
+from shfl import learning_approach
 
 # For each class to document, it is possible to:
 # 1) Document only the class: [classA, classB, ...]
@@ -73,6 +74,14 @@ PAGES = [
         'classes': [
             (model.model.TrainableModel, ["train", "predict", "get_model_params", "set_model_params"]),
             model.deep_learning_model.DeepLearningModel
+        ]
+    },
+    {
+        'page': 'Learning Approach.md',
+        'classes': [
+            (learning_approach.learning_approach.LearningApproach, ["train_all_clients", "aggregate_weights",
+                                                                    "run_rounds"]),
+            learning_approach.federated_government.FederatedGovernment
         ]
     },
     {

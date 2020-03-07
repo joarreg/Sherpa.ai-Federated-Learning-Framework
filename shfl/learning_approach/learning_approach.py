@@ -5,14 +5,10 @@ class LearningApproach(abc.ABC):
     """
     Abstract class Class used to represent a Learning Approach.
 
-    Attributes
-    ----------
-    _federated_data: FederatedData
-        Federated data to use
-    _model: ~TrainableModel
-        Central model
-    _aggregator: str
-        federated aggregator function
+    # Arguments:
+        federated_data: Federated data to use. (see: [Private](../../Private/Federated Operation))
+        model_builder: Function that return a trainable model (see: [Model](../../Model))
+        aggregator: federated aggregator function (see: [Federated Aggregator](../../Federated Aggregator))
     """
     def __init__(self, model_builder, federated_data, aggregator):
         self._federated_data = federated_data
