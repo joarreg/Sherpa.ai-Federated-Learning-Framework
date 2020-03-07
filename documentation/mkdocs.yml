@@ -12,6 +12,7 @@ nav:
       - Data: Private/Data.md
       - Query: Private/Query.md
       - Federated Operation: Private/Federated Operation.md
+  - Databases: Databases.md
   - Model: Model.md
   - Differential Privacy:
       - Mechanisms: Differential privacy/Mechanisms.md

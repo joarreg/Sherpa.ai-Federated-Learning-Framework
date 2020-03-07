@@ -1,6 +1,7 @@
 from shfl import differential_privacy
 from shfl import private
 from shfl import model
+from shfl import data_base
 
 # For each class to document, it is possible to:
 # 1) Document only the class: [classA, classB, ...]
@@ -54,6 +55,17 @@ PAGES = [
         'functions': [
             private.federated_operation.federate_array,
             private.federated_operation.apply_federated_transformation
+        ]
+    },
+    {
+        'page': 'Databases.md',
+        'classes': [
+            (data_base.data_base.DataBase, ["shuffle"]),
+            data_base.emnist.Emnist,
+            data_base.fashion_mnist.FashionMnist
+        ],
+        'functions': [
+            data_base.data_base.extract_validation_samples
         ]
     },
     {
