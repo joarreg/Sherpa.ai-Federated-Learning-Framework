@@ -13,6 +13,7 @@ nav:
       - Query: Private/Query.md
       - Federated Operation: Private/Federated Operation.md
   - Databases: Databases.md
+  - Data Distribution: Data Distribution.md
   - Model: Model.md
   - Learning Approach: Learning Approach.md
   - Differential Privacy:

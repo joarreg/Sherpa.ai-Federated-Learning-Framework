@@ -3,6 +3,7 @@ from shfl import private
 from shfl import model
 from shfl import data_base
 from shfl import learning_approach
+from shfl import data_distribution
 
 # For each class to document, it is possible to:
 # 1) Document only the class: [classA, classB, ...]
@@ -67,6 +68,14 @@ PAGES = [
         ],
         'functions': [
             data_base.data_base.extract_validation_samples
+        ]
+    },
+    {
+        'page': 'Data Distribution.md',
+        'classes': [
+            (data_distribution.data_distribution.DataDistribution, ["get_federated_data", "make_data_federated"]),
+            data_distribution.data_distribution_iid.IidDataDistribution,
+            data_distribution.data_distribution_non_iid.NonIidDataDistribution
         ]
     },
     {

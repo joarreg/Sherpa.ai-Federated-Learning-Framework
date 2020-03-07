@@ -1,17 +1,12 @@
 import numpy as np
-import tensorflow as tf
 import random
 
 from shfl.data_distribution.data_distribution import DataDistribution
 
+
 class NonIidDataDistribution(DataDistribution):
     """
     Implementation of a non-independent and identically distributed data distribution
-
-    Attributes
-    ----------
-    _database:
-        Database to distribute
     """
 
     def choose_labels(self, num_nodes, total_labels):
@@ -20,14 +15,14 @@ class NonIidDataDistribution(DataDistribution):
 
         Parameters
         ----------
-        num_nodes : int
+        num_nodes: int
             Number of nodes
-        total_labels : int
+        total_labels: int
             Number of labels
 
         Return
         ------
-        labels_to_use : array
+        labels_to_use: array
             labels for each client
         """
 
@@ -53,26 +48,6 @@ class NonIidDataDistribution(DataDistribution):
     def make_data_federated(self, data, labels, num_nodes, percent, weights):
         """
         Method that makes data and labels argument federated in a non-iid scenario.
-
-        Parameters
-        ----------
-        data: array
-            Array of data
-        labels: array
-            labels
-        num_nodes : int
-            Number of nodes
-        percent : int
-            Percent of the data (between 0 and 100) to be distributed (default is 100)
-        weights: array
-            Array of weights for weighted distribution (default is None)
-
-        Return
-        ------
-        federated_data : matrix
-            Data for each client
-        federated_labels : matrix
-            Labels for each client
         """
         if weights is None:
             weights = np.full(num_nodes, 1/num_nodes)
