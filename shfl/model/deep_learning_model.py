@@ -3,6 +3,14 @@ from shfl.model.model import TrainableModel
 
 
 class DeepLearningModel(TrainableModel):
+    """
+    This class offers support for Keras and tensorflow models.
+
+    # Arguments:
+        model: compiled model, ready to train
+        batch_size: batch_size to apply
+        epochs: number of epochs
+    """
 
     def __init__(self, model, batch_size=None, epochs=1):
         self._model = model

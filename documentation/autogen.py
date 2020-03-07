@@ -249,7 +249,9 @@ def render_function(function, method=True):
     if method:
         signature = signature.replace(
             clean_module_name(function.__module__) + '.', '')
-    subblocks.append('### ' + function.__name__ + '\n')
+        subblocks.append('### ' + function.__name__ + '\n')
+    else:
+        subblocks.append('## ' + function.__name__ + '\n')
     subblocks.append(code_snippet(signature))
     docstring = function.__doc__
     if docstring:
@@ -346,6 +348,7 @@ def generate(sources_dir):
         classes = read_page_data(page_data, 'classes')
 
         blocks = []
+        class_and_methods = False
         for element in classes:
             if not isinstance(element, (list, tuple)):
                 element = (element, [])
@@ -354,7 +357,8 @@ def generate(sources_dir):
             signature = get_class_signature(cls)
             subblocks.append('<span style="float:right;">' +
                              class_to_source_link(cls) + '</span>')
-            if element[1]:
+            if element[1] or class_and_methods:
+                class_and_methods = True
                 subblocks.append('## ' + cls.__name__ + ' class\n')
             else:
                 subblocks.append('### ' + cls.__name__ + '\n')

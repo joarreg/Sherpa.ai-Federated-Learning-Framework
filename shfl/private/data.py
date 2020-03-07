@@ -5,6 +5,10 @@ from shfl.differential_privacy.dp_mechanism import UnrandomizedMechanism
 class LabeledData:
     """
     Class to represent labeled data
+
+    # Arguments:
+        data: Features representing a data sample
+        label: Label for this sample
     """
     def __init__(self, data, label):
         self._data = data
@@ -29,25 +33,17 @@ class LabeledData:
 
 class DataAccessDefinition:
     """
-    Class to represent how private data can be accessed
+    Class to represent how private data can be accessed.
+
+    Data access definition is represented by two objects, a query and a differential privacy mechanism. It's necessary
+    to define at least one of them to create a DataAccessDefinition
+
+    # Arguments:
+        query: Query to apply over data (see: [Query](../Query))
+        dp_mechanism: Differential privacy mechanism to apply \
+        (see: [Differential Privacy](../../Differential privacy/Mechanisms)).
     """
     def __init__(self, query=None, dp_mechanism=None):
-        """Example of docstring on the __init__ method.
-
-        The __init__ method may be documented in either the class level
-        docstring, or as a docstring on the __init__ method itself.
-
-        Either form is acceptable, but the two should not be mixed. Choose one
-        convention to document the __init__ method and be consistent with it.
-
-        Note:
-            Do not include the `self` parameter in the ``Args`` section.
-
-        Args:
-            query: Description of `param1`.
-            dp_mechanism: Description of `param2`. Multiple
-                lines are supported.
-        """
         if query is None and dp_mechanism is None:
             raise ValueError("You can't define a data access without setting one of query or dp_mechanism")
 
@@ -72,7 +68,7 @@ class DataAccessDefinition:
 
 class UnprotectedAccess(DataAccessDefinition):
     """
-    This class implements access to data without security
+    This class implements access to data without restrictions, plain data will be returned.
     """
     def __init__(self):
         super().__init__(IdentityFunction())

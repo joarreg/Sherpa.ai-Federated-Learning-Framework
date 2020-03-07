@@ -7,6 +7,12 @@ plugins:
   - mkdocstrings
 nav:
   - Home: index.md
+  - Private:
+      - DataNode: Private/DataNode.md
+      - Data: Private/Data.md
+      - Query: Private/Query.md
+      - Federated Operation: Private/Federated Operation.md
+  - Model: Model.md
   - Differential Privacy:
       - Mechanisms: Differential privacy/Mechanisms.md
       - Sensitivity Sampler: Differential privacy/Sensitivity Sampler.md
