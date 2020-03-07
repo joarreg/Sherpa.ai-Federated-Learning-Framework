@@ -6,20 +6,18 @@ class FederatedAggregator(abc.ABC):
     """
     Interface for Federated Aggregator
 
-    Attributes
-    ---------
-    percentage : float
-        Percentage of total data for each client
-    accuracy_models : array
-        Accuracy for each model
+    # Arguments:
+        percentage : Percentage of total data in each client
     """
 
-    def __init__(self, percentage=None, accuracy_models=None):
+    def __init__(self, percentage=None):
         self._percentage = percentage
-        self._accuracy_models = np.array(accuracy_models)
 
     @abc.abstractmethod
     def aggregate_weights(self, clients_params):
         """
         Abstract method that aggregates the weights of the client models.
+
+        # Returns:
+            aggregated_weights: Aggregated weights
         """

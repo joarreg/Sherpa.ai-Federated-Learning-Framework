@@ -5,20 +5,11 @@ from shfl.federated_aggregator.federated_aggregator import FederatedAggregator
 
 class WeightedAvgFedAggregator(FederatedAggregator):
     """
-    Implementation of Average Federated Aggregator
+    Implementation of Average Federated Aggregator. The aggregation of the parameters is based in the number of data \
+    in every node.
     """
 
     def aggregate_weights(self, clients_params):
-        """
-        Method that aggregates the weights of the client models.
-
-        Returns
-        _______
-
-        numpy matrix:
-            Aggregated weights
-
-        """
         clients_params_array = np.array(clients_params)
 
         num_clients = clients_params_array.shape[0]

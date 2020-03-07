@@ -15,6 +15,7 @@ nav:
   - Databases: Databases.md
   - Data Distribution: Data Distribution.md
   - Model: Model.md
+  - Federated Aggregator: Federated Aggregator.md
   - Learning Approach: Learning Approach.md
   - Differential Privacy:
       - Mechanisms: Differential privacy/Mechanisms.md

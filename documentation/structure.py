@@ -4,6 +4,7 @@ from shfl import model
 from shfl import data_base
 from shfl import learning_approach
 from shfl import data_distribution
+from shfl import federated_aggregator
 
 # For each class to document, it is possible to:
 # 1) Document only the class: [classA, classB, ...]
@@ -83,6 +84,14 @@ PAGES = [
         'classes': [
             (model.model.TrainableModel, ["train", "predict", "get_model_params", "set_model_params"]),
             model.deep_learning_model.DeepLearningModel
+        ]
+    },
+    {
+        'page': 'Federated Aggregator.md',
+        'classes': [
+            (federated_aggregator.federated_aggregator.FederatedAggregator, ["aggregate_weights"]),
+            federated_aggregator.avgfed_aggregator.AvgFedAggregator,
+            federated_aggregator.weighted_avgfed_aggregator.WeightedAvgFedAggregator
         ]
     },
     {
