@@ -19,7 +19,7 @@ Sherpa.FL is a project of [Sherpa.ai](http://sherpa.ai) in collaboration with th
 
 ## Installation
 
-See the [install](docs/install.md) documentation for instructions on how to install Sherpa.FL.
+See the [install](install.md) documentation for instructions on how to install Sherpa.FL.
 
 ## Getting Started
 

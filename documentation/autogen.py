@@ -413,6 +413,8 @@ def generate(sources_dir):
 
     shutil.copyfile(os.path.join(str(shfl_dir), 'README.md'),
                     os.path.join(str(sources_dir), 'index.md'))
+    shutil.copyfile(os.path.join(str(shfl_dir), 'install.md'),
+                    os.path.join(str(sources_dir), 'install.md'))
     #shutil.copyfile(os.path.join(str(shfl_dir), 'CONTRIBUTING.md'),
     #                os.path.join(str(sources_dir), 'contributing.md'))
     #copy_examples(os.path.join(str(shfl_dir), 'examples'),
