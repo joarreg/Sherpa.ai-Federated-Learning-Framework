@@ -21,3 +21,4 @@ nav:
       - Mechanisms: Differential privacy/Mechanisms.md
       - Sensitivity Sampler: Differential privacy/Sensitivity Sampler.md
       - Norm: Differential privacy/Norm.md
+      - Probability Distribution: Differential privacy/Probability Distribution.md

@@ -126,6 +126,14 @@ PAGES = [
             (differential_privacy.norm.SensitivityNorm, ["compute"]),
             differential_privacy.norm.L1SensitivityNorm
         ],
+    },
+    {
+        'page': 'Differential privacy/Probability Distribution.md',
+        'classes': [
+            (differential_privacy.probability_distribution.ProbabilityDistribution, ["sample"]),
+            differential_privacy.probability_distribution.NormalDistribution,
+            differential_privacy.probability_distribution.GaussianMixture
+        ],
     }
 ]
 ROOT = 'http://127.0.0.1/'
