@@ -1,5 +1,3 @@
-from sklearn.metrics import accuracy_score
-
 from shfl.learning_approach.learning_approach import LearningApproach
 
 

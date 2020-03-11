@@ -1,5 +1,5 @@
 import numpy as np
-import scipy
+from scipy import special
 from math import pow
 
 
@@ -64,13 +64,13 @@ class SensitivitySampler:
 
     def _sensitivity_sampler_config(self, m, gamma):
         if m is None:
-            lambert_value = np.real(scipy.special.lambertw(-gamma / (2 * np.exp(0.5)), 1))
+            lambert_value = np.real(special.lambertw(-gamma / (2 * np.exp(0.5)), 1))
             rho = np.exp(lambert_value + 0.5)
             m = np.ceil(np.log(1 / rho) / (2 * pow((gamma - rho), 2)))
             gamma_lo = rho + np.sqrt(np.log(1 / rho) / (2 * m))
             k = np.ceil(m * (1 - gamma + gamma_lo))
         else:
-            rho = np.exp(np.real(scipy.special.lambertw(-1 / (4 * m), 1)) / 2)
+            rho = np.exp(np.real(special.lambertw(-1 / (4 * m), 1)) / 2)
             gamma_lo = rho + np.sqrt(np.log(1 / rho) / (2 * m))
             if gamma is None:
                 gamma = gamma_lo

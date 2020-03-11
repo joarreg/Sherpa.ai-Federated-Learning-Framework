@@ -20,7 +20,7 @@ class TestDataBase(DataBase):
         self._validation_labels = np.random.randint(0, 10, 40)
 
 
-def test_get_global_model_accuracy():
+def test_evaluate_global_model():
     model_builder = Mock
     aggregator = Mock()
     database = TestDataBase()
@@ -31,10 +31,10 @@ def test_get_global_model_accuracy():
     federated_data, test_data, test_labels = db.get_federated_data("id001", num_nodes)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
-    fdg._model.predict.return_value = np.random.randint(0, 10, 40)
+    fdg._model.evaluate.return_value = np.random.randint(0, 10, 40)
 
-    fdg.get_global_model_accuracy(test_data, test_labels)
-    fdg._model.predict.assert_called_once_with(test_data)
+    fdg.evaluate_global_model(test_data, test_labels)
+    fdg._model.evaluate.assert_called_once_with(test_data, test_labels)
 
 
 def test_deploy_central_model():
@@ -70,12 +70,12 @@ def test_get_client_accuracy():
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
 
     for node in fdg._federated_data:
-        node._model.predict.return_value = np.random.randint(0, 10, 40)
+        node._model.evaluate.return_value = np.random.randint(0, 10, 40)
 
-    fdg.get_clients_accuracy(test_data, test_labels)
+    fdg.evaluate_clients(test_data, test_labels)
 
     for node in fdg._federated_data:
-        node._model.predict.assert_called_once_with(test_data)
+        node._model.evaluate.assert_called_once_with(test_data, test_labels)
 
 
 def test_train_all_clients():
