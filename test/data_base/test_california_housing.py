@@ -1,8 +1,8 @@
-from shfl.data_base.emnist import Emnist
+from shfl.data_base.california_housing import CaliforniaHousing
 
 
 def test_emnist():
-    data = Emnist()
+    data = CaliforniaHousing()
     data.load_data()
     train_data, train_labels, validation_data, validation_labels, test_data, test_labels = data.data
 
