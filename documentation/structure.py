@@ -30,6 +30,7 @@ PAGES = [
             private.node.DataNode.set_model_params,
             private.node.DataNode.train_model,
             private.node.DataNode.predict,
+            private.node.DataNode.evaluate,
         ],
     },
 {
@@ -82,7 +83,7 @@ PAGES = [
     {
         'page': 'Model.md',
         'classes': [
-            (model.model.TrainableModel, ["train", "predict", "get_model_params", "set_model_params"]),
+            (model.model.TrainableModel, ["train", "predict", "evaluate", "get_model_params", "set_model_params"]),
             model.deep_learning_model.DeepLearningModel
         ]
     },

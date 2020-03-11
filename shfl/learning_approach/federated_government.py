@@ -7,22 +7,20 @@ class FederatedGovernment(LearningApproach):
     """
     Class used to represent Federated Government.
     """
-    def get_global_model_accuracy(self, data_test, label_test):
-        prediction = self._model.predict(data_test)
-        accuracy_global_model_test = accuracy_score(label_test, prediction)
-        print("Global model test Accuracy Client : " + str(accuracy_global_model_test))
+    def evaluate_global_model(self, data_test, label_test):
+        evaluation = self._model.evaluate(data_test, label_test)
+        print("Global model test performance : " + str(evaluation))
 
     def deploy_central_model(self):
         for data_node in self._federated_data:
             data_node.set_model_params(self._model.get_model_params())
 
-    def get_clients_accuracy(self, data_test, label_test):
+    def evaluate_clients(self, data_test, label_test):
         for data_node in self._federated_data:
             # Predict local model in test
-            prediction = data_node.predict(data_test)
-            accuracy_test = accuracy_score(label_test, prediction)
+            evaluation = data_node.evaluate(data_test, label_test)
 
-            print("Test Accuracy Client " + str(data_node) + ": " + str(accuracy_test))
+            print("Test performance client " + str(data_node) + ": " + str(evaluation))
 
     def train_all_clients(self):
         """
@@ -46,13 +44,13 @@ class FederatedGovernment(LearningApproach):
 
     def run_rounds(self, n, test_data, test_label):
         """
-        Run one more round beggining in the actual state
+        Run one more round beginning in the actual state
         """
         for i in range(0, n):
             print("Accuracy round " + str(i))
             self.deploy_central_model()
             self.train_all_clients()
-            self.get_clients_accuracy(test_data, test_label)
+            self.evaluate_clients(test_data, test_label)
             self.aggregate_weights()
-            self.get_global_model_accuracy(test_data, test_label)
+            self.evaluate_global_model(test_data, test_label)
             print("\n\n")

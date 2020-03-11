@@ -30,6 +30,16 @@ class TrainableModel(abc.ABC):
         """
 
     @abc.abstractmethod
+    def evaluate(self, data, labels):
+        """
+        This method must return the performance of the prediction for those labels
+
+        # Arguments:
+            data: Data to be evaluated
+            labels: True values of data
+        """
+
+    @abc.abstractmethod
     def get_model_params(self):
         """
         Gets the params that define the model

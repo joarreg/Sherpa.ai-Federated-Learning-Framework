@@ -141,3 +141,13 @@ class DataNode:
             data: Data to predict
         """
         return self._model.predict(data)
+
+    def evaluate(self, data, labels):
+        """
+        Evaluates the performance of the model
+
+        # Arguments:
+            data: Data to predict
+            label: True values of data
+        """
+        return self._model.evaluate(data, labels)

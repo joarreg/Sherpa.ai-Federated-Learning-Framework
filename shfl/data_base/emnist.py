@@ -21,6 +21,7 @@ class Emnist(db.DataBase):
         images, labels = emnist.extract_training_samples('digits')
         labels = np.eye(10)[labels]
         self._test_data, self._test_labels = emnist.extract_test_samples('digits')
+        self._test_labels = np.eye(10)[self._test_labels]
 
         dim_test = len(self._test_labels)
         self._train_data, self._train_labels, self._validation_data, self._validation_labels \
