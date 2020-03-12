@@ -1,8 +1,8 @@
-from shfl.data_base.fashion_mnist import FashionMnist
+from shfl.data_base.california_housing import CaliforniaHousing
 
 
-def test_fashion_emnist():
-    data = FashionMnist()
+def test_emnist():
+    data = CaliforniaHousing()
     data.load_data()
     train_data, train_labels, validation_data, validation_labels, test_data, test_labels = data.data
 
@@ -12,4 +12,3 @@ def test_fashion_emnist():
     assert train_data.shape[0] == len(train_labels)
     assert validation_data.shape[0] == len(validation_labels)
     assert test_data.shape[0] == len(test_labels)
-

@@ -1,6 +1,5 @@
-import pytest
-
 from shfl.data_base.emnist import Emnist
+
 
 def test_emnist():
     data = Emnist()
@@ -13,4 +12,3 @@ def test_emnist():
     assert train_data.shape[0] == len(train_labels)
     assert validation_data.shape[0] == len(validation_labels)
     assert test_data.shape[0] == len(test_labels)
-

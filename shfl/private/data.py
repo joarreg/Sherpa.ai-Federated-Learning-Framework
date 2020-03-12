@@ -1,17 +1,14 @@
-from shfl.core.query import IdentityFunction
-from shfl.core.dp_mechanism import UnrandomizedMechanism
+from shfl.private.query import IdentityFunction
+from shfl.differential_privacy.dp_mechanism import UnrandomizedMechanism
 
 
 class LabeledData:
     """
-        Class to represent labeled data
+    Class to represent labeled data
 
-    Attributes
-    ----------
-    _data : object
-        Object representing data for a sample
-    _label : object
-        Label for this sample
+    # Arguments:
+        data: Features representing a data sample
+        label: Label for this sample
     """
     def __init__(self, data, label):
         self._data = data
@@ -36,14 +33,15 @@ class LabeledData:
 
 class DataAccessDefinition:
     """
-    Class to represent how private data can be accessed
+    Class to represent how private data can be accessed.
 
-    Attributes
-    ----------
-    _query : ~Query
-        Function to apply to data before return
-    _dp_mechanism : ~DifferentialPrivacyMechanism
-        Randomization algorithm to apply after query
+    Data access definition is represented by two objects, a query and a differential privacy mechanism. It's necessary
+    to define at least one of them to create a DataAccessDefinition
+
+    # Arguments:
+        query: Query to apply over data (see: [Query](../Query))
+        dp_mechanism: Differential privacy mechanism to apply \
+        (see: [Differential Privacy](../../Differential privacy/Mechanisms)).
     """
     def __init__(self, query=None, dp_mechanism=None):
         if query is None and dp_mechanism is None:
@@ -70,7 +68,7 @@ class DataAccessDefinition:
 
 class UnprotectedAccess(DataAccessDefinition):
     """
-    This class implements access to data without security
+    This class implements access to data without restrictions, plain data will be returned.
     """
     def __init__(self):
         super().__init__(IdentityFunction())

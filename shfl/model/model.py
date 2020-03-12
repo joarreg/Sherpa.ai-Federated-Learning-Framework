@@ -3,7 +3,8 @@ import abc
 
 class TrainableModel(abc.ABC):
     """
-    Interface of the models that can be trained
+    Interface of the models that can be trained. If you want to use a model that is not implemented
+    in the framework you have to implement a class with this interface.
     """
 
     @abc.abstractmethod
@@ -11,12 +12,9 @@ class TrainableModel(abc.ABC):
         """
         Method that train the model
 
-        Parameters
-        ----------
-        data : numpy matrix
-            Data to train the model
-        labels: numpy matrix
-            Label for each train element
+        # Arguments:
+            data: Data to train the model
+            labels: Label for each train element
         """
 
     @abc.abstractmethod
@@ -24,29 +22,37 @@ class TrainableModel(abc.ABC):
         """
         Predict labels for data
 
-        Parameters
-        ----------
-        data: matrix
-            data to classify
+        # Arguments:
+            data: data for predictions
 
-        Return
-        ------
-        predictions : matrix
-            predictions for data
+        # Returns:
+            predictions : matrix with predictions for data
+        """
+
+    @abc.abstractmethod
+    def evaluate(self, data, labels):
+        """
+        This method must return the performance of the prediction for those labels
+
+        # Arguments:
+            data: Data to be evaluated
+            labels: True values of data
         """
 
     @abc.abstractmethod
     def get_model_params(self):
         """
         Gets the params that define the model
-        Returns
-        -------
-        params : numpy array
-            parameters defining the model
+
+        # Returns:
+            params : parameters defining the model
         """
 
     @abc.abstractmethod
     def set_model_params(self, params):
         """
         Update the params that define the model
+
+        # Arguments:
+            params : parameters defining the model
         """

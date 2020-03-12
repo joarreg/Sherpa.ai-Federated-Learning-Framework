@@ -1,5 +1,4 @@
 import numpy as np
-import pytest
 
 from shfl.federated_aggregator.federated_aggregator import FederatedAggregator
 
@@ -11,8 +10,7 @@ class TestFederatedAggregator(FederatedAggregator):
 
 def test_federated_aggregator_private_data():
     percentage = 100
-    acc_models = np.random.rand(10)
-    fa = TestFederatedAggregator(percentage, acc_models)
+    fa = TestFederatedAggregator(percentage)
 
     assert fa._percentage == percentage
-    assert np.array_equal(acc_models,fa._accuracy_models)
+

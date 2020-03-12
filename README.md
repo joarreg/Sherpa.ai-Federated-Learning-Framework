@@ -12,11 +12,14 @@ Sherpa.FL is an open-source framework for Machine Learning that is dedicated to 
 
 Sherpa.ai is focused on democratizing Federated Learning by providing methodologies, pipelines, and evaluation techniques specifically designed for Federated Learning. The Sherpa.ai Federated Learning Platform enables developers to simulate Federated Learning scenarios with models, algorithms, and data provided by the framework, as well as their own data.
 
-Sherpa.FL is a project of [Sherpa.ai](http://sherpa.ai) in collaboration with the [Soft Computing and Intelligent Information Systems (SCI2S)](https://sci2s.ugr.es/) research group from the [University of Granada](https://www.ugr.es/).
+Sherpa.FL is a project of [Sherpa.ai](http://sherpa.ai) in collaboration with the [Andalusian Research Institute in Data Science and Computational Intelligence (DaSCI)](https://dasci.es/) research group from the [University of Granada](https://www.ugr.es/).
+
+<p align="center"><img src="https://sherpa-cdn.s3-eu-west-1.amazonaws.com/forContest/Sherpa_ai_logo_nodegrade.png" alt="Sherpa AI" height = "120" /></p>
+<p align="center"><img src="https://sherpa-cdn.s3-eu-west-1.amazonaws.com/third_parties_logos/DaSCI_logo_vertical.png"  alt="Andalusian Research Institute in Data Science and Computational Intelligence" height = "240"/> <img src="https://sherpa-cdn.s3-eu-west-1.amazonaws.com/third_parties_logos/ugr_logo.png"  alt="University of Granada" height = "240"/></p>
 
 ## Installation
 
-See the [install](docs/install.md) documentation for instructions on how to install Sherpa.FL.
+See the [install](install.md) documentation for instructions on how to install Sherpa.FL.
 
 ## Getting Started
 

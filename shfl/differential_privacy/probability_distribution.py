@@ -4,19 +4,26 @@ import abc
 
 class ProbabilityDistribution(abc.ABC):
     """
-    This class represents a probability distribution
+    Class representing interface for a probability distribution
     """
 
     @abc.abstractmethod
     def sample(self, size):
         """
-        This method returns an array with length size sampling the distribution
+        This method must returns an array with length "size", sampling the distribution
+
+        # Arguments:
+            size: Size of the sampling
         """
 
 
 class NormalDistribution(ProbabilityDistribution):
     """
-    Implement Normal Distribution
+    Implements Normal Distribution
+
+    # Arguments:
+        mean: Mean of the normal distribution.
+        std: Standard deviation of the normal distribution
     """
     def __init__(self, mean, std):
         self._mean = mean
@@ -28,7 +35,29 @@ class NormalDistribution(ProbabilityDistribution):
 
 class GaussianMixture(ProbabilityDistribution):
     """
-    Implement combination of Normal Distributions
+    Implements combination of Normal Distributions
+
+    # Arguments:
+        params: Array of arrays with mean and std for every gaussian distribution.
+        weights: Array of weights for every distribution with sum 1.
+
+    # Example:
+
+    ```python
+        # Parameters for two Gaussian
+        mu_M = 178
+        mu_F = 162
+        sigma_M = 7
+        sigma_F = 7
+
+        # Parameters
+        norm_params = np.array([[mu_M, sigma_M],
+                               [mu_F, sigma_F]])
+        weights = np.ones(2) / 2.0
+
+        # Creating combination of gaussian
+        distribution = GaussianMixture(norm_params, weights)
+    ```
     """
     def __init__(self, params, weights):
         self._gaussian_distributions = []

@@ -1,0 +1,24 @@
+site_name: Sherpa.FL
+docs_dir: sources
+theme:
+  name: "material"
+plugins:
+  - search
+  - mkdocstrings
+nav:
+  - Home: index.md
+  - Private:
+      - DataNode: Private/DataNode.md
+      - Data: Private/Data.md
+      - Query: Private/Query.md
+      - Federated Operation: Private/Federated Operation.md
+  - Databases: Databases.md
+  - Data Distribution: Data Distribution.md
+  - Model: Model.md
+  - Federated Aggregator: Federated Aggregator.md
+  - Learning Approach: Learning Approach.md
+  - Differential Privacy:
+      - Mechanisms: Differential privacy/Mechanisms.md
+      - Sensitivity Sampler: Differential privacy/Sensitivity Sampler.md
+      - Norm: Differential privacy/Norm.md
+      - Probability Distribution: Differential privacy/Probability Distribution.md

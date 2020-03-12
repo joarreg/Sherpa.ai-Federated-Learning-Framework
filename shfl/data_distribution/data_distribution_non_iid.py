@@ -3,14 +3,10 @@ import random
 
 from shfl.data_distribution.data_distribution import DataDistribution
 
+
 class NonIidDataDistribution(DataDistribution):
     """
     Implementation of a non-independent and identically distributed data distribution
-
-    Attributes
-    ----------
-    _database:
-        Database to distribute
     """
 
     def choose_labels(self, num_nodes, total_labels):
@@ -19,14 +15,14 @@ class NonIidDataDistribution(DataDistribution):
 
         Parameters
         ----------
-        num_nodes : int
+        num_nodes: int
             Number of nodes
-        total_labels : int
+        total_labels: int
             Number of labels
 
         Return
         ------
-        labels_to_use : array
+        labels_to_use: array
             labels for each client
         """
 
@@ -47,32 +43,11 @@ class NonIidDataDistribution(DataDistribution):
 
             random_labels.append(labels_to_use)
 
-        print(random_labels)
         return random_labels
 
     def make_data_federated(self, data, labels, num_nodes, percent, weights):
         """
         Method that makes data and labels argument federated in a non-iid scenario.
-
-        Parameters
-        ----------
-        data: array
-            Array of data
-        labels: array
-            labels
-        num_nodes : int
-            Number of nodes
-        percent : int
-            Percent of the data (between 0 and 100) to be distributed (default is 100)
-        weights: array
-            Array of weights for weighted distribution (default is None)
-
-        Return
-        ------
-        federated_data : matrix
-            Data for each client
-        federated_labels : matrix
-            Labels for each client
         """
         if weights is None:
             weights = np.full(num_nodes, 1/num_nodes)
@@ -83,7 +58,7 @@ class NonIidDataDistribution(DataDistribution):
         federated_label = []
 
         # We generate random classes for each client
-        total_labels = np.unique(labels)
+        total_labels = np.unique(labels.argmax(axis=-1))
         random_classes = self.choose_labels(num_nodes, len(total_labels))
 
         # Select percent
@@ -93,9 +68,9 @@ class NonIidDataDistribution(DataDistribution):
         for i in range(0, num_nodes):
             labels_to_use = random_classes[i]
 
-            idx = np.array([True if i in labels_to_use else False for i in labels])
+            idx = np.array([True if i in labels_to_use else False for i in labels.argmax(axis=-1)])
+            data_aux = data[idx]
             labels_aux = labels[idx]
-            data_aux = data[idx, ]
 
             randomize = np.arange(len(labels_aux))
             np.random.shuffle(randomize)

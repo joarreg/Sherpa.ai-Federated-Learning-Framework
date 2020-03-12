@@ -6,19 +6,13 @@ def extract_validation_samples(data, labels, dim):
     """
     Method that randomly choose the validation data from data and labels.
 
-    Parameters
-    ----------
-    data: numpy matrix
-        data for extract the validation data
-    labels: numpy array
-        Labels from data
-    dim: int
-        Size for validation data
+    # Arguments:
+        data: Numpy matrix with data for extract the validation data
+        labels: Numpy array with labels
+        dim: Size for validation data
 
-    Return
-    ------
-    new_data : list
-        Set of new data, new labels, validation data and validation labels
+    # Returns:
+        new_data: Data, labels, validation data and validation labels
     """
     randomize = np.arange(len(labels))
     np.random.shuffle(randomize)
@@ -36,22 +30,22 @@ def extract_validation_samples(data, labels, dim):
 
 class DataBase(abc.ABC):
     """
-    Interface for data base
+    Abstract class for data base.
 
-    Attributes
-    ----------
-    _train_data : numpy matrix
-        Data train
-    _train_labels : numpy array
-        Label for each train element
-    _test_data : numpy matrix
-        Data test
-    _test_labels : numpy array
-        Label for each test element
-    _validation_data : numpy matrix
-        Data from validation
-    _validation_labels : numpy array
-        Label for each validation data element
+    Load method must be implemented in order to create a database able to \
+    interact with the system, in concrete with data distribution methods \
+    (see: [Data Distribution](../../Data Distribution)).
+
+    Load method should save data in the protected Attributes:
+
+    # Attributes:
+        _train_data, _train_labels, _validation_data, _validation_labels, _test_data, _test_labels
+
+    # Properties:
+        train: Returns train data and labels
+        validation: Returns validation data and labels
+        test: Returns test data and labels
+        data: Returns train data, train labels, validation data, validation labels, test data and test labels
     """
 
     def __init__(self):
@@ -65,50 +59,30 @@ class DataBase(abc.ABC):
 
     @property
     def train(self):
-        """
-        Returns train data and labels
-        -------
-        """
         return self._train_data, self._train_labels
 
     @property
     def validation(self):
-        """
-        Returns validation data and labels
-        -------
-        """
         return self._validation_data, self._validation_labels
 
     @property
     def test(self):
-        """
-        Returns validation data and labels
-        -------
-        """
         return self._test_data, self._test_labels
 
     @property
     def data(self):
-        """
-        Property method for data
-
-        Return
-        ------
-        all_data : list
-            Set of train data, label train, validation data, validation train, test data and label test
-        """
         return self._train_data, self._train_labels, self._validation_data, self._validation_labels, \
             self._test_data, self._test_labels
 
     @abc.abstractmethod
     def load_data(self):
         """
-        Abstract method that load the data
+        Abstract method that loads the data
         """
 
     def shuffle(self):
         """
-        Shuffle all data
+        Shuffles all data
         """
         randomize = np.arange(len(self._train_labels))
         np.random.shuffle(randomize)

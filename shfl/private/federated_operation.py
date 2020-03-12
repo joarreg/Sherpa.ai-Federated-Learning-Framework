@@ -1,19 +1,16 @@
 import abc
-from shfl.core.node import DataNode
+from shfl.private.node import DataNode
 
 
 class FederatedData:
     """
     Class representing data across different data nodes.
 
-    Every identifier for FederatedData objects only can be used once.
+    This object is iterable over different data nodes. Every identifier for FederatedData \
+    objects only can be used once.
 
-    Attributes
-    ----------
-    _data_nodes : list
-        List containing data nodes that are part of the federated data
-    _identifier : str
-        Unique identifier for the federated data
+    # Arguments:
+        identifier : Unique identifier for the federated data
     """
 
     __used_identifiers = set()
@@ -39,15 +36,29 @@ class FederatedData:
         return self._identifier
 
     def add_data_node(self, node, data):
+        """
+        This method adds a new node containing data to the federated data
+
+        # Arguments:
+            node: DataNode object. (see: [DataNode](../DataNode))
+            data: Data to add to this node
+        """
         node.set_private_data(self._identifier, data)
         self._data_nodes.append(node)
 
     def num_nodes(self):
+        """
+        # Returns:
+            num_nodes : The number of nodes in this federated data.
+        """
         return len(self._data_nodes)
 
     def configure_data_access(self, data_access_definition):
         """
-        Creates policy to access data
+        Creates the same policy to access data over all the data nodes
+
+        # Arguments:
+            data_access_definition: (see: [Data](../Data/#dataaccessdefinition))
         """
         for data_node in self._data_nodes:
             data_node.configure_private_data_access(self._identifier, data_access_definition)
@@ -56,10 +67,8 @@ class FederatedData:
         """
         Queries over every node and returns the answer of every node in a list
 
-        Returns
-        -------
-        list
-           List containing responses for every node
+        # Returns
+           result: List containing responses for every node
         """
         answer = []
         for data_node in self._data_nodes:
@@ -75,32 +84,26 @@ class FederatedTransformation(abc.ABC):
     @abc.abstractmethod
     def apply(self, data):
         """
-        Parameters
-        ----------
-        data : object
-            The object that have to be modified
+        This method receives data to be modified and performs the required modifications over it.
+
+        # Arguments:
+            data: The object that has to be modified
         """
 
 
 def federate_array(identifier, array, num_data_nodes):
     """
-    Create ~FederatedData from a numpy array.
+    Creates FederatedData from a indexable array.
 
     The array will be divided using the first dimension.
 
-    Parameters
-    ----------
-    identifier : str
-        Unique identifier that will be used for the FederatedData
-    array : numpy array
-        Numpy array with any number of dimensions
-    num_data_nodes: int
-        Number of nodes to use
+    # Arguments:
+        identifier: String for unique identifier that will be used for the FederatedData
+        array : Indexable array with any number of dimensions
+        num_data_nodes: Number of nodes to use
 
-    Returns
-    -------
-    ~FederatedData
-        FederatedData with an array of size len(array)/num_data_nodes in every node.
+    # Returns
+        federated_array: FederatedData with an array of size len(array)/num_data_nodes in every node.
     """
     split_size = len(array) / float(num_data_nodes)
     last = 0.0
@@ -115,17 +118,13 @@ def federate_array(identifier, array, num_data_nodes):
 
 def apply_federated_transformation(federated_data, federated_transformation):
     """
-    Applies the federated transformation over this federated data
+    Applies the federated transformation over this federated data.
 
     Original federated data will be modified.
 
-    Parameters
-    ----------
-    federated_data : ~FederatedData
-        ~FederatedData to use in the transformation
-    federated_transformation : ~FederatedTransformation
-        ~FederatedTransformation that will be applied over this data
-
+    # Arguments:
+        federated_data: FederatedData to use in the transformation
+        federated_transformation: FederatedTransformation that will be applied over this data
     """
     for data_node in federated_data:
         data_node.apply_data_transformation(federated_data.identifier, federated_transformation)

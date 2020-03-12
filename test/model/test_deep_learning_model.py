@@ -39,7 +39,7 @@ def test_deep_learning_model_private_data():
     assert dpl._batch_size == batch
     assert dpl._epochs == epoch
     assert np.array_equal(dpl._data_shape, sizes[0][1:])
-    assert np.array_equal(dpl._label_shape, sizes[1][1:])
+    assert np.array_equal(dpl._labels_shape, sizes[1][1:])
 
 
 def test_train_wrong_data():
@@ -108,6 +108,33 @@ def test_keras_model_train():
     assert params['epochs'] == epoch
 
 
+def test_evaluate():
+    model = Mock()
+    layer = Mock
+
+    sizes = [(1, 24, 24), (24, 10)]
+
+    l1 = layer()
+    l1.get_input_shape_at.return_value = sizes[0]
+    l2 = layer()
+    l2.get_output_shape_at.return_value = sizes[1]
+    model.layers = [l1, l2]
+
+    batch = 32
+    epoch = 2
+    kdpm = DeepLearningModel(model, batch, epoch)
+
+    num_data = 30
+    data = np.array([np.random.rand(24, 24) for i in range(num_data)])
+    labels = np.array([np.zeros(10) for i in range(num_data)])
+    for l in labels:
+        l[np.random.randint(0, len(l))] = 1
+
+    kdpm.evaluate(data, labels)
+
+    kdpm._model.evaluate.assert_called_once()
+
+
 def test_predict():
     model = Mock()
     layer = Mock
@@ -151,7 +178,7 @@ def test_wrong_predict():
     num_data = 30
     data = np.array([np.random.rand(16, 16) for i in range(num_data)])
 
-    with pytest.raises(TypeError):
+    with pytest.raises(AssertionError):
         kdpm.predict(data)
 
 

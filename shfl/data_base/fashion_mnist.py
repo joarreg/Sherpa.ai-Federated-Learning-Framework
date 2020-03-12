@@ -7,21 +7,6 @@ from shfl.data_base.data_base import DataBase
 class FashionMnist(DataBase):
     """
     Implementation for load FASHION-EMNIST data
-
-    Attributes
-    ----------
-    _train_data : numpy matrix
-        Data train
-    _train_labels : numpy array
-        Label for each train element
-    _test_data : numpy matrix
-        Data test
-    _test_labels : numpy array
-        Label for each test element
-    _validation_data : numpy matrix
-        Data from validation
-    _validation_labels : numpy array
-        Label for each validation data element
     """
     def __init__(self):
         super(FashionMnist, self).__init__()
@@ -30,10 +15,8 @@ class FashionMnist(DataBase):
         """
         Load data from emnist package
 
-        Return
-        ------
-        all_data : list
-            Set of train data, label train, validation data, label validation, test data and label test
+        # Returns:
+            all_data : train data, train label, validation data, validation label, test data and test labels
         """
         ((images, labels), (self._test_data, self._test_labels)) = fashion_mnist.load_data()
 

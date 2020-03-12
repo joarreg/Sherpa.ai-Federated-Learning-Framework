@@ -2,19 +2,17 @@ import numpy as np
 import random
 import abc
 
-from shfl.core.data import LabeledData
-from shfl.core.federated_operation import FederatedData
-from shfl.core.node import DataNode
+from shfl.private.data import LabeledData
+from shfl.private.federated_operation import FederatedData
+from shfl.private.node import DataNode
 
 
 class DataDistribution(abc.ABC):
     """
-    Interface for data distribution
+    Abstract class for data distribution
 
-    Attributes
-    ----------
-    _database:
-        Database to distribute
+    # Arguments:
+        database: Database to distribute. (see: [Databases](../../Databases))
     """
 
     def __init__(self, database):
@@ -22,24 +20,17 @@ class DataDistribution(abc.ABC):
 
     def get_federated_data(self, identifier, num_nodes, percent=100, weights=None, mistaken=0):
         """
-        Method that split the whole data between the established number of nodes
+        Method that split the whole data between the established number of nodes.
 
-        Parameters
-        ----------
-        identifier : str
-            Name of the federated data element
-        num_nodes : int
-            Number of nodes to create
-        percent : int
-            Percent of the data (between 0 and 100) to be distributed (default is 100)
-        weights: array
-            Array of weights for weighted distribution (default is None)
-        mistaken: int
-            Number of mistaken clients
+        # Arguments:
+            identifier: Name of the federated data element
+            num_nodes: Number of nodes to create
+            percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
+            weights: Array of weights for weighted distribution (default is None)
+            mistaken: Number of mistaken clients
 
-        Return
-        ------
-        Federated data
+        # Returns
+            federated_data, test_data, test_label
         """
         train_data, train_label = self._database.train
         validation_data, validation_label = self._database.validation
@@ -76,18 +67,16 @@ class DataDistribution(abc.ABC):
     @abc.abstractmethod
     def make_data_federated(self, data, labels, num_nodes, percent, weights):
         """
-        Method that makes data and labels argument federated in an iid scenario.
+        Method that must implement every data distribution extending this class
 
-        Parameters
-        ----------
-        data: array
-            Array of data
-        labels: array
-            labels
-        num_nodes : int
-            Number of nodes
-        percent : int
-            Percent of the data (between 0 and 100) to be distributed (default is 100)
-        weights: array
-            Array of weights for weighted distribution (default is None)
+        # Arguments:
+            data: Array of data
+            labels: Labels
+            num_nodes : Number of nodes
+            percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
+            weights: Array of weights for weighted distribution (default is None)
+
+        # Returns
+            federated_data: Data for each client
+            federated_labels: Labels for each client
         """

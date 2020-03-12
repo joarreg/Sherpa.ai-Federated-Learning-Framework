@@ -1,5 +1,5 @@
 import numpy as np
-import scipy
+from scipy import special
 from math import pow
 
 
@@ -9,32 +9,28 @@ class SensitivitySampler:
     Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential Privacy with Sensitivity Sampling",
     accepted into the 34th International Conference on Machine Learning (ICML'2017), May 2017.
     It provides a method to estimate the sensitivity of a generic query using a concrete sensitivity norm.
+
+    # References
+        - [Pain-Free Random Differential Privacy with Sensitivity Sampling](
+           https://arxiv.org/pdf/1706.02562.pdf)
     """
-    def sample_sensitivity(self, query, sensitivity_norm, oracle, n=None, m=None, gamma=None):
+    def sample_sensitivity(self, query, sensitivity_norm, oracle, n, m=None, gamma=None):
         """
-        This method calculates the parameters to sample the oracle and estimates the sensitivity
+        This method calculates the parameters to sample the oracle and estimates the sensitivity.
+        One of m or gamma must be provided.
 
-        Parameters
-        ----------
-        query : ~Query
-            Function to apply over private data
-        sensitivity_norm : function
-            Function to compute the sensitivity norm
-        oracle : ~ProbabilityDistribution
-            ProbabilityDistribution to sample.
-        n: int
-            Size of private data
-        m: int
-            Size of sampling
-        gamma: float
-            Privacy confidence level
+        # Arguments
+            query: Function to apply over private data (see: [Query](../../Query))
+            sensitivity_norm: Function to compute the sensitivity norm
+                (see: [Norm](../Norm))
+            oracle: ProbabilityDistribution to sample.
+            n: int for size of private data
+            m: int for size of sampling
+            gamma: float for privacy confidence level
 
-        Return
-        ------
-        sensitivity : float
-            Calculated sensitivity value by the sampler
-        mean : float
-            Mean sensitivity from all samples.
+        # Returns
+            sensitivity: Calculated sensitivity value by the sampler
+            mean: Mean sensitivity from all samples.
         """
         sensitivity_sampler_config = self._sensitivity_sampler_config(m=m, gamma=gamma)
 
@@ -68,13 +64,13 @@ class SensitivitySampler:
 
     def _sensitivity_sampler_config(self, m, gamma):
         if m is None:
-            lambert_value = np.real(scipy.special.lambertw(-gamma / (2 * np.exp(0.5)), 1))
+            lambert_value = np.real(special.lambertw(-gamma / (2 * np.exp(0.5)), 1))
             rho = np.exp(lambert_value + 0.5)
             m = np.ceil(np.log(1 / rho) / (2 * pow((gamma - rho), 2)))
             gamma_lo = rho + np.sqrt(np.log(1 / rho) / (2 * m))
             k = np.ceil(m * (1 - gamma + gamma_lo))
         else:
-            rho = np.exp(np.real(scipy.special.lambertw(-1 / (4 * m), 1)) / 2)
+            rho = np.exp(np.real(special.lambertw(-1 / (4 * m), 1)) / 2)
             gamma_lo = rho + np.sqrt(np.log(1 / rho) / (2 * m))
             if gamma is None:
                 gamma = gamma_lo
