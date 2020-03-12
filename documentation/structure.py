@@ -66,7 +66,8 @@ PAGES = [
         'classes': [
             (data_base.data_base.DataBase, ["shuffle"]),
             data_base.emnist.Emnist,
-            data_base.fashion_mnist.FashionMnist
+            data_base.fashion_mnist.FashionMnist,
+            data_base.california_housing.CaliforniaHousing
         ],
         'functions': [
             data_base.data_base.extract_validation_samples

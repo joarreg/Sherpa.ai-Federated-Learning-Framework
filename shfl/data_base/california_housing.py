@@ -4,9 +4,9 @@ from shfl.data_base import data_base as db
 
 class CaliforniaHousing(db.DataBase):
     """
-    This database loads the [California housing dataset] from sklearn (https://scikit-learn.org/stable/modules/\
-    generated/sklearn.datasets.fetch_california_housing.html#sklearn.datasets.fetch_california_housing), mainly
-    for regression tasks.
+    This database loads the \
+    [California housing dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html#sklearn.datasets.fetch_california_housing)
+    from sklearn, mainly for regression tasks.
     """
     def load_data(self):
         all_data = sklearn.datasets.fetch_california_housing()
