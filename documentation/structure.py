@@ -25,7 +25,7 @@ PAGES = [
             private.node.DataNode.configure_private_data_access,
             private.node.DataNode.configure_model_params_access,
             private.node.DataNode.apply_data_transformation,
-            private.node.DataNode.query_private_data,
+            private.node.DataNode.query,
             private.node.DataNode.query_model_params,
             private.node.DataNode.set_model_params,
             private.node.DataNode.train_model,
@@ -54,7 +54,8 @@ PAGES = [
         'classes': [
             (private.federated_operation.FederatedData, ["add_data_node", "num_nodes",
                                                          "configure_data_access", "query"]),
-            private.federated_operation.FederatedTransformation
+            private.federated_operation.FederatedDataNode,
+            (private.federated_operation.FederatedTransformation, ["apply"])
         ],
         'functions': [
             private.federated_operation.federate_array,

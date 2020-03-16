@@ -2,28 +2,61 @@ import abc
 from shfl.private.node import DataNode
 
 
+class FederatedDataNode(DataNode):
+    """
+    This class represents a [DataNode](../DataNode) in a FederatedData. Extends DataNode allowing
+    calls to methods without explicit private data identifier, assuming access to the federated data.
+
+    # Arguments:
+        federated_data_identifier: identifier to use in private data
+
+    When you iterate over [FederatedData](./#federateddata-class) the kind of DataNode that you obtain is a \
+    FederatedDataNode.
+
+    # Example:
+
+    ```python
+        # Definition of federated data from dataset
+        database = shfl.data_base.Emnist()
+        iid_distribution = shfl.data_distribution.IidDataDistribution(database)
+        federated_data, test_data, test_labels = iid_distribution.get_federated_data(num_nodes=20, percent=10)
+
+        # Data access definition and query node 0
+        federated_data.configure_data_access(UnprotectedAccess())
+        federated_data[0].query()
+    ```
+    """
+    def __init__(self, federated_data_identifier):
+        super().__init__()
+        self._federated_data_identifier = federated_data_identifier
+
+    def query(self, private_property=None):
+        if private_property is None:
+            private_property = self._federated_data_identifier
+        return super().query(private_property)
+
+    def configure_data_access(self, data_access_definition):
+        super().configure_private_data_access(self._federated_data_identifier, data_access_definition)
+
+    def set_private_data(self, data):
+        super().set_private_data(self._federated_data_identifier, data)
+
+    def train_model(self):
+        super().train_model(self._federated_data_identifier)
+
+    def apply_data_transformation(self, federated_transformation):
+        super().apply_data_transformation(self._federated_data_identifier, federated_transformation)
+
+
 class FederatedData:
     """
     Class representing data across different data nodes.
 
-    This object is iterable over different data nodes. Every identifier for FederatedData \
-    objects only can be used once.
-
-    # Arguments:
-        identifier : Unique identifier for the federated data
+    This object is iterable over different data nodes.
     """
 
-    __used_identifiers = set()
-
-    def __init__(self, identifier):
-        if identifier in FederatedData.__used_identifiers:
-            raise ValueError("Identifier " + str(identifier) + "is already in use")
+    def __init__(self):
         self._data_nodes = []
-        self._identifier = identifier
-        FederatedData.__used_identifiers.add(identifier)
-
-    def __del__(self):
-        FederatedData.__used_identifiers.remove(self._identifier)
 
     def __getitem__(self, item):
         return self._data_nodes[item]
@@ -31,19 +64,15 @@ class FederatedData:
     def __iter__(self):
         return iter(self._data_nodes)
 
-    @property
-    def identifier(self):
-        return self._identifier
-
-    def add_data_node(self, node, data):
+    def add_data_node(self, data):
         """
         This method adds a new node containing data to the federated data
 
         # Arguments:
-            node: DataNode object. (see: [DataNode](../DataNode))
             data: Data to add to this node
         """
-        node.set_private_data(self._identifier, data)
+        node = FederatedDataNode(str(id(self)))
+        node.set_private_data(data)
         self._data_nodes.append(node)
 
     def num_nodes(self):
@@ -58,10 +87,10 @@ class FederatedData:
         Creates the same policy to access data over all the data nodes
 
         # Arguments:
-            data_access_definition: (see: [Data](../Data/#dataaccessdefinition))
+            data_access_definition: (see: [DataAccessDefinition](../Data/#dataaccessdefinition))
         """
         for data_node in self._data_nodes:
-            data_node.configure_private_data_access(self._identifier, data_access_definition)
+            data_node.configure_data_access(data_access_definition)
 
     def query(self):
         """
@@ -72,14 +101,14 @@ class FederatedData:
         """
         answer = []
         for data_node in self._data_nodes:
-            answer.append(data_node.query_private_data(self._identifier))
+            answer.append(data_node.query())
 
         return answer
 
 
 class FederatedTransformation(abc.ABC):
     """
-    Interface defining method to apply an operation over FederatedData
+    Interface defining method to apply an operation over [FederatedData](./#federateddata-class)
     """
     @abc.abstractmethod
     def apply(self, data):
@@ -91,9 +120,9 @@ class FederatedTransformation(abc.ABC):
         """
 
 
-def federate_array(identifier, array, num_data_nodes):
+def federate_array(array, num_data_nodes):
     """
-    Creates FederatedData from a indexable array.
+    Creates [FederatedData](./#federateddata-class) from a indexable array.
 
     The array will be divided using the first dimension.
 
@@ -103,14 +132,15 @@ def federate_array(identifier, array, num_data_nodes):
         num_data_nodes: Number of nodes to use
 
     # Returns
-        federated_array: FederatedData with an array of size len(array)/num_data_nodes in every node.
+        federated_array: [FederatedData](./#federateddata-class) with an array of size len(array)/num_data_nodes \
+        in every node.
     """
     split_size = len(array) / float(num_data_nodes)
     last = 0.0
 
-    federated_array = FederatedData(identifier)
+    federated_array = FederatedData()
     while last < len(array):
-        federated_array.add_data_node(DataNode(), array[int(last):int(last + split_size)])
+        federated_array.add_data_node(array[int(last):int(last + split_size)])
         last = last + split_size
 
     return federated_array
@@ -123,8 +153,9 @@ def apply_federated_transformation(federated_data, federated_transformation):
     Original federated data will be modified.
 
     # Arguments:
-        federated_data: FederatedData to use in the transformation
-        federated_transformation: FederatedTransformation that will be applied over this data
+        federated_data: [FederatedData](./#federateddata-class) to use in the transformation
+        federated_transformation: [FederatedTransformation](./#federatedtransformation-class) that will be applied \
+        over this data
     """
     for data_node in federated_data:
-        data_node.apply_data_transformation(federated_data.identifier, federated_transformation)
+        data_node.apply_data_transformation(federated_transformation)

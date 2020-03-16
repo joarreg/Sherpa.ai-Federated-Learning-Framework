@@ -25,7 +25,7 @@ class FederatedGovernment(LearningApproach):
         Initialize the models of each client and train them
         """
         for data_node in self._federated_data:
-            data_node.train_model(self._federated_data.identifier)
+            data_node.train_model()
 
     def aggregate_weights(self):
         """

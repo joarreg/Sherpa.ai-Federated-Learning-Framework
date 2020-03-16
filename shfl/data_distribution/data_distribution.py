@@ -18,12 +18,11 @@ class DataDistribution(abc.ABC):
     def __init__(self, database):
         self._database = database
 
-    def get_federated_data(self, identifier, num_nodes, percent=100, weights=None, mistaken=0):
+    def get_federated_data(self, num_nodes, percent=100, weights=None, mistaken=0):
         """
         Method that split the whole data between the established number of nodes.
 
         # Arguments:
-            identifier: Name of the federated data element
             num_nodes: Number of nodes to create
             percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
             weights: Array of weights for weighted distribution (default is None)
@@ -57,10 +56,10 @@ class DataDistribution(abc.ABC):
                 mistakes.append(mistaken_client)
                 random.shuffle(federated_train_label[mistaken_client])
 
-        federated_data = FederatedData(identifier)
+        federated_data = FederatedData()
         for node in range(num_nodes):
             node_data = LabeledData(federated_train_data[node], federated_train_label[node])
-            federated_data.add_data_node(DataNode(), node_data)
+            federated_data.add_data_node(node_data)
 
         return federated_data, test_data, test_label
 

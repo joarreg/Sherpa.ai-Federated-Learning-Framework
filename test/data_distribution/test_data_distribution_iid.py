@@ -37,7 +37,7 @@ def test_make_data_federated():
                                                                             num_nodes,
                                                                             percent,
                                                                             weights)
-    data_distribution.get_federated_data("id000", 3)
+    data_distribution.get_federated_data(3)
 
     all_data = np.concatenate(federated_data)
     all_label = np.concatenate(federated_label)

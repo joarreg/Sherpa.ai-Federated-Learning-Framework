@@ -39,7 +39,7 @@ def test_learning_approach_private_data():
     database = TestDataBase()
     database.load_data()
     db = IidDataDistribution(database)
-    federated_data, test_data, test_labels = db.get_federated_data("id001", 3)
+    federated_data, test_data, test_labels = db.get_federated_data(3)
 
     la = TestLearningApproach(model_builder, federated_data, aggregator)
 
@@ -47,6 +47,5 @@ def test_learning_approach_private_data():
         assert isinstance(node._model, model_builder)
 
     assert isinstance(la._model, model_builder)
-    assert federated_data.identifier == la._federated_data.identifier
     assert aggregator.id == la._aggregator.id
 
