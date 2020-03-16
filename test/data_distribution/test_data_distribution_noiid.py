@@ -89,14 +89,14 @@ def test_get_federated_data():
     # So here, we only test mistaken param.
     mistaken = 50
     num_nodes = 4
-    federated_data, test_data, test_label = dt.get_federated_data("id001", num_nodes, mistaken=mistaken)
+    federated_data, test_data, test_label = dt.get_federated_data(num_nodes, mistaken=mistaken)
 
     x_c = []
     y_c = []
     federated_data.configure_data_access(UnprotectedAccess())
     for i in range(federated_data.num_nodes()):
-        x_c.append(federated_data[i].query_private_data("id001").data)
-        y_c.append(federated_data[i].query_private_data("id001").label)
+        x_c.append(federated_data[i].query().data)
+        y_c.append(federated_data[i].query().label)
 
     x_c = np.array(x_c)
     y_c = np.array(y_c)

@@ -91,7 +91,7 @@ class DataNode:
         """
         federated_transformation.apply(self._private_data[private_property])
 
-    def query_private_data(self, private_property):
+    def query(self, private_property):
         """
         Queries private data previously configured. If the access didn't configured this method will raise exception
 

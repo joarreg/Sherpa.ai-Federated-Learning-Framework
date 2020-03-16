@@ -28,7 +28,7 @@ def test_evaluate_global_model():
     db = IidDataDistribution(database)
 
     num_nodes = 3
-    federated_data, test_data, test_labels = db.get_federated_data("id001", num_nodes)
+    federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
     fdg._model.evaluate.return_value = np.random.randint(0, 10, 40)
@@ -45,7 +45,7 @@ def test_deploy_central_model():
     db = IidDataDistribution(database)
 
     num_nodes = 3
-    federated_data, test_data, test_labels = db.get_federated_data("id001", num_nodes)
+    federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
     array_params = np.random.rand(30)
@@ -65,7 +65,7 @@ def test_get_client_accuracy():
     db = IidDataDistribution(database)
 
     num_nodes = 3
-    federated_data, test_data, test_labels = db.get_federated_data("id001", num_nodes)
+    federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
 
@@ -86,7 +86,7 @@ def test_train_all_clients():
     db = IidDataDistribution(database)
 
     num_nodes = 3
-    federated_data, test_data, test_labels = db.get_federated_data("id001", num_nodes)
+    federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
 
@@ -94,7 +94,7 @@ def test_train_all_clients():
 
     fdg._federated_data.configure_data_access(UnprotectedAccess())
     for node in fdg._federated_data:
-        labeled_data = node.query_private_data('id001')
+        labeled_data = node.query()
         node._model.train.assert_called_once_with(labeled_data.data, labeled_data.label)
 
 
@@ -106,7 +106,7 @@ def test_aggregate_weights():
     db = IidDataDistribution(database)
 
     num_nodes = 3
-    federated_data, test_data, test_labels = db.get_federated_data("id001", num_nodes)
+    federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
 
@@ -126,7 +126,7 @@ def test_run_rounds():
     db = IidDataDistribution(database)
 
     num_nodes = 3
-    federated_data, test_data, test_labels = db.get_federated_data("id001", num_nodes)
+    federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
 
