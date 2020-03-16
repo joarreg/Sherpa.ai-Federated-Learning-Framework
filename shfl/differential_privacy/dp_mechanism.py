@@ -1,4 +1,5 @@
 import numpy as np
+import scipy
 import abc
 
 
@@ -27,9 +28,9 @@ class UnrandomizedMechanism(DifferentialPrivacyMechanism):
         return data
 
 
-class RandomizeBinaryProperty(DifferentialPrivacyMechanism):
+class RandomizedResponseCoins(DifferentialPrivacyMechanism):
     """
-    This class uses simple mechanism to add randomness for binary data. This algorithm is described
+    This class uses a simple mechanism to add randomness for binary data. This algorithm is described
     by Cynthia Dwork and Aaron Roth in their work "The algorithmic Foundations of Differential Privacy".
 
     1.- Flip a coin
@@ -57,7 +58,7 @@ class RandomizeBinaryProperty(DifferentialPrivacyMechanism):
         Implements the two coin flip algorithm described by Dwork.
         """
         if data != 0 and data != 1:
-            raise ValueError("RandomizeBinaryProperty works with binary data, but input is not binary")
+            raise ValueError("RandomizedResponseCoins works with binary data, but input is not binary")
 
         random_value = np.random.rand()
         if random_value > self._prob_head_first:
@@ -68,6 +69,40 @@ class RandomizeBinaryProperty(DifferentialPrivacyMechanism):
             return 0
 
         return 1
+
+
+class RandomizedResponseBinary(DifferentialPrivacyMechanism):
+    """
+    Implements the most general binary randomized response algorithm. Both the input and output are binary
+    arrays. The algorithm is defined through the conditional probabilities
+
+    - P( output=0 | input=0 ) = f0
+    - P( output=1 | input=1) = f1
+
+    For f0=f1=0 or 1, the algorithm is not random. It is maximally random for f0=f1=1/2.
+    This class contains, for special cases of f0, f1, the class RandomizedResponseCoins.
+
+    # Arguments
+        f0: float in [0,1] representing the probability of getting 0 when the input is 0
+        f1: float in [0,1] representing the probability of getting 1 when the input is 1
+    """
+
+    def __init__(self, f0, f1):
+        self._f0 = f0
+        self._f1 = f1
+
+    def randomize(self, data):
+        """
+        Implements the general binary randomized response algorithm.
+
+        Both the input and output of the method are binary arrays.
+        """
+        x_response = np.zeros(len(data))
+        x_zero = data == 0
+        x_response[x_zero] = scipy.stats.bernoulli.rvs(1 - self._f0, size=sum(x_zero))
+        x_response[~x_zero] = scipy.stats.bernoulli.rvs(self._f1, size=len(data)-sum(x_zero))
+
+        return x_response
 
 
 class LaplaceMechanism(DifferentialPrivacyMechanism):

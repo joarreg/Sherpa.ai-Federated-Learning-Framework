@@ -110,7 +110,8 @@ PAGES = [
         'classes': [
             differential_privacy.dp_mechanism.DifferentialPrivacyMechanism,
             differential_privacy.dp_mechanism.UnrandomizedMechanism,
-            differential_privacy.dp_mechanism.RandomizeBinaryProperty,
+            differential_privacy.dp_mechanism.RandomizedResponseCoins,
+            differential_privacy.dp_mechanism.RandomizedResponseBinary,
             differential_privacy.dp_mechanism.LaplaceMechanism
         ],
     },
