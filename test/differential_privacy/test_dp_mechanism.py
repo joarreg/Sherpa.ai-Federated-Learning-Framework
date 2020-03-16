@@ -36,6 +36,7 @@ def test_randomize_binary_mechanism():
     assert 0 < differences < data_size
     assert np.mean(result) < 1
 
+
 def test_randomize_binary_deterministic():
     array = np.array([0, 1])
     node_single = DataNode()
@@ -44,9 +45,10 @@ def test_randomize_binary_deterministic():
     data_access_definition = DataAccessDefinition(dp_mechanism=dp_mechanism)
     node_single.configure_private_data_access("A", data_access_definition)
 
-    result = node_single.query_private_data(private_property="A")
+    result = node_single.query(private_property="A")
 
     assert np.array_equal(array, result)
+
 
 def test_randomize_binary_random():
     data_size = 100
@@ -57,7 +59,7 @@ def test_randomize_binary_random():
     data_access_definition = DataAccessDefinition(dp_mechanism=dp_mechanism)
     node_single.configure_private_data_access("A", data_access_definition)
 
-    result = node_single.query_private_data(private_property="A")
+    result = node_single.query(private_property="A")
 
     differences = 0
     for i in range(data_size):
@@ -66,6 +68,7 @@ def test_randomize_binary_random():
 
     assert 0 < differences < data_size
     assert np.mean(result) < 1
+
 
 def test_randomize_binary_mechanism_no_binary():
     data_size = 100
