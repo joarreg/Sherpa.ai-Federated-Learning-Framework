@@ -8,3 +8,4 @@ shfl.egg-info/
 documentation/sources/*
 documentation/site/*
 venv/*
+notebooks/data/*
