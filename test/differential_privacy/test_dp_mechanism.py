@@ -43,7 +43,7 @@ def test_randomize_binary_mechanism_array_coins():
     node_single = DataNode()
     node_single.set_private_data(name="array", data=array)
 
-    node_single.configure_private_data_access("array", DataAccessDefinition(dp_mechanism=RandomizedResponseCoins()))
+    node_single.configure_data_access("array", DataAccessDefinition(dp_mechanism=RandomizedResponseCoins()))
 
     result = node_single.query("array")
     differences = 0
@@ -64,7 +64,7 @@ def test_randomize_binary_mechanism_array_almost_always_true_values_coins():
     # Very low heads probability in the first attempt, mean should be near true value
     data_access_definition = DataAccessDefinition(dp_mechanism=RandomizedResponseCoins(prob_head_first=0.01,
                                                                                        prob_head_second=0.9))
-    node_single.configure_private_data_access("array", data_access_definition)
+    node_single.configure_data_access("array", data_access_definition)
 
     result = node_single.query("array")
 
@@ -79,7 +79,7 @@ def test_randomize_binary_mechanism_array_almost_always_random_values_coins():
     # Very high heads probability in the first attempt, mean should be near prob_head_second
     data_access_definition = DataAccessDefinition(dp_mechanism=RandomizedResponseCoins(prob_head_first=0.99,
                                                                                        prob_head_second=0.1))
-    node_single.configure_private_data_access("array", data_access_definition)
+    node_single.configure_data_access("array", data_access_definition)
 
     result = node_single.query("array")
 
@@ -91,7 +91,7 @@ def test_randomize_binary_mechanism_scalar_coins():
     node_single = DataNode()
     node_single.set_private_data(name="scalar", data=scalar)
 
-    node_single.configure_private_data_access("scalar", DataAccessDefinition(dp_mechanism=RandomizedResponseCoins()))
+    node_single.configure_data_access("scalar", DataAccessDefinition(dp_mechanism=RandomizedResponseCoins()))
 
     result = node_single.query(private_property="scalar")
 
@@ -116,7 +116,7 @@ def test_randomize_binary_deterministic():
     node_single.set_private_data(name="A", data=array)
     dp_mechanism = RandomizedResponseBinary(f0=1, f1=1)
     data_access_definition = DataAccessDefinition(dp_mechanism=dp_mechanism)
-    node_single.configure_private_data_access("A", data_access_definition)
+    node_single.configure_data_access("A", data_access_definition)
 
     result = node_single.query(private_property="A")
 
@@ -130,7 +130,7 @@ def test_randomize_binary_random():
     node_single.set_private_data(name="A", data=array)
     dp_mechanism = RandomizedResponseBinary(f0=0.5, f1=0.5)
     data_access_definition = DataAccessDefinition(dp_mechanism=dp_mechanism)
-    node_single.configure_private_data_access("A", data_access_definition)
+    node_single.configure_data_access("A", data_access_definition)
 
     result = node_single.query(private_property="A")
 
@@ -149,7 +149,7 @@ def test_randomize_binary_random_scalar_1():
     node_single.set_private_data(name="scalar", data=scalar)
     dp_mechanism = RandomizedResponseBinary(f0=0.5, f1=0.5)
     data_access_definition = DataAccessDefinition(dp_mechanism=dp_mechanism)
-    node_single.configure_private_data_access("scalar", data_access_definition)
+    node_single.configure_data_access("scalar", data_access_definition)
 
     result = node_single.query(private_property="scalar")
 
@@ -163,7 +163,7 @@ def test_randomize_binary_random_scalar_0():
     node_single.set_private_data(name="scalar", data=scalar)
     dp_mechanism = RandomizedResponseBinary(f0=0.5, f1=0.5)
     data_access_definition = DataAccessDefinition(dp_mechanism=dp_mechanism)
-    node_single.configure_private_data_access("scalar", data_access_definition)
+    node_single.configure_data_access("scalar", data_access_definition)
 
     result = node_single.query(private_property="scalar")
 
@@ -178,7 +178,7 @@ def test_randomize_binary_mechanism_array_almost_always_true_values_ones():
 
     # Prob of one given 1 very high, mean should be near 1
     data_access_definition = DataAccessDefinition(dp_mechanism=RandomizedResponseBinary(f0=0.5, f1=0.99))
-    node_single.configure_private_data_access("array", data_access_definition)
+    node_single.configure_data_access("array", data_access_definition)
 
     result = node_single.query("array")
 
@@ -192,7 +192,7 @@ def test_randomize_binary_mechanism_array_almost_always_true_values_zeros():
 
     # Prob of one given 1 very high, mean should be near 1
     data_access_definition = DataAccessDefinition(dp_mechanism=RandomizedResponseBinary(f0=0.99, f1=0.5))
-    node_single.configure_private_data_access("array", data_access_definition)
+    node_single.configure_data_access("array", data_access_definition)
 
     result = node_single.query("array")
 
@@ -206,7 +206,7 @@ def test_randomize_binary_mechanism_array_almost_always_false_values():
 
     # Prob of one given 1 very low, mean should be near 0
     data_access_definition = DataAccessDefinition(dp_mechanism=RandomizedResponseBinary(f0=0.5, f1=0.01))
-    node_single.configure_private_data_access("array", data_access_definition)
+    node_single.configure_data_access("array", data_access_definition)
 
     result = node_single.query("array")
 
@@ -220,7 +220,7 @@ def test_randomize_binary_mechanism_array_almost_always_false_values_zeros():
 
     # Prob of one given 1 very low, mean should be near 0
     data_access_definition = DataAccessDefinition(dp_mechanism=RandomizedResponseBinary(f0=0.01, f1=0.5))
-    node_single.configure_private_data_access("array", data_access_definition)
+    node_single.configure_data_access("array", data_access_definition)
 
     result = node_single.query("array")
 
@@ -243,7 +243,7 @@ def test_randomize_binary_mechanism_no_binary_scalar():
     node_single.set_private_data(name="scalar", data=scalar)
     dp_mechanism = RandomizedResponseBinary(f0=0.5, f1=0.5)
     data_access_definition = DataAccessDefinition(dp_mechanism=dp_mechanism)
-    node_single.configure_private_data_access("scalar", data_access_definition)
+    node_single.configure_data_access("scalar", data_access_definition)
 
     with pytest.raises(ValueError):
         node_single.query("scalar")
@@ -271,7 +271,7 @@ def test_laplace_scalar_mechanism():
 
     node = DataNode()
     node.set_private_data("scalar", scalar)
-    node.configure_private_data_access("scalar", DataAccessDefinition(dp_mechanism=LaplaceMechanism(40, 1)))
+    node.configure_data_access("scalar", DataAccessDefinition(dp_mechanism=LaplaceMechanism(40, 1)))
 
     result = node.query("scalar")
 

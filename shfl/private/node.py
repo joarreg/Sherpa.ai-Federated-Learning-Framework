@@ -62,7 +62,7 @@ class DataNode:
         """
         self._private_data[name] = copy.deepcopy(data)
 
-    def configure_private_data_access(self, name, data_access_definition):
+    def configure_data_access(self, name, data_access_definition):
         """
         Adds a DataAccessDefinition for a concrete private data.
 

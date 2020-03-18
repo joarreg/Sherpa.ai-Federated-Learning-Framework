@@ -18,7 +18,7 @@ def test_query_private_data():
     random_array = np.random.rand(30)
     data_node = DataNode()
     data_node.set_private_data("random_array", random_array)
-    data_node.configure_private_data_access("random_array", UnprotectedAccess())
+    data_node.configure_data_access("random_array", UnprotectedAccess())
     data = data_node.query("random_array")
     for i in range(len(random_array)):
         assert data[i] == random_array[i]

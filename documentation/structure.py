@@ -22,7 +22,7 @@ PAGES = [
         ],
         'methods': [
             private.node.DataNode.set_private_data,
-            private.node.DataNode.configure_private_data_access,
+            private.node.DataNode.configure_data_access,
             private.node.DataNode.configure_model_params_access,
             private.node.DataNode.apply_data_transformation,
             private.node.DataNode.query,

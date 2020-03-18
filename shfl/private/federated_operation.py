@@ -36,7 +36,7 @@ class FederatedDataNode(DataNode):
         return super().query(private_property)
 
     def configure_data_access(self, data_access_definition):
-        super().configure_private_data_access(self._federated_data_identifier, data_access_definition)
+        super().configure_data_access(self._federated_data_identifier, data_access_definition)
 
     def set_private_data(self, data):
         super().set_private_data(self._federated_data_identifier, data)
