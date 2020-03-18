@@ -57,24 +57,24 @@ class RandomizedResponseCoins(DifferentialPrivacyMechanism):
         """
         Implements the two coin flip algorithm described by Dwork.
         """
-        if data != 0 and data != 1:
-            raise ValueError("RandomizedResponseCoins works with binary data, but input is not binary")
+        _check_binary_data(data)
+        size = _get_data_size(data)
 
-        random_value = np.random.rand()
-        if random_value > self._prob_head_first:
-            return int(data)
+        first_coin_flip = np.random.rand(size) > self._prob_head_first
+        second_coin_flip = np.random.rand(size) < self._prob_head_second
 
-        random_value = np.random.rand()
-        if random_value > self._prob_head_second:
-            return 0
+        result = data * first_coin_flip + (1 - first_coin_flip) * second_coin_flip
 
-        return 1
+        if np.isscalar(data):
+            result = int(result)
+
+        return result
 
 
 class RandomizedResponseBinary(DifferentialPrivacyMechanism):
     """
     Implements the most general binary randomized response algorithm. Both the input and output are binary
-    arrays. The algorithm is defined through the conditional probabilities
+    arrays or scalars. The algorithm is defined through the conditional probabilities
 
     - P( output=0 | input=0 ) = f0
     - P( output=1 | input=1) = f1
@@ -97,10 +97,21 @@ class RandomizedResponseBinary(DifferentialPrivacyMechanism):
 
         Both the input and output of the method are binary arrays.
         """
-        x_response = np.zeros(len(data))
-        x_zero = data == 0
-        x_response[x_zero] = scipy.stats.bernoulli.rvs(1 - self._f0, size=sum(x_zero))
-        x_response[~x_zero] = scipy.stats.bernoulli.rvs(self._f1, size=len(data)-sum(x_zero))
+        _check_binary_data(data)
+        size = _get_data_size(data)
+
+        if size > 1:
+            # Binary array case
+            x_response = np.zeros(size)
+            x_zero = data == 0
+            x_response[x_zero] = scipy.stats.bernoulli.rvs(1 - self._f0, size=sum(x_zero))
+            x_response[~x_zero] = scipy.stats.bernoulli.rvs(self._f1, size=len(data)-sum(x_zero))
+        else:
+            # Scalar case
+            if data == 0:
+                x_response = int(scipy.stats.bernoulli.rvs(1 - self._f0, size=1))
+            else:
+                x_response = int(scipy.stats.bernoulli.rvs(self._f1, size=1))
 
         return x_response
 
@@ -132,11 +143,24 @@ class LaplaceMechanism(DifferentialPrivacyMechanism):
         self._epsilon = epsilon
 
     def randomize(self, data):
+        size = _get_data_size(data)
         b = self._sensitivity/self._epsilon
 
-        if np.isscalar(data):
-            size = 1
-        else:
-            size = len(data)
-
         return data + np.random.laplace(loc=0.0, scale=b, size=size)
+
+
+def _get_data_size(data):
+    if np.isscalar(data):
+        size = 1
+    else:
+        size = len(data)
+
+    return size
+
+
+def _check_binary_data(data):
+    if np.isscalar(data):
+        if data != 0 and data != 1:
+            raise ValueError("Randomized mechanism works with binary scalars, but input is not binary")
+    elif not np.array_equal(data, data.astype(bool)):
+        raise ValueError("Randomized mechanism works with binary data, but input is not binary")
