@@ -4,23 +4,33 @@ import random
 import numpy as np
 
 
-class FederatedDataAttack(abc.ABC, FederatedTransformation):
+class FederatedDataAttack(abc.ABC):
     """
     Interface defining method to apply an FederatedAttack over [FederatedData](./#federateddata-class)
-
-    This interface implements [FederatedTransformation](./#federatedtransformation-class) in order to apply \
-    data transformation to the node data.
     """
 
     @abc.abstractmethod
-    def attack(self, federated_data):
+    def apply_attack(self, data):
         """
         This method receives federated data to be modified and performs the required modifications \
         (federated_attack) over it simulating the adversarial attack.
 
         # Arguments:
-            federated_data: The data of nodes that have to be
+            federated_data: The data of nodes that we attack
         """
+
+
+class ShuffleNode(FederatedTransformation):
+    """
+    Implementation of Federated Transformation for shuffling labels of labeled data in order to implement \
+    data poisoning attack.
+    """
+    def apply(self, labeled_data):
+        """
+        Method that implements apply abstract method of [FederatedTransformation](./#federatedtransformation-class) \
+        shuffling labels of labeled_data
+        """
+        random.shuffle(labeled_data.label)
 
 
 class FederatedPoisoningDataAttack(FederatedDataAttack):
@@ -28,30 +38,31 @@ class FederatedPoisoningDataAttack(FederatedDataAttack):
     Class representing poisoning data attack simulation. This simulation consists on shuffling \
     the labels of some nodes.
 
-    This class implements interface [FederatedDataAttack](./#federateddataattack-class)
+    This class implements interface [FederatedDataAttack](./#federateddataattack-class) and \
+    [FederatedTransformation](./#federatedtransformation-class) in order to apply data transformation to the node data.
 
     # Arguments:
         percentage: percentage of nodes that are adversarial ones
     """
 
     def __init__(self, percentage):
+        super().__init__()
         self._percentage = percentage
+        self._adversaries = []
 
-    def attack(self, federated_data):
+    @property
+    def adversaries(self):
+        return self._adversaries
+
+    def apply_attack(self, federated_data):
         """
         Method that implements federated attack of data poisoning shuffling training labels of some nodes.
         """
-        num_nodes = federated_data.num_nodes
+        num_nodes = federated_data.num_nodes()
         list_nodes = np.arange(num_nodes)
-        list_adversaries = random.choice(list_nodes, k=int(self._percentage * num_nodes))
-        federated_adversaries = federated_data[list_adversaries]
+        self._adversaries = random.choices(list_nodes, k=int(self._percentage / 100 * num_nodes))
+        boolean_adversaries = [1 if x in self._adversaries else 0 for x in list_nodes]
 
-        # We apply federated transformation of data in selected nodes
-        self.apply(federated_adversaries)
-
-    def apply(self, labeled_data):
-        """
-        Method that implements apply abstract method of [FederatedTransformation](./#federatedtransformation-class) \
-        shuffling labels of labeled_data
-        """
-        random.shuffle(labeled_data.label)
+        for node, boolean in zip(federated_data, boolean_adversaries):
+            if boolean:
+                node.apply_data_transformation(ShuffleNode())
