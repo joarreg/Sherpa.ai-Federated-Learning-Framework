@@ -3,7 +3,6 @@ import pytest
 
 import shfl
 from shfl.private import DataNode
-from shfl.private.query import IdentityFunction
 from shfl.differential_privacy.dp_mechanism import RandomizedResponseBinary
 from shfl.differential_privacy.dp_mechanism import RandomizedResponseCoins
 from shfl.differential_privacy.dp_mechanism import LaplaceMechanism
@@ -236,7 +235,7 @@ def test_laplace_mechanism():
     array = NormalDistribution(175, 7).sample(data_size)
     federated_array = shfl.private.federated_operation.federate_array(array, data_size)
 
-    federated_array.configure_data_access(LaplaceMechanism(IdentityFunction(), 40, 1))
+    federated_array.configure_data_access(LaplaceMechanism(40, 1))
     result = federated_array.query()
 
     differences = 0
@@ -253,7 +252,7 @@ def test_laplace_scalar_mechanism():
 
     node = DataNode()
     node.set_private_data("scalar", scalar)
-    node.configure_data_access("scalar", LaplaceMechanism(IdentityFunction(), 40, 1))
+    node.configure_data_access("scalar", LaplaceMechanism(40, 1))
 
     result = node.query("scalar")
 

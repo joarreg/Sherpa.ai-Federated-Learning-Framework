@@ -2,6 +2,7 @@ import numpy as np
 import scipy
 
 from shfl.private.data import DataAccessDefinition
+from shfl.private.query import IdentityFunction
 
 
 class RandomizedResponseCoins(DataAccessDefinition):
@@ -14,6 +15,8 @@ class RandomizedResponseCoins(DataAccessDefinition):
     2.- If tails, then respond truthfully.
 
     3.- If heads, then flip a second coin and respond "Yes" if heads and "No" if tails.
+
+    Input data must be binary, otherwise exception will be raised.
 
     # Arguments
         prob_head_first: float in [0,1] representing probability to use a random response instead of true value.
@@ -57,6 +60,8 @@ class RandomizedResponseBinary(DataAccessDefinition):
 
     For f0=f1=0 or 1, the algorithm is not random. It is maximally random for f0=f1=1/2.
     This class contains, for special cases of f0, f1, the class RandomizedResponseCoins.
+
+    Input data must be binary, otherwise exception will be raised.
 
     # Arguments
         f0: float in [0,1] representing the probability of getting 0 when the input is 0
@@ -107,18 +112,23 @@ class LaplaceMechanism(DataAccessDefinition):
     (see: [SensitivitySampler](../Sensitivity Sampler))
 
     # Arguments:
-        query: Function to apply over private data (see: [Query](../../Query))
         sensitivity: float representing sensitivity of the applied query
         epsilon: float for the epsilon you want to apply
+        query: Function to apply over private data (see: [Query](../../Private/Query)). This parameter is optional and \
+            the identity function (see: [IdentityFunction](../../Private/Query/#identityfunction-class)) will be used \
+            if it is not provided.
 
     # References
         - [The algorithmic foundations of differential privacy](
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
-    def __init__(self, query, sensitivity, epsilon):
-        self._query = query
+    def __init__(self, sensitivity, epsilon, query=None):
+        if query is None:
+            query = IdentityFunction()
+
         self._sensitivity = sensitivity
         self._epsilon = epsilon
+        self._query = query
 
     def apply(self, data):
         query_result = self._query.get(data)
