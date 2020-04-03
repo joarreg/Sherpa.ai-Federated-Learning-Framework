@@ -1,5 +1,4 @@
-from shfl.private.query import IdentityFunction
-from shfl.differential_privacy.dp_mechanism import UnrandomizedMechanism
+import abc
 
 
 class LabeledData:
@@ -31,44 +30,27 @@ class LabeledData:
         self._label = label
 
 
-class DataAccessDefinition:
+class DataAccessDefinition(abc.ABC):
     """
-    Class to represent how private data can be accessed.
-
-    Data access definition is represented by two objects, a query and a differential privacy mechanism. It's necessary
-    to define at least one of them to create a DataAccessDefinition
-
-    # Arguments:
-        query: Query to apply over data (see: [Query](../Query))
-        dp_mechanism: Differential privacy mechanism to apply \
-        (see: [Differential Privacy](../../Differential privacy/Mechanisms)).
+    Interface to implement in order to define how private data can be accessed.
     """
-    def __init__(self, query=None, dp_mechanism=None):
-        if query is None and dp_mechanism is None:
-            raise ValueError("You can't define a data access without setting one of query or dp_mechanism")
 
-        if query is None:
-            self._query = IdentityFunction()
-        else:
-            self._query = query
+    @abc.abstractmethod
+    def apply(self, data):
+        """
+        Every implementation needs to implement this method defining how data will be returned.
 
-        if dp_mechanism is None:
-            self._dp_mechanism = UnrandomizedMechanism()
-        else:
-            self._dp_mechanism = dp_mechanism
+        # Arguments:
+            data: Raw data that are going to be accessed
 
-    @property
-    def query(self):
-        return self._query
-
-    @property
-    def dp_mechanism(self):
-        return self._dp_mechanism
+        # Returns
+            result_data: Result data, function of argument data
+        """
 
 
 class UnprotectedAccess(DataAccessDefinition):
     """
     This class implements access to data without restrictions, plain data will be returned.
     """
-    def __init__(self):
-        super().__init__(IdentityFunction())
+    def apply(self, data):
+        return data

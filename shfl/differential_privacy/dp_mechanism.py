@@ -1,34 +1,10 @@
 import numpy as np
 import scipy
-import abc
+
+from shfl.private.data import DataAccessDefinition
 
 
-class DifferentialPrivacyMechanism(abc.ABC):
-    """
-    This is the interface that must be implemented to create an algorithm with the goal to protect
-    information
-    """
-    @abc.abstractmethod
-    def randomize(self, data):
-        """
-        The method should add some noise to the original data and return the obtained value
-        """
-
-
-class UnrandomizedMechanism(DifferentialPrivacyMechanism):
-    """
-    This class doesn't implement randomization mechanism. You might want to send the data without applying
-    any differential privacy method. Maybe your algorithm is private by design and it is not important that
-    someone intercepts your data.
-    """
-    def randomize(self, data):
-        """
-        Data is returned without modification and no differential privacy is applied
-        """
-        return data
-
-
-class RandomizedResponseCoins(DifferentialPrivacyMechanism):
+class RandomizedResponseCoins(DataAccessDefinition):
     """
     This class uses a simple mechanism to add randomness for binary data. This algorithm is described
     by Cynthia Dwork and Aaron Roth in their work "The algorithmic Foundations of Differential Privacy".
@@ -53,7 +29,7 @@ class RandomizedResponseCoins(DifferentialPrivacyMechanism):
         self._prob_head_first = prob_head_first
         self._prob_head_second = prob_head_second
 
-    def randomize(self, data):
+    def apply(self, data):
         """
         Implements the two coin flip algorithm described by Dwork.
         """
@@ -71,7 +47,7 @@ class RandomizedResponseCoins(DifferentialPrivacyMechanism):
         return result
 
 
-class RandomizedResponseBinary(DifferentialPrivacyMechanism):
+class RandomizedResponseBinary(DataAccessDefinition):
     """
     Implements the most general binary randomized response algorithm. Both the input and output are binary
     arrays or scalars. The algorithm is defined through the conditional probabilities
@@ -91,7 +67,7 @@ class RandomizedResponseBinary(DifferentialPrivacyMechanism):
         self._f0 = f0
         self._f1 = f1
 
-    def randomize(self, data):
+    def apply(self, data):
         """
         Implements the general binary randomized response algorithm.
 
@@ -116,7 +92,7 @@ class RandomizedResponseBinary(DifferentialPrivacyMechanism):
         return x_response
 
 
-class LaplaceMechanism(DifferentialPrivacyMechanism):
+class LaplaceMechanism(DataAccessDefinition):
     """
     Implements the laplace mechanism for differential privacy defined by Dwork in their work
     "The algorithmic Foundations of Differential Privacy".
@@ -131,6 +107,7 @@ class LaplaceMechanism(DifferentialPrivacyMechanism):
     (see: [SensitivitySampler](../Sensitivity Sampler))
 
     # Arguments:
+        query: Function to apply over private data (see: [Query](../../Query))
         sensitivity: float representing sensitivity of the applied query
         epsilon: float for the epsilon you want to apply
 
@@ -138,12 +115,14 @@ class LaplaceMechanism(DifferentialPrivacyMechanism):
         - [The algorithmic foundations of differential privacy](
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
-    def __init__(self, sensitivity, epsilon):
+    def __init__(self, query, sensitivity, epsilon):
+        self._query = query
         self._sensitivity = sensitivity
         self._epsilon = epsilon
 
-    def randomize(self, data):
-        size = _get_data_size(data)
+    def apply(self, data):
+        query_result = self._query.get(data)
+        size = _get_data_size(query_result)
         b = self._sensitivity/self._epsilon
 
         return data + np.random.laplace(loc=0.0, scale=b, size=size)

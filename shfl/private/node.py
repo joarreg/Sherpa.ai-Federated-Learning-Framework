@@ -102,14 +102,13 @@ class DataNode:
             raise ValueError("Data access must be configured before query data")
 
         data_access_policy = self._private_data_access_policies[private_property]
-        data = data_access_policy.query.get(self._private_data[private_property])
-        return data_access_policy.dp_mechanism.randomize(data)
+        return data_access_policy.apply(self._private_data[private_property])
 
     def query_model_params(self):
         """
         Queries model parameters. By default the parameters access is unprotected but access definition can be changed
         """
-        return self._model_access_policy.query.get(self._model.get_model_params())
+        return self._model_access_policy.apply(self._model.get_model_params())
 
     def set_model_params(self, model_params):
         """
