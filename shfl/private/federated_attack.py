@@ -24,6 +24,9 @@ class ShuffleNode(FederatedTransformation):
     """
     Implementation of Federated Transformation for shuffling labels of labeled data in order to implement \
     data poisoning attack.
+
+    This class implements interface [FederatedTransformation](./#federatedtransformation-class).
+
     """
     def apply(self, labeled_data):
         """
@@ -36,10 +39,9 @@ class ShuffleNode(FederatedTransformation):
 class FederatedPoisoningDataAttack(FederatedDataAttack):
     """
     Class representing poisoning data attack simulation. This simulation consists on shuffling \
-    the labels of some nodes.
+    the labels of some nodes. For that purpose, it uses class [ShuffleNode](./#shufflenode-class).
 
-    This class implements interface [FederatedDataAttack](./#federateddataattack-class) and \
-    [FederatedTransformation](./#federatedtransformation-class) in order to apply data transformation to the node data.
+    This class implements interface [FederatedDataAttack](./#federateddataattack-class).
 
     # Arguments:
         percentage: percentage of nodes that are adversarial ones
@@ -60,7 +62,7 @@ class FederatedPoisoningDataAttack(FederatedDataAttack):
         """
         num_nodes = federated_data.num_nodes()
         list_nodes = np.arange(num_nodes)
-        self._adversaries = random.choices(list_nodes, k=int(self._percentage / 100 * num_nodes))
+        self._adversaries = random.sample(list(list_nodes), k=int(self._percentage / 100 * num_nodes))
         boolean_adversaries = [1 if x in self._adversaries else 0 for x in list_nodes]
 
         for node, boolean in zip(federated_data, boolean_adversaries):
