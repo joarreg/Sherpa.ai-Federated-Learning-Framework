@@ -1,5 +1,6 @@
 from keras.callbacks import EarlyStopping
 from shfl.model.model import TrainableModel
+import tensorflow as tf
 
 
 class DeepLearningModel(TrainableModel):
@@ -10,9 +11,19 @@ class DeepLearningModel(TrainableModel):
         model: compiled model, ready to train
         batch_size: batch_size to apply
         epochs: number of epochs
+        initialized: Indicates if the model is initialized or not (default False)
     """
-    def __init__(self, model, batch_size=None, epochs=1):
-        self._model = model
+    def __init__(self, model, batch_size=None, epochs=1, initialized=False):
+        if not initialized:
+            self._model = model
+        else:
+            self._model = tf.keras.models.model_from_config({'class_name': model.__class__.__name__,
+                                                             'config': model.get_config()})
+            self._model.compile(optimizer=model.optimizer.__class__.__name__, loss=model.loss,
+                                metrics=model.metrics_names[1:])
+
+            self._model.set_weights(model.get_weights())
+
         self._data_shape = model.layers[0].get_input_shape_at(0)[1:]
         self._labels_shape = model.layers[-1].get_output_shape_at(0)[1:]
 
