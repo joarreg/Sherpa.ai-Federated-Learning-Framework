@@ -1,6 +1,7 @@
 import numpy as np
 from unittest.mock import Mock
 import pytest
+import tensorflow as tf
 
 from shfl.model.deep_learning_model import DeepLearningModel
 
@@ -40,6 +41,23 @@ def test_deep_learning_model_private_data():
     assert dpl._epochs == epoch
     assert np.array_equal(dpl._data_shape, sizes[0][1:])
     assert np.array_equal(dpl._labels_shape, sizes[1][1:])
+
+
+def test_deep_learning_model_initialized():
+    model = tf.keras.models.Sequential()
+    model.add(tf.keras.layers.Dense(12, input_shape=(28, 28, 1)))
+    model.add(tf.keras.layers.Dense(1))
+    model.compile(optimizer='rmsprop', loss='binary_crossentropy')
+
+    dpl = TestDeepLearningModel(model, initialized=True)
+
+    weights = np.concatenate([w.ravel() for w in model.get_weights()])
+    weights_model = np.concatenate([w.ravel() for w in dpl._model.get_weights()])
+
+    assert np.array_equal(weights_model, weights)
+    assert model.get_config() == dpl._model.get_config()
+    assert model.optimizer.__class__.__name__ == dpl._model.optimizer.__class__.__name__
+    assert model.loss == dpl._model.loss
 
 
 def test_train_wrong_data():
