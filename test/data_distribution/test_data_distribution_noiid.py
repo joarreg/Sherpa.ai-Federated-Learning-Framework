@@ -86,10 +86,8 @@ def test_get_federated_data():
 
     # Identifier and num nodes is checked in private test.
     # Percent and weight is checked in idd and no_idd test.
-    # So here, we only test mistaken param.
-    mistaken = 50
     num_nodes = 4
-    federated_data, test_data, test_label = dt.get_federated_data(num_nodes, mistaken=mistaken)
+    federated_data, test_data, test_label = dt.get_federated_data(num_nodes)
 
     x_c = []
     y_c = []
@@ -108,7 +106,6 @@ def test_get_federated_data():
     y = np.concatenate([train_labels, validation_labels], axis=0)
     y = tf.keras.utils.to_categorical(y)
 
-    num_mistaken = 0
     idx = []
     for i, node in enumerate(x_c):
         labels_node = []
@@ -116,13 +113,9 @@ def test_get_federated_data():
             assert data in x
             idx.append(np.where((data == x).all(axis=1))[0][0])
             labels_node.append(y[idx[-1]].argmax(axis=-1))
-        if not (labels_node == y_c[i]).all():
-            num_mistaken = num_mistaken + 1
 
     assert np.array_equal(x[idx, ].ravel(), np.concatenate(x_c).ravel())
     assert np.array_equal(test_data.ravel(), dt._database.test[0].ravel())
     assert np.array_equal(test_label, dt._database.test[1])
-    assert num_mistaken / num_nodes * 100 == mistaken
-    assert num_mistaken / num_nodes * 100 > 0
 
 
