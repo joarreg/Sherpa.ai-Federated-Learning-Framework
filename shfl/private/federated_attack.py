@@ -28,6 +28,9 @@ class ShuffleNode(FederatedTransformation):
     This class implements interface [FederatedTransformation](./#federatedtransformation-class).
 
     """
+    def __init__(self, seed=123):
+        random.seed(seed)
+
     def apply(self, labeled_data):
         """
         Method that implements apply abstract method of [FederatedTransformation](./#federatedtransformation-class) \
