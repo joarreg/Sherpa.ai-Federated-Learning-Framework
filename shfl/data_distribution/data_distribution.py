@@ -18,7 +18,7 @@ class DataDistribution(abc.ABC):
     def __init__(self, database):
         self._database = database
 
-    def get_federated_data(self, num_nodes, percent=100, weights=None, mistaken=0):
+    def get_federated_data(self, num_nodes, percent=100, weights=None):
         """
         Method that split the whole data between the established number of nodes.
 
@@ -31,6 +31,7 @@ class DataDistribution(abc.ABC):
         # Returns
             federated_data, test_data, test_label
         """
+
         train_data, train_label = self._database.train
         validation_data, validation_label = self._database.validation
         test_data, test_label = self._database.test
@@ -42,19 +43,6 @@ class DataDistribution(abc.ABC):
                                                                                train_label,
                                                                                num_nodes, percent,
                                                                                weights)
-        if mistaken > 0:
-            num_mistaken = int(mistaken * num_nodes / 100)
-
-            mistakes = []
-
-            for i in range(num_mistaken):
-                mistaken_client = random.randint(0, num_nodes - 1)
-
-                while mistaken_client in mistakes:
-                    mistaken_client = random.randint(0, num_nodes - 1)
-
-                mistakes.append(mistaken_client)
-                random.shuffle(federated_train_label[mistaken_client])
 
         federated_data = FederatedData()
         for node in range(num_nodes):
