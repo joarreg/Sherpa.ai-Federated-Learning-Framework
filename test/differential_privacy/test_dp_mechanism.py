@@ -285,9 +285,9 @@ def test_exponential_mechanism_pricing():
     max_price = x_bin[np.where(y_bin == y_bin.max())]
     min_price = x_bin[np.where(y_bin == y_bin.min())]
     bin_size = x_bin[1] - x_bin[0]
-    assert (1.00 - x_bin[np.where(y_bin == y_bin.max())] > (0 - bin_size)).all() # Check the best price is close to 1.00
-    assert ((x_bin[np.where(y_bin == y_bin.min())] > (3.01 - bin_size)).all()    # Check the no-revenue price is either greater than 3.01
-            or x_bin[np.where(y_bin == y_bin.min())][0] < bin_size )             # or close to 0.00                 
+    assert (1.00 - x_bin[np.where(y_bin == max_price)] > bin_size).all()       # Check the best price is close to 1.00
+    assert ((x_bin[np.where(y_bin == min_price)] > (3.01 - bin_size)).all()    # Check the no-revenue price is either greater than 3.01
+            or x_bin[np.where(y_bin == min_price)][0] < bin_size )             # or close to 0.00                 
      
     
 def test_exponential_mechanism_obtain_laplace():
