@@ -296,8 +296,7 @@ def test_exponential_mechanism_obtain_laplace():
         output = -np.absolute(x - r)
         return output
 
-    r_min, r_max = -20, 20          # Set extreme r values
-    r = np.arange(r_min, r_max, 0.001) # Set the interval of possible outputs r
+    r = np.arange(-20, 20, 0.001)   # Set the interval of possible outputs r
     x = 3.5                         # Set a value for the dataset
     delta_u = 1                     # We simply set it to one
     epsilon = 1                     # Set a value for epsilon
@@ -310,5 +309,5 @@ def test_exponential_mechanism_obtain_laplace():
     node.configure_data_access("identity", data_access_definition)
     result = node.query("identity")
 
-    assert (result > r_min).all() and (result < r_max).all()
-    assert np.absolute(np.mean(result) - x) < (delta_u/epsilon)
+    assert (result > r.min()).all() and (result < r.max()).all()    # Check all outputs are within range
+    assert np.absolute(np.mean(result) - x) < (delta_u/epsilon)     # Check the mean output is close to true value
