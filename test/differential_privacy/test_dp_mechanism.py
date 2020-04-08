@@ -6,6 +6,7 @@ from shfl.private import DataNode
 from shfl.differential_privacy.dp_mechanism import RandomizedResponseBinary
 from shfl.differential_privacy.dp_mechanism import RandomizedResponseCoins
 from shfl.differential_privacy.dp_mechanism import LaplaceMechanism
+from shfl.differential_privacy.dp_mechanism import ExponentialMechanism
 from shfl.differential_privacy.probability_distribution import NormalDistribution
 
 
@@ -258,3 +259,56 @@ def test_laplace_scalar_mechanism():
 
     assert scalar != result
     assert np.abs(scalar - result) < 100
+
+    
+def test_exponential_mechanism_pricing():
+    
+    def u(x, r):
+        output = np.zeros(len(r))
+        for i in range(len(r)): 
+            output[i] = r[i] * sum(np.greater_equal(x, r[i]))
+        return output
+    
+    x = [1.00, 1.00, 1.00, 3.01]    # Input dataset: the true bids
+    r = np.arange(0, 3.5, 0.001)    # Set the interval of possible outputs r
+    delta_u = r.max()               # In this specific case, Delta u = max(r)
+    epsilon = 5                     # Set a value for epsilon
+    size = 10000                    # We want to repeat the query this many times
+
+    node = DataNode()               
+    node.set_private_data(name="bids", data=np.array(x)) 
+    data_access_definition = ExponentialMechanism(u, r, delta_u, epsilon, size)
+    node.configure_data_access("bids", data_access_definition)
+    result = node.query("bids")
+    y_bin, x_bin = np.histogram(a=result, bins=int(round(np.sqrt(len(result)))), density=True)
+    
+    max_price = x_bin[np.where(y_bin == y_bin.max())]
+    min_price = x_bin[np.where(y_bin == y_bin.min())]
+    bin_size = x_bin[1] - x_bin[0]
+    assert (1.00 - x_bin[np.where(y_bin == y_bin.max())] > (0 - bin_size)).all() # Check the best price is close to 1.00
+    assert ((x_bin[np.where(y_bin == y_bin.min())] > (3.01 - bin_size)).all()    # Check the no-revenue price is either greater than 3.01
+            or x_bin[np.where(y_bin == y_bin.min())][0] < bin_size )             # or close to 0.00                 
+     
+    
+def test_exponential_mechanism_obtain_laplace():
+    
+    def u_laplacian(x, r):
+        output = -np.absolute(x - r)
+        return output
+
+    r_min, r_max = -20, 20          # Set extreme r values
+    r = np.arange(r_min, r_max, 0.001) # Set the interval of possible outputs r
+    x = 3.5                         # Set a value for the dataset
+    delta_u = 1                     # We simply set it to one
+    epsilon = 1                     # Set a value for epsilon
+    size = 100000                   # We want to repeat the query this many times
+
+    node = DataNode()             
+    node.set_private_data(name="identity", data=np.array(x))
+
+    data_access_definition = ExponentialMechanism(u_laplacian, r, delta_u, epsilon, size)
+    node.configure_data_access("identity", data_access_definition)
+    result = node.query("identity")
+
+    assert (result > r_min).all() and (result < r_max).all()
+    assert np.absolute(np.mean(result) - x) < (delta_u/epsilon)

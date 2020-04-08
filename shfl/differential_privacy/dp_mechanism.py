@@ -138,6 +138,36 @@ class LaplaceMechanism(DataAccessDefinition):
         return data + np.random.laplace(loc=0.0, scale=b, size=size)
 
 
+class ExponentialMechanism(DataAccessDefinition):
+    """
+    Implements the exponential mechanism differential privacy defined by Dwork in their work
+    "The algorithmic Foundations of Differential Privacy".
+    
+    # Arguments:
+        u: utility function with arguments x and r. It should be vectorized, so that for a
+        particular database x, it returns as many values as given in r.
+        r: array for the response space.
+        delta_u: float for the sensitivity of the utility function.
+        epsilon: float for the epsilon you want to apply.
+        size: integer for the number of queries to perform at once. If not given it defaults to one.
+    """
+    def __init__(self, u, r, delta_u, epsilon, size=1):
+        self._u = u
+        self._r = r
+        self._delta_u = delta_u
+        self._epsilon = epsilon
+        self._size = size
+    
+    def apply(self, data):
+        r_range = self._r
+        u_points = self._u(data, r_range)
+        p = np.exp(self._epsilon * u_points / (2 * self._delta_u))      
+        p /= p.sum()
+        sample = np.random.choice(a=r_range, size=self._size, replace=True, p=p)
+        
+        return sample    
+    
+    
 def _get_data_size(data):
     if np.isscalar(data):
         size = 1
