@@ -31,6 +31,15 @@ class DeepLearningModel(TrainableModel):
         self._epochs = epochs
 
     def train(self, data, labels):
+        """
+        Method for train the model
+
+        Arguments:
+            data: matrix
+                Data with shape NxD (N: Number of elements; D: Dimensions)
+            labels: int matrix
+                Labels for data with One Hot Encoded format.
+        """
         self._check_data(data)
         self._check_labels(labels)
 
@@ -39,11 +48,27 @@ class DeepLearningModel(TrainableModel):
                         verbose=0, shuffle=False, callbacks=[early_stopping])
 
     def predict(self, data):
+        """
+        Method for train the model
+
+        Arguments:
+            data: matrix
+                Data with shape NxD (N: Number of elements; D: Dimensions)
+        """
         self._check_data(data)
 
         return self._model.predict(data, batch_size=self._batch_size).argmax(axis=-1)
 
     def evaluate(self, data, labels):
+        """
+        Method for evaluate the model
+
+        Arguments:
+            data: matrix
+                Data with shape NxD (N: Number of elements; D: Dimensions)
+            labels: int matrix
+                Labels for data with One Hot Encoded format.
+        """
         self._check_data(data)
         self._check_labels(labels)
 
