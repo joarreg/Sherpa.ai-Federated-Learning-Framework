@@ -1,34 +1,11 @@
 import numpy as np
 import scipy
-import abc
+
+from shfl.private.data import DataAccessDefinition
+from shfl.private.query import IdentityFunction
 
 
-class DifferentialPrivacyMechanism(abc.ABC):
-    """
-    This is the interface that must be implemented to create an algorithm with the goal to protect
-    information
-    """
-    @abc.abstractmethod
-    def randomize(self, data):
-        """
-        The method should add some noise to the original data and return the obtained value
-        """
-
-
-class UnrandomizedMechanism(DifferentialPrivacyMechanism):
-    """
-    This class doesn't implement randomization mechanism. You might want to send the data without applying
-    any differential privacy method. Maybe your algorithm is private by design and it is not important that
-    someone intercepts your data.
-    """
-    def randomize(self, data):
-        """
-        Data is returned without modification and no differential privacy is applied
-        """
-        return data
-
-
-class RandomizedResponseCoins(DifferentialPrivacyMechanism):
+class RandomizedResponseCoins(DataAccessDefinition):
     """
     This class uses a simple mechanism to add randomness for binary data. This algorithm is described
     by Cynthia Dwork and Aaron Roth in their work "The algorithmic Foundations of Differential Privacy".
@@ -38,6 +15,8 @@ class RandomizedResponseCoins(DifferentialPrivacyMechanism):
     2.- If tails, then respond truthfully.
 
     3.- If heads, then flip a second coin and respond "Yes" if heads and "No" if tails.
+
+    Input data must be binary, otherwise exception will be raised.
 
     # Arguments
         prob_head_first: float in [0,1] representing probability to use a random response instead of true value.
@@ -53,7 +32,7 @@ class RandomizedResponseCoins(DifferentialPrivacyMechanism):
         self._prob_head_first = prob_head_first
         self._prob_head_second = prob_head_second
 
-    def randomize(self, data):
+    def apply(self, data):
         """
         Implements the two coin flip algorithm described by Dwork.
         """
@@ -71,7 +50,7 @@ class RandomizedResponseCoins(DifferentialPrivacyMechanism):
         return result
 
 
-class RandomizedResponseBinary(DifferentialPrivacyMechanism):
+class RandomizedResponseBinary(DataAccessDefinition):
     """
     Implements the most general binary randomized response algorithm. Both the input and output are binary
     arrays or scalars. The algorithm is defined through the conditional probabilities
@@ -82,6 +61,8 @@ class RandomizedResponseBinary(DifferentialPrivacyMechanism):
     For f0=f1=0 or 1, the algorithm is not random. It is maximally random for f0=f1=1/2.
     This class contains, for special cases of f0, f1, the class RandomizedResponseCoins.
 
+    Input data must be binary, otherwise exception will be raised.
+
     # Arguments
         f0: float in [0,1] representing the probability of getting 0 when the input is 0
         f1: float in [0,1] representing the probability of getting 1 when the input is 1
@@ -91,7 +72,7 @@ class RandomizedResponseBinary(DifferentialPrivacyMechanism):
         self._f0 = f0
         self._f1 = f1
 
-    def randomize(self, data):
+    def apply(self, data):
         """
         Implements the general binary randomized response algorithm.
 
@@ -116,7 +97,7 @@ class RandomizedResponseBinary(DifferentialPrivacyMechanism):
         return x_response
 
 
-class LaplaceMechanism(DifferentialPrivacyMechanism):
+class LaplaceMechanism(DataAccessDefinition):
     """
     Implements the laplace mechanism for differential privacy defined by Dwork in their work
     "The algorithmic Foundations of Differential Privacy".
@@ -133,22 +114,60 @@ class LaplaceMechanism(DifferentialPrivacyMechanism):
     # Arguments:
         sensitivity: float representing sensitivity of the applied query
         epsilon: float for the epsilon you want to apply
+        query: Function to apply over private data (see: [Query](../../Private/Query)). This parameter is optional and \
+            the identity function (see: [IdentityFunction](../../Private/Query/#identityfunction-class)) will be used \
+            if it is not provided.
 
     # References
         - [The algorithmic foundations of differential privacy](
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
-    def __init__(self, sensitivity, epsilon):
+    def __init__(self, sensitivity, epsilon, query=None):
+        if query is None:
+            query = IdentityFunction()
+
         self._sensitivity = sensitivity
         self._epsilon = epsilon
+        self._query = query
 
-    def randomize(self, data):
-        size = _get_data_size(data)
+    def apply(self, data):
+        query_result = self._query.get(data)
+        size = _get_data_size(query_result)
         b = self._sensitivity/self._epsilon
 
         return data + np.random.laplace(loc=0.0, scale=b, size=size)
 
 
+class ExponentialMechanism(DataAccessDefinition):
+    """
+    Implements the exponential mechanism differential privacy defined by Dwork in their work
+    "The algorithmic Foundations of Differential Privacy".
+    
+    # Arguments:
+        u: utility function with arguments x and r. It should be vectorized, so that for a
+        particular database x, it returns as many values as given in r.
+        r: array for the response space.
+        delta_u: float for the sensitivity of the utility function.
+        epsilon: float for the epsilon you want to apply.
+        size: integer for the number of queries to perform at once. If not given it defaults to one.
+    """
+    def __init__(self, u, r, delta_u, epsilon, size=1):
+        self._u = u
+        self._r = r
+        self._delta_u = delta_u
+        self._epsilon = epsilon
+        self._size = size
+    
+    def apply(self, data):
+        r_range = self._r
+        u_points = self._u(data, r_range)
+        p = np.exp(self._epsilon * u_points / (2 * self._delta_u))      
+        p /= p.sum()
+        sample = np.random.choice(a=r_range, size=self._size, replace=True, p=p)
+        
+        return sample    
+    
+    
 def _get_data_size(data):
     if np.isscalar(data):
         size = 1
