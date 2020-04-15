@@ -8,7 +8,7 @@ from shfl.private.query import IdentityFunction
 class RandomizedResponseCoins(DataAccessDefinition):
     """
     This class uses a simple mechanism to add randomness for binary data. This algorithm is described
-    by Cynthia Dwork and Aaron Roth in their work "The algorithmic Foundations of Differential Privacy".
+    by Cynthia Dwork and Aaron Roth in "The algorithmic Foundations of Differential Privacy".
 
     1.- Flip a coin
 
@@ -99,7 +99,7 @@ class RandomizedResponseBinary(DataAccessDefinition):
 
 class LaplaceMechanism(DataAccessDefinition):
     """
-    Implements the laplace mechanism for differential privacy defined by Dwork in their work
+    Implements the Laplace mechanism for differential privacy defined by Dwork in
     "The algorithmic Foundations of Differential Privacy".
 
     Notice that the Laplace mechanism is a randomization algorithm that depends on the sensitivity,
@@ -140,16 +140,20 @@ class LaplaceMechanism(DataAccessDefinition):
 
 class ExponentialMechanism(DataAccessDefinition):
     """
-    Implements the exponential mechanism differential privacy defined by Dwork in their work
+    Implements the exponential mechanism differential privacy defined by Dwork in 
     "The algorithmic Foundations of Differential Privacy".
     
     # Arguments:
-        u: utility function with arguments x and r. It should be vectorized, so that for a
+        u: utility function with arguments x and r. It should be vectorized, so that for a \
         particular database x, it returns as many values as given in r.
         r: array for the response space.
         delta_u: float for the sensitivity of the utility function.
         epsilon: float for the epsilon you want to apply.
         size: integer for the number of queries to perform at once. If not given it defaults to one.
+        
+    # References
+        - [The algorithmic foundations of differential privacy](
+           https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
     def __init__(self, u, r, delta_u, epsilon, size=1):
         self._u = u
