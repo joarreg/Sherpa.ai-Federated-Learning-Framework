@@ -1,5 +1,6 @@
 import abc
 from shfl.private.node import DataNode
+from shfl.private.data import LabeledData
 
 
 class FederatedDataNode(DataNode):
@@ -41,11 +42,37 @@ class FederatedDataNode(DataNode):
     def set_private_data(self, data):
         super().set_private_data(self._federated_data_identifier, data)
 
+    def set_private_test_data(self, data):
+        super().set_private_test_data(self._federated_data_identifier, data)
+
     def train_model(self):
         super().train_model(self._federated_data_identifier)
 
     def apply_data_transformation(self, federated_transformation):
         super().apply_data_transformation(self._federated_data_identifier, federated_transformation)
+
+    def evaluate(self, data, test):
+        return super().evaluate(data, test), super().local_evaluate(self._federated_data_identifier)
+
+    def split_train_test(self, test_split=0.2):
+        """
+        Splits private_data in train and test sets
+
+        # Arguments:
+             training_data_key: String identifying the private data to use for this model. This key must contain
+            LabeledData (see: [Data](../../Data))
+
+            test_split: percentage of test split
+        """
+        labeled_data = self._private_data.get(self._federated_data_identifier)
+        length = len(labeled_data.data)
+        train_data = labeled_data.data[int(test_split * length):]
+        train_label = labeled_data.label[int(test_split * length):]
+        test_data = labeled_data.data[:int(test_split * length)]
+        test_label = labeled_data.label[:int(test_split * length)]
+
+        self.set_private_data(LabeledData(train_data, train_label))
+        self.set_private_test_data(LabeledData(test_data, test_label))
 
 
 class FederatedData:
@@ -159,3 +186,9 @@ def apply_federated_transformation(federated_data, federated_transformation):
     """
     for data_node in federated_data:
         data_node.apply_data_transformation(federated_transformation)
+
+
+def split_train_test(federated_data, test_split=0.2):
+    for data_node in federated_data:
+        data_node.split_train_test(test_split)
+

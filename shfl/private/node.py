@@ -19,6 +19,7 @@ class DataNode:
 
     def __init__(self):
         self._private_data = {}
+        self._private_test_data = {}
         self._private_data_access_policies = {}
         self._model = None
         self._model_access_policy = UnprotectedAccess()
@@ -45,11 +46,27 @@ class DataNode:
         Allows to see data for this node, but you cannot retrieve data
 
         # Returns
-            private : test data
+            private : data
         """
         print("Node private data, you can see the data for debug purposes but the data remains in the node")
         print(type(self._private_data))
         print(self._private_data)
+
+    @property
+    def private_test_data(self):
+        """
+        Allows to see data for this node, but you cannot retrieve data
+
+        # Returns
+            private : test data
+        """
+        print("Node private test data, you can see the data for debug purposes but the data remains in the node")
+        print(type(self._private_test_data))
+        print(self._private_test_data)
+
+    @private_test_data.setter
+    def private_test_data(self, test_data):
+        self._private_test_data = test_data
 
     def set_private_data(self, name, data):
         """
@@ -61,6 +78,17 @@ class DataNode:
             data: Data to be stored in the private memory of the DataNode
         """
         self._private_data[name] = copy.deepcopy(data)
+
+    def set_private_test_data(self, name, data):
+        """
+        Creates copy of test data in private memory using name as key. If there is a previous value with this key the
+        data will be override.
+
+        # Arguments:
+            name: String with the key identifier for the data
+            data: Data to be stored in the private memory of the DataNode
+        """
+        self._private_test_data[name] = copy.deepcopy(data)
 
     def configure_data_access(self, name, data_access_definition):
         """
@@ -150,3 +178,10 @@ class DataNode:
             label: True values of data
         """
         return self._model.evaluate(data, labels)
+
+    def local_evaluate(self, data_key):
+        if self._private_test_data is not None:
+            labeled_data = self._private_test_data.get(data_key)
+            return self._model.evaluate(labeled_data.data, labeled_data.label)
+        else:
+            return None
