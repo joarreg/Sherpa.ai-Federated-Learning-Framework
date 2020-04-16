@@ -180,7 +180,7 @@ class DataNode:
         return self._model.evaluate(data, labels)
 
     def local_evaluate(self, data_key):
-        if self._private_test_data is not None:
+        if bool(self._private_test_data):
             labeled_data = self._private_test_data.get(data_key)
             return self._model.evaluate(labeled_data.data, labeled_data.label)
         else:
