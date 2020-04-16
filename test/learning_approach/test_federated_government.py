@@ -5,7 +5,7 @@ from shfl.learning_approach.federated_government import FederatedGovernment
 from shfl.data_base.data_base import DataBase
 from shfl.data_distribution.data_distribution_iid import IidDataDistribution
 from shfl.private.data import UnprotectedAccess
-
+from shfl.private.federated_operation import split_train_test
 
 class TestDataBase(DataBase):
     def __init__(self):
@@ -127,6 +127,34 @@ def test_run_rounds():
 
     num_nodes = 3
     federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
+
+    fdg = FederatedGovernment(model_builder, federated_data, aggregator)
+
+    array_params = np.random.rand(30)
+    fdg._model.get_model_params.return_value = array_params
+
+    for node in fdg._federated_data:
+        node._model.predict.return_value = np.random.randint(0, 10, 40)
+
+    weights = np.random.rand(64, 32)
+    fdg._aggregator.aggregate_weights.return_value = weights
+
+    fdg._model.predict.return_value = np.random.randint(0, 10, 40)
+
+    fdg.run_rounds(1, test_data, test_labels)
+
+
+def test_run_rounds_local_tests():
+    model_builder = Mock
+    aggregator = Mock()
+    database = TestDataBase()
+    database.load_data()
+    db = IidDataDistribution(database)
+
+    num_nodes = 3
+    federated_data, test_data, test_labels = db.get_federated_data(num_nodes)
+
+    split_train_test(federated_data)
 
     fdg = FederatedGovernment(model_builder, federated_data, aggregator)
 

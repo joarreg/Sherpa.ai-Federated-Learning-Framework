@@ -64,10 +64,6 @@ class DataNode:
         print(type(self._private_test_data))
         print(self._private_test_data)
 
-    @private_test_data.setter
-    def private_test_data(self, test_data):
-        self._private_test_data = test_data
-
     def set_private_data(self, name, data):
         """
         Creates copy of data in private memory using name as key. If there is a previous value with this key the
