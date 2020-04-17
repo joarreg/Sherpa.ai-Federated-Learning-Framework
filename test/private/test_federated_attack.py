@@ -18,13 +18,10 @@ def test_shuffle_node():
     federated_data = FederatedData()
     federated_data.add_data_node(labeled_data)
     for node in federated_data:
-        node.apply_data_transformation(ShuffleNode(seed=123))
-
-    random.seed(123)
-    random.shuffle(label)
+        node.apply_data_transformation(ShuffleNode())
 
     federated_data.configure_data_access(UnprotectedAccess())
-    assert np.array_equal(federated_data[0].query().label, label)
+    assert (not np.array_equal(federated_data[0].query().label, label))
 
 
 def test_federated_poisoning_attack():
@@ -44,11 +41,11 @@ def test_federated_poisoning_attack():
     simple_attack.apply_attack(federated_data=federated_data)
 
     adversaries_idx = simple_attack.adversaries
-    for adv in range(len(adversaries_idx)):
-        random.seed(123)
-        random.shuffle(list_labels[adversaries_idx[adv]])
 
     federated_data.configure_data_access(UnprotectedAccess())
     for node, idx in zip(federated_data, range(num_nodes)):
-        assert np.array_equal(node.query().label, list_labels[idx])
+        if idx in adversaries_idx:
+            assert not np.array_equal(node.query().label, list_labels[idx])
+        else:
+            assert np.array_equal(node.query().label, list_labels[idx])
 
