@@ -78,7 +78,7 @@ class FederatedData:
     def num_nodes(self):
         """
         # Returns:
-            num_nodes : The number of nodes in this federated data.
+            num_nodes: The number of nodes in this federated data.
         """
         return len(self._data_nodes)
 
@@ -97,7 +97,7 @@ class FederatedData:
         Queries over every node and returns the answer of every node in a list
 
         # Returns
-           result: List containing responses for every node
+            answer: List containing responses for every node
         """
         answer = []
         for data_node in self._data_nodes:
@@ -108,7 +108,7 @@ class FederatedData:
 
 class FederatedTransformation(abc.ABC):
     """
-    Interface defining method to apply an operation over [FederatedData](./#federateddata-class)
+    Interface defining the method for applying an operation over [FederatedData](./#federateddata-class)
     """
     @abc.abstractmethod
     def apply(self, data):
@@ -122,18 +122,17 @@ class FederatedTransformation(abc.ABC):
 
 def federate_array(array, num_data_nodes):
     """
-    Creates [FederatedData](./#federateddata-class) from a indexable array.
+    Creates [FederatedData](./#federateddata-class) from an indexable array.
 
     The array will be divided using the first dimension.
 
     # Arguments:
-        identifier: String for unique identifier that will be used for the FederatedData
-        array : Indexable array with any number of dimensions
+        array: Indexable array with any number of dimensions
         num_data_nodes: Number of nodes to use
 
     # Returns
         federated_array: [FederatedData](./#federateddata-class) with an array of size len(array)/num_data_nodes \
-        in every node.
+        in every node
     """
     split_size = len(array) / float(num_data_nodes)
     last = 0.0

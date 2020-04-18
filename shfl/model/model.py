@@ -23,10 +23,10 @@ class TrainableModel(abc.ABC):
         Predict labels for data
 
         # Arguments:
-            data: data for predictions
+            data: Data for predictions
 
         # Returns:
-            predictions : matrix with predictions for data
+            predictions: Matrix with predictions for data
         """
 
     @abc.abstractmethod
@@ -45,7 +45,7 @@ class TrainableModel(abc.ABC):
         Gets the params that define the model
 
         # Returns:
-            params : parameters defining the model
+            params: Parameters defining the model
         """
 
     @abc.abstractmethod
@@ -54,5 +54,5 @@ class TrainableModel(abc.ABC):
         Update the params that define the model
 
         # Arguments:
-            params : parameters defining the model
+            params: Parameters defining the model
         """

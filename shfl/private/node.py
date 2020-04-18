@@ -8,12 +8,12 @@ class DataNode:
     This class represents an independent data node.
 
     A DataNode has its own private data and provides methods
-    to initialize this data and access. The access to private data needs to be configured with an access policy
+    to initialize this data and access to it. The access to private data needs to be configured with an access policy
     before query it or an exception will be raised. A method to transform private data is also provided. This is
     a mechanism that allows data preprocessing or related task over data.
 
     A model (see: [Model](../../Model)) can be deployed in the DataNode and use private data
-    in order to learn. It is assumed that a model is represented by its parameters and the access to this parameters
+    in order to learn. It is assumed that a model is represented by its parameters and the access to these parameters
     must be also configured before queries.
     """
 
@@ -54,7 +54,7 @@ class DataNode:
     def set_private_data(self, name, data):
         """
         Creates copy of data in private memory using name as key. If there is a previous value with this key the
-        data will be override.
+        data will be overridden.
 
         # Arguments:
             name: String with the key identifier for the data
@@ -64,7 +64,7 @@ class DataNode:
 
     def configure_data_access(self, name, data_access_definition):
         """
-        Adds a DataAccessDefinition for a concrete private data.
+        Adds a DataAccessDefinition for some concrete private data.
 
         # Arguments:
             name: String with the key identifier for the data
@@ -86,7 +86,7 @@ class DataNode:
         Executes FederatedTransformation (see: [Federated Operation](../Federated Operation)) over private date.
 
         # Arguments:
-            name: String with the key identifier for the data
+            private_property: String with the key identifier for the data
             federated_transformation: Operation to execute (see: [Federated Operation](../Federated Operation))
         """
         federated_transformation.apply(self._private_data[private_property])
@@ -96,7 +96,7 @@ class DataNode:
         Queries private data previously configured. If the access didn't configured this method will raise exception
 
         # Arguments:
-            name: String with the key identifier for the data
+            private_property: String with the key identifier for the data
         """
         if private_property not in self._private_data_access_policies:
             raise ValueError("Data access must be configured before query data")
@@ -124,7 +124,7 @@ class DataNode:
         Train the model that has been previously set in the data node
 
         # Arguments:
-            training_data_key: String identifying the private data to use for this model. This key must contain
+            training_data_key: String identifying the private data to use for this model. This key must contain \
             LabeledData (see: [Data](../../Data))
         """
         labeled_data = self._private_data.get(training_data_key)
@@ -147,6 +147,6 @@ class DataNode:
 
         # Arguments:
             data: Data to predict
-            label: True values of data
+            labels: True values of data
         """
         return self._model.evaluate(data, labels)
