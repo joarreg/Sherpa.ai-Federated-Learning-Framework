@@ -8,10 +8,10 @@ class DeepLearningModel(TrainableModel):
     This class offers support for Keras and tensorflow models.
 
     # Arguments:
-        model: compiled model, ready to train
+        model: Compiled model, ready to train
         batch_size: batch_size to apply
-        epochs: number of epochs
-        initialized: Indicates if the model is initialized or not (default False)
+        epochs: Number of epochs
+        initialized: Indicates whether the model is initialized or not (default False)
     """
     def __init__(self, model, batch_size=None, epochs=1, initialized=False):
         if not initialized:

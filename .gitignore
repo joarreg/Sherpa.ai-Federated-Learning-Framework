@@ -9,3 +9,4 @@ documentation/sources/*
 documentation/site/*
 venv/*
 notebooks/data/*
+test_git_ignored/*
