@@ -5,7 +5,7 @@ import tensorflow as tf
 
 class DeepLearningModel(TrainableModel):
     """
-    This class offers support for Keras and tensorflow models.
+    This class offers support for Keras and tensorflow models. It implements [TrainableModel](../Model/#trainablemodel-class)
 
     # Arguments:
         model: Compiled model, ready to train
@@ -32,13 +32,11 @@ class DeepLearningModel(TrainableModel):
 
     def train(self, data, labels):
         """
-        Method for train the model
+        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
 
-        Arguments:
-            data: matrix
-                Data with shape NxD (N: Number of elements; D: Dimensions)
-            labels: int matrix
-                Labels for data with One Hot Encoded format.
+        # Arguments
+            data: Data with shape NxD (N: Number of elements; D: Dimensions)
+            labels: Labels for data with One Hot Encoded format.
         """
         self._check_data(data)
         self._check_labels(labels)
@@ -49,11 +47,10 @@ class DeepLearningModel(TrainableModel):
 
     def predict(self, data):
         """
-        Method for train the model
+        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
 
         Arguments:
-            data: matrix
-                Data with shape NxD (N: Number of elements; D: Dimensions)
+            data: Data with shape NxD (N: Number of elements; D: Dimensions)
         """
         self._check_data(data)
 
@@ -61,13 +58,11 @@ class DeepLearningModel(TrainableModel):
 
     def evaluate(self, data, labels):
         """
-        Method for evaluate the model
+        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
 
         Arguments:
-            data: matrix
-                Data with shape NxD (N: Number of elements; D: Dimensions)
-            labels: int matrix
-                Labels for data with One Hot Encoded format.
+            data: Data with shape NxD (N: Number of elements; D: Dimensions)
+            labels: Labels for data with One Hot Encoded format.
         """
         self._check_data(data)
         self._check_labels(labels)
@@ -75,17 +70,29 @@ class DeepLearningModel(TrainableModel):
         return self._model.evaluate(data, labels, verbose=0)
 
     def get_model_params(self):
+        """
+        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        """
         return self._model.get_weights()
 
     def set_model_params(self, params):
+        """
+        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        """
         self._model.set_weights(params)
 
     def _check_data(self, data):
+        """
+        Method that checks if the data dimension if correct.
+        """
         if data.shape[1:] != self._data_shape:
             raise AssertionError("Data need to have the same shape described by the model " + str(self._data_shape) +
                                  " .Current data has shape " + str(data.shape[1:]))
 
     def _check_labels(self, labels):
+        """
+        Method that checks if the labels dimension if correct.
+        """
         if labels.shape[1:] != self._labels_shape:
             raise AssertionError("Labels need to have the same shape described by the model " + str(self._labels_shape)
                                  + " .Current data has shape " + str(labels.shape[1:]))
