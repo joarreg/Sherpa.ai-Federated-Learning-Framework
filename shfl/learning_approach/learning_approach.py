@@ -32,5 +32,10 @@ class LearningApproach(abc.ABC):
     @abc.abstractmethod
     def run_rounds(self, n, test_data, test_label):
         """
-        Run one more round beggining in the actual state
+        Run one more round begining in the actual state
+
+        # Arguments:
+            n: number of rounds
+            test_data: test dataset
+            test_label: corresponding labels to test dataset
         """
