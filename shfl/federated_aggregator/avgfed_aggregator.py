@@ -16,6 +16,9 @@ class AvgFedAggregator(FederatedAggregator):
 
         # Returns
             aggregated_weights: aggregator weights representing the global learning model
+
+        # References
+            [Communication-Efficient Learning of Deep Networks from Decentralized Data](https://arxiv.org/abs/1602.05629)
         """
 
         clients_params_array = np.array(clients_params)
