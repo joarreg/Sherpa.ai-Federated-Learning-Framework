@@ -5,6 +5,7 @@ class FederatedGovernment(LearningApproach):
     """
     Class used to represent Federated Government.
     """
+
     def evaluate_global_model(self, data_test, label_test):
         """
         Evaluation of the performance of the global model.
@@ -33,9 +34,12 @@ class FederatedGovernment(LearningApproach):
         """
         for data_node in self._federated_data:
             # Predict local model in test
-            evaluation = data_node.evaluate(data_test, label_test)
-
-            print("Test performance client " + str(data_node) + ": " + str(evaluation))
+            evaluation, local_evaluation = data_node.evaluate(data_test, label_test)
+            if local_evaluation is not None:
+                print("Performance client " + str(data_node) + ": Global test: " + str(evaluation)
+                     + ", Local test: " + str(local_evaluation))
+            else:
+                print("Test performance client " + str(data_node) + ": " + str(evaluation))
 
     def train_all_clients(self):
         """
@@ -59,7 +63,12 @@ class FederatedGovernment(LearningApproach):
 
     def run_rounds(self, n, test_data, test_label):
         """
+<<<<<<< HEAD
         Implementation of the abstract method of class [Learning Approach](../Learning Approach/#learningapproach-class)
+=======
+        Run one more round beginning in the actual state testing in test data and federated_local_test.
+
+>>>>>>> e9f3dc1491ce33fffdc5438857e2f2599418f25a
         """
         for i in range(0, n):
             print("Accuracy round " + str(i))

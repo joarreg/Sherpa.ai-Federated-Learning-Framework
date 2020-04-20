@@ -14,6 +14,13 @@ def test_private_data():
     data_node.private_data
 
 
+def test_private_test_data():
+    random_array = np.random.rand(30)
+    data_node = DataNode()
+    data_node.set_private_test_data("random_array_test", random_array)
+    data_node.private_test_data
+
+
 def test_query_private_data():
     random_array = np.random.rand(30)
     data_node = DataNode()
