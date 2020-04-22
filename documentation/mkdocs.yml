@@ -7,18 +7,20 @@ plugins:
   - mkdocstrings
 nav:
   - Home: index.md
+  - Getting started: getting-started.md
   - Private:
-      - DataNode: Private/DataNode.md
-      - Data: Private/Data.md
-      - Query: Private/Query.md
-      - Federated Operation: Private/Federated Operation.md
-  - Databases: Databases.md
-  - Data Distribution: Data Distribution.md
-  - Model: Model.md
-  - Federated Aggregator: Federated Aggregator.md
-  - Learning Approach: Learning Approach.md
+      - Overview: private/overview.md
+      - DataNode: private/data_node.md
+      - Data: private/data.md
+      - Query: private/query.md
+      - Federated Operation: private/federated_operation.md
+  - Databases: databases.md
+  - Data Distribution: data_distribution.md
+  - Model: model.md
+  - Federated Aggregator: federated_aggregator.md
+  - Learning Approach: learning_approach.md
   - Differential Privacy:
-      - Mechanisms: Differential privacy/Mechanisms.md
-      - Sensitivity Sampler: Differential privacy/Sensitivity Sampler.md
-      - Norm: Differential privacy/Norm.md
-      - Probability Distribution: Differential privacy/Probability Distribution.md
+      - Mechanisms: differential_privacy/mechanisms.md
+      - Sensitivity Sampler: differential_privacy/sensitivity_sampler.md
+      - Norm: differential_privacy/norm.md
+      - Probability Distribution: differential_privacy/probability_distribution.md

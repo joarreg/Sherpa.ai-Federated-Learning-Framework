@@ -20,9 +20,9 @@ class SensitivitySampler:
         One of m or gamma must be provided.
 
         # Arguments
-            query: Function to apply over private data (see: [Query](../../Query))
+            query: Function to apply over private data (see: [Query](../../private/query))
             sensitivity_norm: Function to compute the sensitivity norm
-                (see: [Norm](../Norm))
+                (see: [Norm](../norm))
             oracle: ProbabilityDistribution to sample.
             n: int for size of private data
             m: int for size of sampling

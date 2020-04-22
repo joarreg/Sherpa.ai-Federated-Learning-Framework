@@ -109,13 +109,13 @@ class LaplaceMechanism(DataAccessDefinition):
     In order to apply this mechanism for a particular value of epsilon, we need to compute
     the sensitivity, which might be hard to compute in practice. The framework provides
     a method to estimate the sensitivity of a query that maps the private data in a normed space
-    (see: [SensitivitySampler](../Sensitivity Sampler))
+    (see: [SensitivitySampler](../sensitivity_sampler))
 
     # Arguments:
         sensitivity: float representing sensitivity of the applied query
         epsilon: float for the epsilon you want to apply
-        query: Function to apply over private data (see: [Query](../../Private/Query)). This parameter is optional and \
-            the identity function (see: [IdentityFunction](../../Private/Query/#identityfunction-class)) will be used \
+        query: Function to apply over private data (see: [Query](../../private/query)). This parameter is optional and \
+            the identity function (see: [IdentityFunction](../../private/query/#identityfunction-class)) will be used \
             if it is not provided.
 
     # References

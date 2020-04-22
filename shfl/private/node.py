@@ -12,7 +12,7 @@ class DataNode:
     before query it or an exception will be raised. A method to transform private data is also provided. This is
     a mechanism that allows data preprocessing or related task over data.
 
-    A model (see: [Model](../../Model)) can be deployed in the DataNode and use private data
+    A model (see: [Model](../../model)) can be deployed in the DataNode and use private data
     in order to learn. It is assumed that a model is represented by its parameters and the access to this parameters
     must be also configured before queries.
     """
@@ -68,7 +68,7 @@ class DataNode:
 
         # Arguments:
             name: String with the key identifier for the data
-            data_access_definition: Policy to access data (see: [DataAccessDefinition](../DataAccessDefinition))
+            data_access_definition: Policy to access data (see: [DataAccessDefinition](../data/#dataaccessdefinition))
         """
         self._private_data_access_policies[name] = copy.deepcopy(data_access_definition)
 
@@ -77,17 +77,17 @@ class DataNode:
         Adds a DataAccessDefinition for model parameters.
 
         # Arguments:
-            data_access_definition: Policy to access parameters (see: [DataAccessDefinition](../DataAccessDefinition))
+            data_access_definition: Policy to access parameters (see: [DataAccessDefinition](../data/#dataaccessdefinition))
         """
         self._model_access_policy = copy.deepcopy(data_access_definition)
 
     def apply_data_transformation(self, private_property, federated_transformation):
         """
-        Executes FederatedTransformation (see: [Federated Operation](../Federated Operation)) over private date.
+        Executes FederatedTransformation (see: [Federated Operation](../federated_operation)) over private date.
 
         # Arguments:
             name: String with the key identifier for the data
-            federated_transformation: Operation to execute (see: [Federated Operation](../Federated Operation))
+            federated_transformation: Operation to execute (see: [Federated Operation](../federated_operation))
         """
         federated_transformation.apply(self._private_data[private_property])
 
@@ -124,8 +124,8 @@ class DataNode:
         Train the model that has been previously set in the data node
 
         # Arguments:
-            training_data_key: String identifying the private data to use for this model. This key must contain
-            LabeledData (see: [Data](../../Data))
+            training_data_key: String identifying the private data to use for this model. This key must contain \
+            LabeledData (see: [LabeledData](../data/#labeleddata))
         """
         labeled_data = self._private_data.get(training_data_key)
         if not hasattr(labeled_data, 'data') or not hasattr(labeled_data, 'label'):

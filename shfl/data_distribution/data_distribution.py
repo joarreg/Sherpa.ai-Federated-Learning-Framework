@@ -12,7 +12,7 @@ class DataDistribution(abc.ABC):
     Abstract class for data distribution
 
     # Arguments:
-        database: Database to distribute. (see: [Databases](../../Databases))
+        database: Database to distribute. (see: [Databases](../../databases))
     """
 
     def __init__(self, database):

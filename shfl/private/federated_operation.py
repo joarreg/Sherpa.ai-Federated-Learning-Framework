@@ -4,7 +4,7 @@ from shfl.private.node import DataNode
 
 class FederatedDataNode(DataNode):
     """
-    This class represents a [DataNode](../DataNode) in a FederatedData. Extends DataNode allowing
+    This class represents a [DataNode](../data_node) in a FederatedData. Extends DataNode allowing
     calls to methods without explicit private data identifier, assuming access to the federated data.
 
     # Arguments:
@@ -87,7 +87,7 @@ class FederatedData:
         Creates the same policy to access data over all the data nodes
 
         # Arguments:
-            data_access_definition: (see: [DataAccessDefinition](../Data/#dataaccessdefinition))
+            data_access_definition: (see: [DataAccessDefinition](../data/#dataaccessdefinition))
         """
         for data_node in self._data_nodes:
             data_node.configure_data_access(data_access_definition)

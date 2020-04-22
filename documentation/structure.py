@@ -16,7 +16,7 @@ from shfl import federated_aggregator
 
 PAGES = [
     {
-        'page': 'Private/DataNode.md',
+        'page': 'private/data_node.md',
         'classes': [
             private.node.DataNode
         ],
@@ -34,7 +34,7 @@ PAGES = [
         ],
     },
 {
-        'page': 'Private/Data.md',
+        'page': 'private/data.md',
         'classes': [
             private.data.DataAccessDefinition,
             private.data.UnprotectedAccess,
@@ -42,7 +42,7 @@ PAGES = [
         ]
     },
     {
-        'page': 'Private/Query.md',
+        'page': 'private/query.md',
         'classes': [
             (private.query.Query, ["get"]),
             private.query.IdentityFunction,
@@ -50,7 +50,7 @@ PAGES = [
         ]
     },
     {
-        'page': 'Private/Federated Operation.md',
+        'page': 'private/federated_operation.md',
         'classes': [
             (private.federated_operation.FederatedData, ["add_data_node", "num_nodes",
                                                          "configure_data_access", "query"]),
@@ -63,7 +63,7 @@ PAGES = [
         ]
     },
     {
-        'page': 'Databases.md',
+        'page': 'databases.md',
         'classes': [
             (data_base.data_base.DataBase, ["shuffle"]),
             data_base.emnist.Emnist,
@@ -75,7 +75,7 @@ PAGES = [
         ]
     },
     {
-        'page': 'Data Distribution.md',
+        'page': 'data_distribution.md',
         'classes': [
             (data_distribution.data_distribution.DataDistribution, ["get_federated_data", "make_data_federated"]),
             data_distribution.data_distribution_iid.IidDataDistribution,
@@ -83,14 +83,14 @@ PAGES = [
         ]
     },
     {
-        'page': 'Model.md',
+        'page': 'model.md',
         'classes': [
             (model.model.TrainableModel, ["train", "predict", "evaluate", "get_model_params", "set_model_params"]),
             model.deep_learning_model.DeepLearningModel
         ]
     },
     {
-        'page': 'Federated Aggregator.md',
+        'page': 'federated_aggregator.md',
         'classes': [
             (federated_aggregator.federated_aggregator.FederatedAggregator, ["aggregate_weights"]),
             federated_aggregator.avgfed_aggregator.AvgFedAggregator,
@@ -98,7 +98,7 @@ PAGES = [
         ]
     },
     {
-        'page': 'Learning Approach.md',
+        'page': 'learning_approach.md',
         'classes': [
             (learning_approach.learning_approach.LearningApproach, ["train_all_clients", "aggregate_weights",
                                                                     "run_rounds"]),
@@ -106,7 +106,7 @@ PAGES = [
         ]
     },
     {
-        'page': 'Differential privacy/Mechanisms.md',
+        'page': 'differential_privacy/mechanisms.md',
         'classes': [
             differential_privacy.dp_mechanism.RandomizedResponseCoins,
             differential_privacy.dp_mechanism.RandomizedResponseBinary,
@@ -114,7 +114,7 @@ PAGES = [
         ],
     },
     {
-        'page': 'Differential privacy/Sensitivity Sampler.md',
+        'page': 'differential_privacy/sensitivity_sampler.md',
         'classes': [
             differential_privacy.sensitivity_sampler.SensitivitySampler
         ],
@@ -123,14 +123,14 @@ PAGES = [
         ],
     },
     {
-        'page': 'Differential privacy/Norm.md',
+        'page': 'differential_privacy/norm.md',
         'classes': [
             (differential_privacy.norm.SensitivityNorm, ["compute"]),
             differential_privacy.norm.L1SensitivityNorm
         ],
     },
     {
-        'page': 'Differential privacy/Probability Distribution.md',
+        'page': 'differential_privacy/probability_distribution.md',
         'classes': [
             (differential_privacy.probability_distribution.ProbabilityDistribution, ["sample"]),
             differential_privacy.probability_distribution.NormalDistribution,
