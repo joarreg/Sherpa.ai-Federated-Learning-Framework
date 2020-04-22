@@ -91,7 +91,7 @@ class DataNode:
         Adds a DataAccessDefinition for some concrete private data.
 
         # Arguments:
-            name: String with the key identifier for the data
+            name: Identifier for the data that will be configured
             data_access_definition: Policy to access data (see: [DataAccessDefinition](../data/#dataaccessdefinition))
         """
         self._private_data_access_policies[name] = copy.deepcopy(data_access_definition)
@@ -110,7 +110,7 @@ class DataNode:
         Executes FederatedTransformation (see: [Federated Operation](../federated_operation)) over private data.
 
         # Arguments:
-            private_property: String with the key identifier for the data
+            private_property: Identifier for the data that will be transformed
             federated_transformation: Operation to execute (see: [Federated Operation](../federated_operation))
         """
         federated_transformation.apply(self._private_data[private_property])

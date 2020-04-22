@@ -3,7 +3,7 @@ from shfl.learning_approach.learning_approach import LearningApproach
 
 class FederatedGovernment(LearningApproach):
     """
-    Class used to represent Federated Government.
+    Class used to represent Federated Government. Implements LearningApproach.
     """
 
     def evaluate_global_model(self, data_test, label_test):
@@ -47,6 +47,11 @@ class FederatedGovernment(LearningApproach):
     def run_rounds(self, n, test_data, test_label):
         """
         Run one more round beginning in the actual state testing in test data and federated_local_test.
+
+        # Arguments:
+            n: Number of rounds
+            test_data: Test data for evaluation between rounds
+            test_label: Test label for evaluation between rounds
 
         """
         for i in range(0, n):
