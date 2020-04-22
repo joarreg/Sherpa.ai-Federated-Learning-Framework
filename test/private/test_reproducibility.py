@@ -4,6 +4,8 @@ import pytest
 
 
 def test_reproducibility():
+    Reproducibility.getInstance().delete_instance()
+
     seed = 1234
     Reproducibility(seed)
 
@@ -13,12 +15,20 @@ def test_reproducibility():
 
 
 def test_reproducibiliry_singleton():
+    Reproducibility.getInstance().delete_instance()
+
+    seed = 1234
+    Reproducibility(seed)
 
     with pytest.raises(Exception):
         Reproducibility()
 
 
 def test_set_seed():
+    Reproducibility.getInstance().delete_instance()
+
+    seed = 1234
+    Reproducibility(seed)
 
     id = 'ID0'
     Reproducibility.getInstance().set_seed(id)

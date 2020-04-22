@@ -40,8 +40,8 @@ class Reproducibility:
         Return:
             Singleton instance class
         """
-        # if Reproducibility.__instance == None:
-        #     Reproducibility()
+        if Reproducibility.__instance == None:
+            Reproducibility()
         return Reproducibility.__instance
 
     def __init__(self, seed=None):
@@ -54,7 +54,6 @@ class Reproducibility:
             self.__seed = seed
             self.__seeds = {'server': self.__seed}
             Reproducibility.__instance = self
-            Reproducibility._instance_test = self
 
             if self.__seed is not None:
                 self.set_seed('server')
@@ -78,5 +77,11 @@ class Reproducibility:
     @property
     def seeds(self):
         return self.__seeds
+
+    def delete_instance(self):
+        if Reproducibility.__instance != None:
+            del self.__seed
+            del self.__seeds
+            Reproducibility.__instance = None
 
 
