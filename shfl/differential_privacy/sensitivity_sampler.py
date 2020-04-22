@@ -6,7 +6,7 @@ from math import pow
 class SensitivitySampler:
     """
     This class implements the algorithm described in the article
-    Benjamin I. P. Rubinstein and Francesco Aldà. "Pain-Free Random Differential Privacy with Sensitivity Sampling",
+    Benjamin I. P. Rubinstein and Francesco Aldà "Pain-Free Random Differential Privacy with Sensitivity Sampling",
     accepted into the 34th International Conference on Machine Learning (ICML'2017), May 2017.
     It provides a method to estimate the sensitivity of a generic query using a concrete sensitivity norm.
 

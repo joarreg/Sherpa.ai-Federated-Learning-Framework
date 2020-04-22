@@ -26,10 +26,9 @@ class DataDistribution(abc.ABC):
             num_nodes: Number of nodes to create
             percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
             weights: Array of weights for weighted distribution (default is None)
-            mistaken: Number of mistaken clients
 
-        # Returns
-            federated_data, test_data, test_label
+        # Returns:
+              * **federated_data, test_data, test_label**
         """
 
         train_data, train_label = self._database.train
@@ -63,7 +62,7 @@ class DataDistribution(abc.ABC):
             percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
             weights: Array of weights for weighted distribution (default is None)
 
-        # Returns
+        # Returns:
             federated_data: Data for each client
-            federated_labels: Labels for each client
+            federated_label: Labels for each client
         """

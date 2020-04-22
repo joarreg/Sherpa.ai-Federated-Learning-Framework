@@ -6,9 +6,9 @@ class LearningApproach(abc.ABC):
     Abstract class Class used to represent a Learning Approach.
 
     # Arguments:
-        federated_data: Federated data to use. (see: [FederatedData](../../private/federated_operation/#federateddata-class))
         model_builder: Function that return a trainable model (see: [Model](../../model))
-        aggregator: federated aggregator function (see: [Federated Aggregator](../../federated_aggregator))
+        federated_data: Federated data to use. (see: [Private](../../private/federated_operation/#federateddata-class))
+        aggregator: Federated aggregator function (see: [Federated Aggregator](../../federated_aggregator))
     """
     def __init__(self, model_builder, federated_data, aggregator):
         self._federated_data = federated_data

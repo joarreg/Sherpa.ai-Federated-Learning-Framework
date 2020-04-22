@@ -4,13 +4,13 @@ import abc
 
 class ProbabilityDistribution(abc.ABC):
     """
-    Class representing interface for a probability distribution
+    Class representing the interface for a probability distribution
     """
 
     @abc.abstractmethod
     def sample(self, size):
         """
-        This method must returns an array with length "size", sampling the distribution
+        This method must return an array with length "size", sampling the distribution
 
         # Arguments:
             size: Size of the sampling
@@ -35,7 +35,7 @@ class NormalDistribution(ProbabilityDistribution):
 
 class GaussianMixture(ProbabilityDistribution):
     """
-    Implements combination of Normal Distributions
+    Implements the combination of Normal Distributions
 
     # Arguments:
         params: Array of arrays with mean and std for every gaussian distribution.

@@ -8,17 +8,18 @@ class DataNode:
     This class represents an independent data node.
 
     A DataNode has its own private data and provides methods
-    to initialize this data and access. The access to private data needs to be configured with an access policy
+    to initialize this data and access to it. The access to private data needs to be configured with an access policy
     before query it or an exception will be raised. A method to transform private data is also provided. This is
     a mechanism that allows data preprocessing or related task over data.
 
     A model (see: [Model](../../model)) can be deployed in the DataNode and use private data
-    in order to learn. It is assumed that a model is represented by its parameters and the access to this parameters
+    in order to learn. It is assumed that a model is represented by its parameters and the access to these parameters
     must be also configured before queries.
     """
 
     def __init__(self):
         self._private_data = {}
+        self._private_test_data = {}
         self._private_data_access_policies = {}
         self._model = None
         self._model_access_policy = UnprotectedAccess()
@@ -45,16 +46,28 @@ class DataNode:
         Allows to see data for this node, but you cannot retrieve data
 
         # Returns
-            private : test data
+            private : data
         """
         print("Node private data, you can see the data for debug purposes but the data remains in the node")
         print(type(self._private_data))
         print(self._private_data)
 
+    @property
+    def private_test_data(self):
+        """
+        Allows to see data for this node, but you cannot retrieve data
+
+        # Returns
+            private : test data
+        """
+        print("Node private test data, you can see the data for debug purposes but the data remains in the node")
+        print(type(self._private_test_data))
+        print(self._private_test_data)
+
     def set_private_data(self, name, data):
         """
         Creates copy of data in private memory using name as key. If there is a previous value with this key the
-        data will be override.
+        data will be overridden.
 
         # Arguments:
             name: String with the key identifier for the data
@@ -62,9 +75,20 @@ class DataNode:
         """
         self._private_data[name] = copy.deepcopy(data)
 
+    def set_private_test_data(self, name, data):
+        """
+        Creates copy of test data in private memory using name as key. If there is a previous value with this key the
+        data will be override.
+
+        # Arguments:
+            name: String with the key identifier for the data
+            data: Data to be stored in the private memory of the DataNode
+        """
+        self._private_test_data[name] = copy.deepcopy(data)
+
     def configure_data_access(self, name, data_access_definition):
         """
-        Adds a DataAccessDefinition for a concrete private data.
+        Adds a DataAccessDefinition for some concrete private data.
 
         # Arguments:
             name: String with the key identifier for the data
@@ -83,10 +107,10 @@ class DataNode:
 
     def apply_data_transformation(self, private_property, federated_transformation):
         """
-        Executes FederatedTransformation (see: [Federated Operation](../federated_operation)) over private date.
+        Executes FederatedTransformation (see: [Federated Operation](../federated_operation)) over private data.
 
         # Arguments:
-            name: String with the key identifier for the data
+            private_property: String with the key identifier for the data
             federated_transformation: Operation to execute (see: [Federated Operation](../federated_operation))
         """
         federated_transformation.apply(self._private_data[private_property])
@@ -96,7 +120,7 @@ class DataNode:
         Queries private data previously configured. If the access didn't configured this method will raise exception
 
         # Arguments:
-            name: String with the key identifier for the data
+            private_property: String with the key identifier for the data
         """
         if private_property not in self._private_data_access_policies:
             raise ValueError("Data access must be configured before query data")
@@ -147,6 +171,13 @@ class DataNode:
 
         # Arguments:
             data: Data to predict
-            label: True values of data
+            labels: True values of data
         """
         return self._model.evaluate(data, labels)
+
+    def local_evaluate(self, data_key):
+        if bool(self._private_test_data):
+            labeled_data = self._private_test_data.get(data_key)
+            return self._model.evaluate(labeled_data.data, labeled_data.label)
+        else:
+            return None

@@ -39,7 +39,7 @@ class DataBase(abc.ABC):
     Load method should save data in the protected Attributes:
 
     # Attributes:
-        _train_data, _train_labels, _validation_data, _validation_labels, _test_data, _test_labels
+        * **_train_data, _train_labels, _validation_data, _validation_labels, _test_data, _test_labels**
 
     # Properties:
         train: Returns train data and labels

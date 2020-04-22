@@ -4,8 +4,8 @@ import abc
 
 class Query(abc.ABC):
     """
-    This class represents a query over private data. This interface expose a method receiving
-    data and must return a result function of this input.
+    This class represents a query over private data. This interface exposes a method receiving
+    data and must return a result based on this input.
     """
 
     @abc.abstractmethod

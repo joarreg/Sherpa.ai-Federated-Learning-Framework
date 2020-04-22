@@ -1,10 +1,11 @@
 import numpy as np
 import pytest
+from keras.utils import to_categorical
 
 import shfl.private.federated_operation
 from shfl.private.federated_operation import FederatedTransformation
 from shfl.private.federated_operation import FederatedData
-from shfl.private.data import UnprotectedAccess
+from shfl.private.data import UnprotectedAccess, LabeledData
 
 
 class TestTransformation(FederatedTransformation):
@@ -71,3 +72,23 @@ def test_federated_data_identifier():
     federated_data.configure_data_access(UnprotectedAccess())
     with pytest.raises(ValueError):
         federated_data[0].query("bad_identifier_federated_data")
+
+
+def test_split_train_test():
+    num_nodes = 10
+    data = np.random.rand(10,num_nodes)
+    label = np.random.randint(range(0, 10), num_nodes)
+
+    federated_data = FederatedData()
+    for idx in range(num_nodes):
+        federated_data.add_data_node(LabeledData(data[idx], to_categorical(label[idx])))
+
+    federated_data.configure_data_access(UnprotectedAccess())
+    raw_federated_data = federated_data
+
+    shfl.private.federated_operation.split_train_test(federated_data)
+
+    for raw_node, split_node in zip(raw_federated_data, federated_data):
+        raw_node.split_train_test()
+        assert raw_node.private_data == split_node.private_data
+        assert raw_node.private_test_data == split_node.private_test_data

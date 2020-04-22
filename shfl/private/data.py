@@ -32,7 +32,7 @@ class LabeledData:
 
 class DataAccessDefinition(abc.ABC):
     """
-    Interface to implement in order to define how private data can be accessed.
+    Interface that must be implemented in order to define how to access the private data.
     """
 
     @abc.abstractmethod
