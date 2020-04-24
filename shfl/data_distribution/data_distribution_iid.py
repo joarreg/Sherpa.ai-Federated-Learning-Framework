@@ -5,12 +5,25 @@ from shfl.data_distribution.data_distribution import DataDistribution
 
 class IidDataDistribution(DataDistribution):
     """
-    Implementation of an independent and identically distributed data distribution
+    Implementation of an independent and identically distributed data distribution using \
+        [Data Distribution](../Data Distribution)
     """
 
-    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling = "without_sampling"):
+    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling="without_sampling"):
         """
         Method that makes data and labels argument federated in an iid scenario.
+
+        # Arguments:
+            data: Data to federate
+            labels: Labels to federate
+            num_nodes: Number of nodes to create
+            percent: Percent of the data (between 0 and 100) to be distributed
+            weights: Array of weights for weighted distribution
+            sampling: methodology between with or without sampling (default "without_sampling")
+
+        # Returns:
+              * **federated_data, federated_labels**
+
         """
         if weights is None:
             weights = np.full(num_nodes, 1/num_nodes)
