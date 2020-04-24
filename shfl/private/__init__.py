@@ -13,5 +13,5 @@ from shfl.private.node import DataNode
 from shfl.private.query import Query
 from shfl.private.query import Mean
 from shfl.private.query import IdentityFunction
-
+from shfl.private.reproducibility import Reproducibility
 
