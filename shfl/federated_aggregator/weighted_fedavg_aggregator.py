@@ -5,7 +5,7 @@ from shfl.federated_aggregator.federated_aggregator import FederatedAggregator
 
 class WeightedFedAvgAggregator(FederatedAggregator):
     """
-    Implementation of Average Federated Aggregator. The aggregation of the parameters is based in the number of data \
+    Implementation of Weighted Federated Avegaring Aggregator. The aggregation of the parameters is based in the number of data \
     in every node.
 
     It implements [Federated Aggregator](../Federated Aggregator)

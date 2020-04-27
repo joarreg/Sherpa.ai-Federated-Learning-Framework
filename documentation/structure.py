@@ -93,8 +93,8 @@ PAGES = [
         'page': 'Federated Aggregator.md',
         'classes': [
             (federated_aggregator.federated_aggregator.FederatedAggregator, ["aggregate_weights"]),
-            federated_aggregator.fedavg_aggregator.AvgFedAggregator,
-            federated_aggregator.weighted_fedavg_aggregator.WeightedAvgFedAggregator
+            federated_aggregator.fedavg_aggregator.FedAvgAggregator,
+            federated_aggregator.weighted_fedavg_aggregator.WeightedFedAvgAggregator
         ]
     },
     {
