@@ -3,5 +3,5 @@ from __future__ import division
 from __future__ import print_function
 
 from shfl.federated_aggregator.federated_aggregator import FederatedAggregator
-from shfl.federated_aggregator.avgfed_aggregator import AvgFedAggregator
-from shfl.federated_aggregator.weighted_avgfed_aggregator import WeightedAvgFedAggregator
+from shfl.federated_aggregator.fedavg_aggregator import AvgFedAggregator
+from shfl.federated_aggregator.weighted_fedavg_aggregator import WeightedAvgFedAggregator
