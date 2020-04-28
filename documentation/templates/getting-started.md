@@ -7,6 +7,9 @@ create and evaluate different aspects of this kind of algorithms with minimum co
 The main big topics covered at the moment in the framework are federated learning and differential privacy. This 
 techniques can be used together in order to increase the privacy of a federated learning algorithm. 
 
+We have also develop a set of notebooks covering some of the most common use cases and explaining methodological 
+aspects over different aspects. The full list of notebooks is [here](https://github.com/sherpaai/Sherpa.FL/tree/master/notebooks)
+
 Even if are mainly interested in differential privacy a good point to start with Sherpa.FL is to follow the following 
 [notebook](https://github.com/sherpaai/Sherpa.FL/blob/master/notebooks/basic_concepts.ipynb) where are explained the 
 main concepts that are used all the time in the tutorials and in the documentation.

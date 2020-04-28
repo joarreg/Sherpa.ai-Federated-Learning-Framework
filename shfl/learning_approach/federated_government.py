@@ -3,18 +3,35 @@ from shfl.learning_approach.learning_approach import LearningApproach
 
 class FederatedGovernment(LearningApproach):
     """
-    Class used to represent Federated Government. Implements LearningApproach.
+    Class used to represent Federated Government (see: [Learning Approach](../learning_approach))).
     """
 
     def evaluate_global_model(self, data_test, label_test):
+        """
+        Evaluation of the performance of the global model.
+
+        # Arguments:
+            test_data: test dataset
+            test_label: corresponding labels to test dataset
+        """
         evaluation = self._model.evaluate(data_test, label_test)
         print("Global model test performance : " + str(evaluation))
 
     def deploy_central_model(self):
+        """
+        Deployment of the global learning model to each client (node) in the simulation.
+        """
         for data_node in self._federated_data:
             data_node.set_model_params(self._model.get_model_params())
 
     def evaluate_clients(self, data_test, label_test):
+        """
+        Evaluation of local learning models over global test dataset.
+
+        # Arguments:
+            test_data: test dataset
+            test_label: corresponding labels to test dataset
+        """
         for data_node in self._federated_data:
             # Predict local model in test
             evaluation, local_evaluation = data_node.evaluate(data_test, label_test)
@@ -26,14 +43,14 @@ class FederatedGovernment(LearningApproach):
 
     def train_all_clients(self):
         """
-        Initialize the models of each client and train them
+        Implementation of the abstract method of class [Learning Approach](../learning_approach/#learningapproach-class)
         """
         for data_node in self._federated_data:
             data_node.train_model()
 
     def aggregate_weights(self):
         """
-        Calculate aggregated weights and update clients and server models
+        Implementation of the abstract method of class [Learning Approach](../Learning Approach/#learningapproach-class)
         """
         weights = []
         for data_node in self._federated_data:
@@ -46,6 +63,8 @@ class FederatedGovernment(LearningApproach):
 
     def run_rounds(self, n, test_data, test_label):
         """
+        Implementation of the abstract method of class [Learning Approach](../Learning Approach/#learningapproach-class)
+
         Run one more round beginning in the actual state testing in test data and federated_local_test.
 
         # Arguments:

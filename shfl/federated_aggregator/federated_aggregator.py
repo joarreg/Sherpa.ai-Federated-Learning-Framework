@@ -3,10 +3,10 @@ import abc
 
 class FederatedAggregator(abc.ABC):
     """
-    Interface for Federated Aggregator
+    Interface for Federated Aggregator.
 
     # Arguments:
-        percentage: Percentage of total data in each client
+        percentage: Percentage of total data in each client (default None)
     """
 
     def __init__(self, percentage=None):
@@ -18,8 +18,7 @@ class FederatedAggregator(abc.ABC):
         Abstract method that aggregates the weights of the client models.
 
         # Arguments:
-            clients_params: Parameters from each client
-
+            clients_params: Params that represents local clients learning models.
         # Returns:
             aggregated_weights: Aggregated weights
         """
