@@ -1,6 +1,6 @@
 import numpy as np
 
-from shfl.federated_aggregator.weighted_avgfed_aggregator import WeightedAvgFedAggregator
+from shfl.federated_aggregator.weighted_fedavg_aggregator import WeightedFedAvgAggregator
 
 
 def test_aggregated_weights():
@@ -16,7 +16,7 @@ def test_aggregated_weights():
 
     percentage = np.random.dirichlet(np.ones(num_clients),size=1)[0]
 
-    avgfa = WeightedAvgFedAggregator(percentage=percentage)
+    avgfa = WeightedFedAvgAggregator(percentage=percentage)
     aggregated_weights = avgfa.aggregate_weights(clients_params)
 
     own_ponderated_weights = np.array([percentage[client] * clients_params[client, :] for client in range(num_clients)])

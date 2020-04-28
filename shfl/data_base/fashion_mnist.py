@@ -6,7 +6,10 @@ from shfl.data_base.data_base import DataBase
 
 class FashionMnist(DataBase):
     """
-    Implementation for load FASHION-EMNIST data
+    Implementation for load FASHION-MNIST data
+
+    # References
+        [FASHION-MNIST dataset](https://keras.io/datasets/#fashion-mnist-database-of-fashion-articles)
     """
     def __init__(self):
         super(FashionMnist, self).__init__()

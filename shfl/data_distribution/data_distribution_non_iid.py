@@ -6,24 +6,20 @@ from shfl.data_distribution.data_distribution import DataDistribution
 
 class NonIidDataDistribution(DataDistribution):
     """
-    Implementation of a non-independent and identically distributed data distribution
+    Implementation of a non-independent and identically distributed data distribution using \
+        [Data Distribution](../Data Distribution)
     """
 
     def choose_labels(self, num_nodes, total_labels):
         """
         Method that randomly choose labels used for each client in non-iid scenario.
 
-        Parameters
-        ----------
-        num_nodes: int
-            Number of nodes
-        total_labels: int
-            Number of labels
+        # Arguments:
+            num_nodes: Number of nodes
+            total_labels: Number of labels
 
-        Return
-        ------
-        labels_to_use: array
-            labels for each client
+        # Returns
+            labels_to_use
         """
 
         random_labels = []
@@ -48,6 +44,16 @@ class NonIidDataDistribution(DataDistribution):
     def make_data_federated(self, data, labels, num_nodes, percent, weights):
         """
         Method that makes data and labels argument federated in a non-iid scenario.
+
+        # Arguments:
+            data: Data to federate
+            labels: Labels to federate
+            num_nodes: Number of nodes to create
+            percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
+            weights: Array of weights for weighted distribution (default is None)
+
+        # Returns:
+              * **federated_data, federated_labels**
         """
         if weights is None:
             weights = np.full(num_nodes, 1/num_nodes)

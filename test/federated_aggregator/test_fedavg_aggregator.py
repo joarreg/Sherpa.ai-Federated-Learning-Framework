@@ -1,6 +1,6 @@
 import numpy as np
 
-from shfl.federated_aggregator.avgfed_aggregator import AvgFedAggregator
+from shfl.federated_aggregator.fedavg_aggregator import FedAvgAggregator
 
 
 def test_aggregated_weights():
@@ -14,7 +14,7 @@ def test_aggregated_weights():
 
     clients_params = np.array(weights)
 
-    avgfa = AvgFedAggregator()
+    avgfa = FedAvgAggregator()
     aggregated_weights = avgfa.aggregate_weights(clients_params)
 
     own_agg = np.array([np.mean(clients_params[:, layer], axis=0) for layer in range(num_layers)])
