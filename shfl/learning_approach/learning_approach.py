@@ -7,7 +7,7 @@ class LearningApproach(abc.ABC):
 
     # Arguments:
         model_builder: Function that return a trainable model (see: [Model](../../model))
-        federated_data: Federated data to use. (see: [Private](../../private/federated_operation/#federateddata-class))
+        federated_data: Federated data to use. (see: [FederatedData](../../private/federated_operation/#federateddata-class))
         aggregator: Federated aggregator function (see: [Federated Aggregator](../../federated_aggregator))
     """
     def __init__(self, model_builder, federated_data, aggregator):

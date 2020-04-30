@@ -6,8 +6,8 @@ Machine Learning-based services and products in the industry are built over conv
 In any case we are covering a huge range of models, including support for some popular deep learning frameworks. Of 
 course, if you want to use your own model, the framework is easily extensible.
 
-[TrainableModel](../#trainablemodel-clas) is the abstract class that every model has to implement in order to interact 
-with all the pieces of the framework. [DeepLearningModel](../#deeplearningmodel-class) is a predefined model that takes 
+[TrainableModel](./#trainablemodel-class) is the abstract class that every model has to implement in order to interact 
+with all the pieces of the framework. [DeepLearningModel](./#deeplearningmodel-class) is a predefined model that takes 
 a compiled keras or tensorflow model. If you want to define your own model only need to implement a class with methods 
 defined by TrainableModel. 
 
