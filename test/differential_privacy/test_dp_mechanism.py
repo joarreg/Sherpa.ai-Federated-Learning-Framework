@@ -3,49 +3,13 @@ import pytest
 
 import shfl
 from shfl.private import DataNode
-from shfl.private.data import UnprotectedAccess
 from shfl.differential_privacy.dp_mechanism import RandomizedResponseBinary
 from shfl.differential_privacy.dp_mechanism import RandomizedResponseCoins
 from shfl.differential_privacy.dp_mechanism import LaplaceMechanism
 from shfl.differential_privacy.dp_mechanism import ExponentialMechanism
 from shfl.differential_privacy.dp_mechanism import GaussianMechanism
-from shfl.differential_privacy.dp_mechanism import ExceededPrivacyBudgetError
-from shfl.differential_privacy.dp_mechanism import AdaptiveDifferentialPrivacy
+from shfl.differential_privacy.composition_dp import AdaptiveDifferentialPrivacy
 from shfl.differential_privacy.probability_distribution import NormalDistribution
-
-
-def test_exception__budget():
-    exception = ExceededPrivacyBudgetError(epsilon_delta=1)
-    assert str(exception) is not None
-
-
-def test_exception_exceeded_privacy_budget_error():
-    scalar = 175
-
-    data_access_definition = AdaptiveDifferentialPrivacy(epsilon_delta=(1, 0),
-                                                         default_access_definition=GaussianMechanism(1,
-                                                                                                     epsilon_delta=(0.1,
-                                                                                                                    1)))
-    node = DataNode()
-    node.set_private_data("scalar", scalar)
-    node.configure_data_access("scalar", data_access_definition)
-
-    with pytest.raises(ExceededPrivacyBudgetError):
-        node.query("scalar")
-
-
-def test_constructor_bad_params():
-    with pytest.raises(ValueError):
-        AdaptiveDifferentialPrivacy(epsilon_delta=(1, 2, 3))
-
-    with pytest.raises(ValueError):
-        AdaptiveDifferentialPrivacy(epsilon_delta=(-1, 2))
-
-    with pytest.raises(ValueError):
-        AdaptiveDifferentialPrivacy(epsilon_delta=(1, -2))
-
-    with pytest.raises(ValueError):
-        AdaptiveDifferentialPrivacy(epsilon_delta=(1, 1), default_access_definition=UnprotectedAccess())
 
 
 def test_get_epsilon_delta():
@@ -53,63 +17,6 @@ def test_get_epsilon_delta():
     data_access_definition = AdaptiveDifferentialPrivacy(epsilon_delta=e_d)
 
     assert data_access_definition.epsilon_delta == e_d
-
-
-def test_configure_data_access():
-    data_access_definition = AdaptiveDifferentialPrivacy(epsilon_delta=(1, 1))
-    data_node = DataNode()
-    data_node.set_private_data("test", np.array(range(10)))
-    with pytest.raises(ValueError):
-        data_node.configure_data_access("test", data_access_definition)
-        data_node.query("test")
-
-
-def test_data_access():
-    data_access_definition = AdaptiveDifferentialPrivacy(epsilon_delta=(1, 1))
-    data_node = DataNode()
-    array = np.array(range(10))
-    data_node.set_private_data("test", array)
-
-    data_node.configure_data_access("test", data_access_definition)
-    query_result = data_node.query("test", data_access_definition=GaussianMechanism(1, epsilon_delta=(0.1, 1)))
-
-    assert query_result is not None
-
-
-def test_exception_no_access_definition():
-    data_access_definition = AdaptiveDifferentialPrivacy(epsilon_delta=(1, 1))
-    data_node = DataNode()
-    array = np.array(range(10))
-    data_node.set_private_data("test", array)
-
-    data_node.configure_data_access("test", data_access_definition)
-    with pytest.raises(ValueError):
-        data_node.query("test")
-
-
-def test_exception_budget():
-    data_access_definition = AdaptiveDifferentialPrivacy(epsilon_delta=(1, 1),
-                                                         default_access_definition=GaussianMechanism(1, epsilon_delta=(0.1, 1)))
-    data_node = DataNode()
-    array = np.array(range(10))
-    data_node.set_private_data("test", array)
-
-    data_node.configure_data_access("test", data_access_definition)
-    with pytest.raises(ExceededPrivacyBudgetError):
-        for i in range(1, 1000):
-            data_node.query("test")
-
-
-def test_exception_budget_2():
-    data_access_definition = AdaptiveDifferentialPrivacy(epsilon_delta=(1, 0.001))
-    data_node = DataNode()
-    array = np.array(range(10))
-    data_node.set_private_data("test", array)
-
-    data_node.configure_data_access("test", data_access_definition)
-    with pytest.raises(ExceededPrivacyBudgetError):
-        for i in range(1, 1000):
-            data_node.query("test", data_access_definition=GaussianMechanism(1, epsilon_delta=(0.1, 1)))
 
 
 def test_randomize_binary_mechanism_coins():
