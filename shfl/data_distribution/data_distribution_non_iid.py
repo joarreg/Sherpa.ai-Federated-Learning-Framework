@@ -41,7 +41,7 @@ class NonIidDataDistribution(DataDistribution):
 
         return random_labels
 
-    def make_data_federated(self, data, labels, num_nodes, percent, weights):
+    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling="without_replacement"):
         """
         Method that makes data and labels argument federated in a non-iid scenario.
 
@@ -51,6 +51,7 @@ class NonIidDataDistribution(DataDistribution):
             num_nodes: Number of nodes to create
             percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
             weights: Array of weights for weighted distribution (default is None)
+            sampling: methodology between with or without sampling (default "without_sampling")
 
         # Returns:
               * **federated_data, federated_labels**
