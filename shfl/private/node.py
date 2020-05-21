@@ -1,6 +1,37 @@
 import copy
 
 from shfl.private.data import UnprotectedAccess
+from math import log, sqrt, exp
+
+
+class ExceededPrivacyBudgetError(Exception):
+    """
+    This Exception is expected to be used when a certain privacy budget is exceed. 
+    When it is used, it means that the data cannot be accessed anymore
+
+    # Arguments:
+        message: this text is shown in addition to the exception text
+        epsilon_delta: the privacy budget which has been surpassed
+    """
+    
+    def __init__(self, **args):
+        self._epsilon_delta = None
+        self._property = None
+        if args:
+            if "epsilon_delta" in args:
+                self._epsilon_delta = args["epsilon_delta"]
+            if "property" in args:
+                self._property = args["property"]
+
+    def __str__(self):
+        if self._epsilon_delta and self._property:
+            return 'Error: Privacy Budget {} has been exceeded for property {}'.format(self._epsilon_delta, self._property)
+        elif self._epsilon_delta:
+            return 'Error: Privacy Budget {} has been exceeded'.format(self._epsilon_delta)
+        elif self._property:
+            return 'Error: Privacy Budget has been exceeded for property {}'.format(self._property)
+        else:
+            return 'Error: Privacy Budget has been exceeded'
 
 
 class DataNode:
@@ -10,20 +41,88 @@ class DataNode:
     A DataNode has its own private data and provides methods
     to initialize this data and access to it. The access to private data needs to be configured with an access policy
     before query it or an exception will be raised. A method to transform private data is also provided. This is
-    a mechanism that allows data preprocessing or related task over data.
+    a mechanism that allows data preprocessing or related task over data. 
+    
+    It supports Adaptive Differential Privacy through Privacy Filters
 
     A model (see: [Model](../../model)) can be deployed in the DataNode and use private data
     in order to learn. It is assumed that a model is represented by its parameters and the access to these parameters
     must be also configured before queries.
+    
+    # Arguments:
+        epsilon_delta: Tuple or array of length 2 which contains the epsilon-delta privacy budget for this data
+
     """
 
-    def __init__(self):
+    def __init__(self, epsilon_delta=None):
         self._private_data = {}
         self._private_test_data = {}
         self._private_data_access_policies = {}
+        self._private_data_epsilon_delta_access_history = {}
         self._model = None
         self._model_access_policy = UnprotectedAccess()
+        self._epsilon_delta = None
+        if epsilon_delta is not None:
+            if len(epsilon_delta) != 2:
+                raise ValueError("epsilon_delta parameter has to be a tuple or list of length 2, but {} were given".format(len(epsilon_delta)))
+            self._epsilon_delta = epsilon_delta
+            self._epsilon_delta_access_history = []
+            if self._epsilon_delta[0] <= 0:
+                raise ValueError("Epsilon has to be greater than zero")
+            if self._epsilon_delta[1] < 0:
+                raise ValueError("Delta has to be greater than zero")
+    
+    def __basic_adaptive_comp_theorem(self, private_property):
+        """
+            It checks whether the privacy budget given by epsilon_delta is surpassed.
+            
+            It implements the theorem 3.6 from Privacy Odometers and Filters: Pay-as-you-Go Composition.
+            
+            # Arguments:
+                epsilon_delta_access_history: a list of the epsilon-delta expenses of each access
+                epsilon_delta: privacy budget specified for the accessed private data
+            
+            # References:
+                - [Privacy Odometers and Filters: Pay-as-you-Go Composition] (https://arxiv.org/abs/1605.08294)
+        """
+        global_epsilon, global_delta = self._epsilon_delta
+        eps_sum, delta_sum = map(sum, zip(*self._private_data_epsilon_delta_access_history[private_property]))
+        return eps_sum > global_epsilon or delta_sum > global_delta
 
+    def __advanced_adaptive_comp_theorem(self, private_property):
+        """
+            It checks whether the privacy budget given by epsilon_delta is surpassed.
+            
+            It implements the theorem 5.1 from Privacy Odometers and Filters: Pay-as-you-Go Composition.
+            
+            # Arguments:
+                epsilon_delta_access_history: a list of the epsilon-delta expenses of each access
+                epsilon_delta: privacy budget specified for the accessed private data
+            
+            # References:
+                - [Privacy Odometers and Filters: Pay-as-you-Go Composition] (https://arxiv.org/abs/1605.08294)
+        """
+        epsilon_history, delta_history = zip(*self._private_data_epsilon_delta_access_history[private_property])
+        global_epsilon, global_delta = self._epsilon_delta
+        
+        delta_sum = sum(delta_history)
+        epsilon_squared_sum = sum(epsilon**2 for epsilon in epsilon_history)
+        
+        H = global_epsilon**2 / (28.04 * log(1 / global_delta))
+        
+        A = sum(eps * (exp(eps) - 1) * 0.5 for eps in epsilon_history)
+        B = epsilon_squared_sum + H
+        C = 2 + log(epsilon_squared_sum / H + 1)
+        D = log(2 / global_delta)
+        
+        K = A + sqrt (B * C * D)
+
+        return K > global_epsilon or delta_sum > (global_delta * 0.5)
+
+    @property
+    def epsilon_delta(self):
+        return self._epsilon_delta
+    
     @property
     def model(self):
         print("You can't get the model, you need to query the params to access")
@@ -94,7 +193,18 @@ class DataNode:
             name: Identifier for the data that will be configured
             data_access_definition: Policy to access data (see: [DataAccessDefinition](../data/#dataaccessdefinition))
         """
+        access_policy_eps_delta_available = hasattr(data_access_definition, 'epsilon_delta')
+        eps_delta_available = self._epsilon_delta is not None
+        
+        if access_policy_eps_delta_available and not eps_delta_available:
+            raise ValueError("You can't access non differentially private data with a differentially private mechanism")
+        
+        if not access_policy_eps_delta_available and eps_delta_available:
+            raise ValueError("You can't access differentially private data with a non differentially private mechanism")
+        
         self._private_data_access_policies[name] = copy.deepcopy(data_access_definition)
+        self._private_data_epsilon_delta_access_history[name] = []
+
 
     def configure_model_params_access(self, data_access_definition):
         """
@@ -126,7 +236,22 @@ class DataNode:
             raise ValueError("Data access must be configured before query data")
 
         data_access_policy = self._private_data_access_policies[private_property]
-        return data_access_policy.apply(self._private_data[private_property])
+
+        access_policy_eps_delta_available = hasattr(data_access_policy, 'epsilon_delta')
+        
+        if access_policy_eps_delta_available:
+            self._private_data_epsilon_delta_access_history[private_property].append(data_access_policy.epsilon_delta)
+            
+            privacy_budget_exceeded = self.__basic_adaptive_comp_theorem(private_property)
+            if 0 < self._epsilon_delta[1] < exp(-1):
+                privacy_budget_exceeded &= self.__advanced_adaptive_comp_theorem(private_property)
+            if privacy_budget_exceeded:
+                self._private_data_epsilon_delta_access_history[private_property].pop()
+                raise ExceededPrivacyBudgetError(property=private_property, epsilon_delta=self._epsilon_delta)
+            else:
+                return data_access_policy.apply(self._private_data[private_property])
+        else:
+            return data_access_policy.apply(self._private_data[private_property])
 
     def query_model_params(self):
         """
