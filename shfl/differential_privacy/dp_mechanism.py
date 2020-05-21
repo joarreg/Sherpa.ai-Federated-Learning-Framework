@@ -1,9 +1,9 @@
 import numpy as np
 import scipy
+from math import sqrt, log
 
 from shfl.private.data import DPDataAccessDefinition
 from shfl.private.query import IdentityFunction
-from math import sqrt, log
 
 
 class RandomizedResponseCoins(DPDataAccessDefinition):
@@ -70,7 +70,8 @@ class RandomizedResponseBinary(DPDataAccessDefinition):
 
     For f0=f1=0 or 1, the algorithm is not random. It is maximally random for f0=f1=1/2.
     This class contains, for special cases of f0, f1, the class RandomizedResponseCoins.
-    This algorithm is epsilon-differentially private if epsilon >= log max{ p00/p01, p11/p10} = log max { f0/(1-f1), f1/(1-f0)}
+    This algorithm is epsilon-differentially private if epsilon >= log max{ p00/p01, p11/p10} = log \
+    max { f0/(1-f1), f1/(1-f0)}
     
     Input data must be binary, otherwise exception will be raised.
 
@@ -83,15 +84,15 @@ class RandomizedResponseBinary(DPDataAccessDefinition):
     """
 
     def __init__(self, f0, f1, epsilon):
-        _safety_checks((epsilon, 0))
+        check_epsilon_delta((epsilon, 0))
         if f0 <= 0 or f0 >= 1:
             raise ValueError("f0 argument must be between 0 an 1, {} was provided".format(f0))
         if f1 <= 0 or f1 >= 1:
             raise ValueError("f1 argument must be between 0 an 1, {} was provided".format(f1))
         if epsilon < log(max(f0 / (1 - f1), f1 / (1 - f0))):
-            raise ValueError("To ensure epsilon differential privacy, " +
-                            "the following inequality mus be satified " +
-                            "{}=epsilon >= {}=log max ( f0 / (1 - f1), f1 / (1 - f0))".format(epsilon, log(max(f0 / (1 - f1), f1 / (1 - f0)))))
+            raise ValueError("To ensure epsilon differential privacy, the following inequality mus be satisfied " +
+                             "{}=epsilon >= {}=log max ( f0 / (1 - f1), f1 / (1 - f0))"
+                             .format(epsilon, log(max(f0 / (1 - f1), f1 / (1 - f0)))))
         self._f0 = f0
         self._f1 = f1
         self._epsilon_delta = (epsilon, 0)
@@ -151,7 +152,7 @@ class LaplaceMechanism(DPDataAccessDefinition):
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
     def __init__(self, sensitivity, epsilon, query=None):
-        _safety_checks((epsilon,0))
+        check_epsilon_delta((epsilon, 0))
         
         if query is None:
             query = IdentityFunction()
@@ -162,7 +163,7 @@ class LaplaceMechanism(DPDataAccessDefinition):
         
     @property
     def epsilon_delta(self):
-        return (self._epsilon, 0)
+        return self._epsilon, 0
     
     def apply(self, data):
         query_result = self._query.get(data)
@@ -201,7 +202,7 @@ class GaussianMechanism(DPDataAccessDefinition):
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
     def __init__(self, sensitivity, epsilon_delta, query=None):
-        _safety_checks(epsilon_delta)
+        check_epsilon_delta(epsilon_delta)
         if epsilon_delta[0] >= 1:
             raise ValueError("In the Gaussian mechanism epsilon have to be greater than 0 and less than 1")
         if query is None:
@@ -240,7 +241,7 @@ class ExponentialMechanism(DPDataAccessDefinition):
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
     def __init__(self, u, r, delta_u, epsilon, size=1):
-        _safety_checks((epsilon,0))
+        check_epsilon_delta((epsilon, 0))
         self._u = u
         self._r = r
         self._delta_u = delta_u
@@ -249,7 +250,7 @@ class ExponentialMechanism(DPDataAccessDefinition):
     
     @property
     def epsilon_delta(self):
-        return (self._epsilon, 0)
+        return self._epsilon, 0
     
     def apply(self, data):
         r_range = self._r
@@ -261,9 +262,10 @@ class ExponentialMechanism(DPDataAccessDefinition):
         return sample    
     
 
-def _safety_checks(epsilon_delta):
+def check_epsilon_delta(epsilon_delta):
     if len(epsilon_delta) != 2:
-        raise ValueError("epsilon_delta parameter should be a tuple with two elements, but {} were given".format(len(epsilon_delta)))
+        raise ValueError("epsilon_delta parameter should be a tuple with two elements, but {} were given"
+                         .format(len(epsilon_delta)))
     if epsilon_delta[1] < 0:
         raise ValueError("Delta have to be greater than zero")
     if epsilon_delta[0] < 0:
@@ -285,3 +287,4 @@ def _check_binary_data(data):
             raise ValueError("Randomized mechanism works with binary scalars, but input is not binary")
     elif not np.array_equal(data, data.astype(bool)):
         raise ValueError("Randomized mechanism works with binary data, but input is not binary")
+
