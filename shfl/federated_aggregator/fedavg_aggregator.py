@@ -13,6 +13,9 @@ class FedAvgAggregator(FederatedAggregator):
     def aggregate_weights(self, clients_params):
         """
         Implementation of abstract method of class [AggregateWeightsFunction](../Federate Aggregator/#federatedaggregator-class)
+        Arguments:
+            clients_params: list of all clients' model parameters. 
+            For each client, the model's parameters are assumed to be stored in a multi-dimensional numeric array.  
 
         # Returns
             aggregated_weights: aggregator weights representing the global learning model
@@ -22,10 +25,10 @@ class FedAvgAggregator(FederatedAggregator):
         """
 
         clients_params_array = np.array(clients_params)
+        print(clients_params_array.shape)
 
         num_clients = clients_params_array.shape[0]
         num_layers = clients_params_array.shape[1]
-        clients_params_array = clients_params_array.reshape(num_clients, num_layers)
 
         aggregated_weights = np.array([np.mean(clients_params_array[:, layer], axis=0) for layer in range(num_layers)])
 
