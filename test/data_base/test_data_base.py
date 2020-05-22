@@ -3,6 +3,7 @@ import pytest
 
 import shfl.data_base.data_base
 from shfl.data_base.data_base import DataBase
+from shfl.data_base.data_base import LabeledDatabase
 
 
 class TestDataBase(DataBase):
@@ -64,6 +65,7 @@ def test_data_base_shuffle_elements():
     assert np.array_equal(np.sort(validation_labels_b), np.sort(validation_labels_a))
     assert np.array_equal(np.sort(test_labels_b), np.sort(test_labels_a))
 
+
 def test_data_base_shuffle_correct():
     data = TestDataBase()
     data.load_data()
@@ -82,8 +84,19 @@ def test_data_base_shuffle_correct():
     assert (validation_data_b == validation_data_a).all() == False
     assert (test_data_b == test_data_a).all() == False
 
+
 def test_shuffle_wrong_call():
     data = TestDataBase()
 
     with pytest.raises(TypeError):
         data.shuffle()
+
+
+def test_labeled_database():
+    data = np.random.randint(low=0, high=100, size=100, dtype='l')
+    labels = 10 + 2 * data + np.random.normal(loc=0.0, scale=10, size=len(data))
+    database = LabeledDatabase(data, labels)
+    loaded_data = database.load_data()
+
+    assert loaded_data is not None
+    assert len(loaded_data[1]) + len(loaded_data[3]) + len(loaded_data[5]) == len(data)
