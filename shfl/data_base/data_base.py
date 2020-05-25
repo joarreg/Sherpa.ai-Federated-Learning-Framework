@@ -102,6 +102,11 @@ class DataBase(abc.ABC):
 class LabeledDatabase(DataBase):
     """
     Class to create generic labeled database from data and labels vectors
+
+    # Arguments
+        data: Data features to load
+        labels: Labels for this features
+        train_percentage: float between 0 and 1 to indicate how much data is dedicated to train
     """
     def __init__(self, data, labels, train_percentage=0.8):
         super(DataBase, self).__init__()
