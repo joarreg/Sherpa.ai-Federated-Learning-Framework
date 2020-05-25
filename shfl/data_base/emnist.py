@@ -19,16 +19,12 @@ class Emnist(db.DataBase):
         Load data from emnist package
 
         # Returns
-            all_data : train data, train labels, validation data, validation labels, test data and test labels
+            all_data : train data, train labels, test data and test labels
         """
-        images, labels = emnist.extract_training_samples('digits')
-        labels = np.eye(10)[labels]
+        self._train_data, self._train_labels = emnist.extract_training_samples('digits')
+        self._train_labels = np.eye(10)[self._train_labels]
         self._test_data, self._test_labels = emnist.extract_test_samples('digits')
         self._test_labels = np.eye(10)[self._test_labels]
-
-        dim_test = len(self._test_labels)
-        self._train_data, self._train_labels, self._validation_data, self._validation_labels \
-            = db.extract_validation_samples(images, labels, dim_test)
 
         self.shuffle()
         
