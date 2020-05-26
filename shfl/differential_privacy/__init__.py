@@ -4,6 +4,8 @@ from __future__ import print_function
 
 from shfl.differential_privacy.dp_mechanism import RandomizedResponseCoins
 from shfl.differential_privacy.dp_mechanism import LaplaceMechanism
+from shfl.differential_privacy.composition_dp import ExceededPrivacyBudgetError
+from shfl.differential_privacy.composition_dp import AdaptiveDifferentialPrivacy
 from shfl.differential_privacy.sensitivity_sampler import SensitivitySampler
 from shfl.differential_privacy.norm import SensitivityNorm
 from shfl.differential_privacy.norm import L1SensitivityNorm
