@@ -42,7 +42,8 @@ class IidDataDistribution(DataDistribution):
         federated_label = []
 
         if sampling == "without_replacement":
-            weights = np.array([float(i)/sum(weights) for i in weights])
+            if sum(weights) > 1:
+                weights = np.array([float(i)/sum(weights) for i in weights])
 
             sum_used = 0
             percentage_used = 0
