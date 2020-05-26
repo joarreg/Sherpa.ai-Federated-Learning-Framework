@@ -51,7 +51,7 @@ class DataDistribution(abc.ABC):
         return federated_data, test_data, test_label
 
     @abc.abstractmethod
-    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling="without_replacement"):
+    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling):
         """
         Method that must implement every data distribution extending this class
 
