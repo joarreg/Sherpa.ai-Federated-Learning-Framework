@@ -14,11 +14,8 @@ class CaliforniaHousing(db.DataBase):
         labels = all_data["target"]
 
         test_size = int(len(data) * 0.1)
-        validation_size = int(len(data) * 0.1)
-        train_data, train_labels, self._test_data, self._test_labels = db.extract_validation_samples(data, labels,
-                                                                                                     test_size)
-        self._train_data, self._train_labels, self._validation_data, self._validation_labels \
-            = db.extract_validation_samples(train_data, train_labels, validation_size)
+        self._train_data, self._train_labels,\
+            self._test_data, self._test_labels = db.extract_validation_samples(data, labels, test_size)
 
         self.shuffle()
 

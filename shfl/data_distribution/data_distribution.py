@@ -1,10 +1,7 @@
-import numpy as np
-import random
 import abc
 
 from shfl.private.data import LabeledData
 from shfl.private.federated_operation import FederatedData
-from shfl.private.node import DataNode
 
 
 class DataDistribution(abc.ABC):
@@ -32,11 +29,7 @@ class DataDistribution(abc.ABC):
         """
 
         train_data, train_label = self._database.train
-        validation_data, validation_label = self._database.validation
         test_data, test_label = self._database.test
-
-        train_data = np.concatenate((train_data, validation_data), axis=0)
-        train_label = np.concatenate((train_label, validation_label), axis=0)
 
         federated_train_data, federated_train_label = self.make_data_federated(train_data,
                                                                                train_label,

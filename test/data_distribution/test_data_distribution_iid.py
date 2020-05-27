@@ -11,10 +11,8 @@ class TestDataBase(DataBase):
     def load_data(self):
         self._train_data = np.random.rand(200).reshape([40, 5])
         self._test_data = np.random.rand(200).reshape([40, 5])
-        self._validation_data = np.random.rand(200).reshape([40, 5])
         self._train_labels = np.random.randint(0, 10, 40)
         self._test_labels = np.random.randint(0, 10, 40)
-        self._validation_labels = np.random.randint(0, 10, 40)
 
 
 def test_make_data_federated():
@@ -23,10 +21,6 @@ def test_make_data_federated():
     data_distribution = IidDataDistribution(data)
 
     train_data, train_label = data_distribution._database.train
-    validation_data, validation_label = data_distribution._database.validation
-
-    train_data = np.concatenate((train_data, validation_data), axis=0)
-    train_label = np.concatenate((train_label, validation_label), axis=0)
 
     num_nodes = 3
     percent = 60

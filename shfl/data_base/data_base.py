@@ -49,21 +49,14 @@ class DataBase(abc.ABC):
     """
 
     def __init__(self):
-        super(DataBase, self).__init__()
         self._train_data = []
         self._test_data = []
-        self._validation_data = []
         self._train_labels = []
         self._test_labels = []
-        self._validation_labels = []
 
     @property
     def train(self):
         return self._train_data, self._train_labels
-
-    @property
-    def validation(self):
-        return self._validation_data, self._validation_labels
 
     @property
     def test(self):
@@ -71,8 +64,7 @@ class DataBase(abc.ABC):
 
     @property
     def data(self):
-        return self._train_data, self._train_labels, self._validation_data, self._validation_labels, \
-            self._test_data, self._test_labels
+        return self._train_data, self._train_labels, self._test_data, self._test_labels
 
     @abc.abstractmethod
     def load_data(self):
@@ -94,7 +86,27 @@ class DataBase(abc.ABC):
         self._test_data = self._test_data[randomize, ]
         self._test_labels = self._test_labels[randomize]
 
-        randomize = np.arange(len(self._validation_labels))
-        np.random.shuffle(randomize)
-        self._validation_data = self._validation_data[randomize,]
-        self._validation_labels = self._validation_labels[randomize]
+
+class LabeledDatabase(DataBase):
+    """
+    Class to create generic labeled database from data and labels vectors
+
+    # Arguments
+        data: Data features to load
+        labels: Labels for this features
+        train_percentage: float between 0 and 1 to indicate how much data is dedicated to train
+    """
+    def __init__(self, data, labels, train_percentage=0.8):
+        super(DataBase, self).__init__()
+        self._data = data
+        self._labels = labels
+        self._train_percentage = train_percentage
+
+    def load_data(self):
+        test_size = round(len(self._data) * (1 - self._train_percentage))
+        self._train_data, self._train_labels, \
+            self._test_data, self._test_labels = extract_validation_samples(self._data, self._labels, test_size)
+
+        self.shuffle()
+
+        return self.data
