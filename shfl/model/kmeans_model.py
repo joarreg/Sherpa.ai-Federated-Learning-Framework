@@ -16,9 +16,15 @@ class KMeansModel(TrainableModel):
         n_init: Number of time the k-means algorithm will be run with different centroid seeds (default 10).
     """
 
-    def __init__(self, n_clusters, init, n_init=10):
+    def __init__(self, n_clusters, n_features, init='k-means++', n_init=10):
         self._k_means = KMeans(n_clusters=n_clusters, init=init, n_init=n_init)
-        self._k_means.cluster_centers_ = init
+        self._init = init
+        self._n_features = n_features
+
+        if type(init) is np.ndarray:
+            self._k_means.cluster_centers_ = init
+        else:
+            self._k_means.cluster_centers_ = np.zeros((n_clusters, n_features))
 
     def train(self, data, labels=None):
         """
@@ -67,5 +73,8 @@ class KMeansModel(TrainableModel):
         """
         Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
         """
-        n_clusters = params.shape[0]
-        self.__init__(n_clusters=n_clusters, init=params)
+        if np.array_equal(params, np.zeros((params.shape[0], params.shape[1]))):
+            self.__init__(n_clusters=params.shape[0], n_features=self._n_features, init=self._init,
+                          n_init=self._n_init)
+        else:
+            self.__init__(n_clusters=params.shape[0], n_features=self._n_features, init=params, n_init=self._n_init)
