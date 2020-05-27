@@ -1,10 +1,10 @@
 from shfl.model.model import TrainableModel
 import numpy as np
-from sklearn.clustering import KMeans
+from sklearn.cluster import KMeans
 from sklearn import metrics
 
 
-class KMeans(TrainableModel):
+class KMeansModel(TrainableModel):
     """
     This class offers support for scikit-learn K-Means model. It implements [TrainableModel](../Model/#trainablemodel-class)
 
@@ -16,8 +16,9 @@ class KMeans(TrainableModel):
         n_init: Number of time the k-means algorithm will be run with different centroid seeds (default 10).
     """
 
-    def __init__(self, n_clusters, init='k-means++', n_init=10):
+    def __init__(self, n_clusters, init, n_init=10):
         self._k_means = KMeans(n_clusters=n_clusters, init=init, n_init=n_init)
+        self._k_means.cluster_centers_ = init
 
     def train(self, data, labels=None):
         """
