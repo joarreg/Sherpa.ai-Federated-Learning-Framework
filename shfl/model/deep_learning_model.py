@@ -1,6 +1,7 @@
 from keras.callbacks import EarlyStopping
 from shfl.model.model import TrainableModel
 import tensorflow as tf
+import copy
 
 
 class DeepLearningModel(TrainableModel):
@@ -13,17 +14,8 @@ class DeepLearningModel(TrainableModel):
         epochs: Number of epochs
         initialized: Indicates whether the model is initialized or not (default False)
     """
-    def __init__(self, model, batch_size=None, epochs=1, initialized=False):
-        if not initialized:
-            self._model = model
-        else:
-            self._model = tf.keras.models.model_from_config({'class_name': model.__class__.__name__,
-                                                             'config': model.get_config()})
-            self._model.compile(optimizer=model.optimizer.__class__.__name__, loss=model.loss,
-                                metrics=model.metrics_names[1:])
-
-            self._model.set_weights(model.get_weights())
-
+    def __init__(self, model, batch_size=None, epochs=1):
+        self._model = model
         self._data_shape = model.layers[0].get_input_shape_at(0)[1:]
         self._labels_shape = model.layers[-1].get_output_shape_at(0)[1:]
 
@@ -96,3 +88,20 @@ class DeepLearningModel(TrainableModel):
         if labels.shape[1:] != self._labels_shape:
             raise AssertionError("Labels need to have the same shape described by the model " + str(self._labels_shape)
                                  + " .Current data has shape " + str(labels.shape[1:]))
+
+    def __deepcopy__(self, memo):
+        cls = self.__class__
+        result = cls.__new__(cls)
+        memo[id(self)] = result
+        for k, v in self.__dict__.items():
+            if k == "_model":
+                model = tf.keras.models.model_from_config({'class_name': v.__class__.__name__,
+                                                           'config': v.get_config()})
+                model.compile(optimizer=v.optimizer.__class__.__name__, loss=v.loss,
+                              metrics=v.metrics_names[1:])
+
+                model.set_weights(v.get_weights())
+                setattr(result, k, model)
+            else:
+                setattr(result, k, copy.deepcopy(v, memo))
+        return result

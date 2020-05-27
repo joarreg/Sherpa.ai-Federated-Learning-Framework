@@ -1,4 +1,5 @@
 import numpy as np
+import unittest.mock
 from unittest.mock import Mock
 
 from shfl.learning_approach.federated_government import FederatedGovernment
@@ -7,6 +8,7 @@ from shfl.data_distribution.data_distribution_iid import IidDataDistribution
 from shfl.private.data import UnprotectedAccess
 from shfl.private.federated_operation import split_train_test
 
+
 class TestDataBase(DataBase):
     def __init__(self):
         super(TestDataBase, self).__init__()
@@ -14,10 +16,8 @@ class TestDataBase(DataBase):
     def load_data(self):
         self._train_data = np.random.rand(200).reshape([40, 5])
         self._test_data = np.random.rand(200).reshape([40, 5])
-        self._validation_data = np.random.rand(200).reshape([40, 5])
         self._train_labels = np.random.randint(0, 10, 40)
         self._test_labels = np.random.randint(0, 10, 40)
-        self._validation_labels = np.random.randint(0, 10, 40)
 
 
 def test_evaluate_global_model():
@@ -37,6 +37,9 @@ def test_evaluate_global_model():
     fdg._model.evaluate.assert_called_once_with(test_data, test_labels)
 
 
+copy_mock = Mock()
+
+
 def test_deploy_central_model():
     model_builder = Mock
     aggregator = Mock()
@@ -54,7 +57,7 @@ def test_deploy_central_model():
     fdg.deploy_central_model()
 
     for node in fdg._federated_data:
-        node._model.set_model_params.assert_called_once_with(array_params)
+        node._model.set_model_params.assert_called_once()
 
 
 def test_evaluate_clients_global():
