@@ -45,7 +45,7 @@ class FederatedImagesClassifier(FederatedGovernment):
         if data_base_name_key in ImagesDataBases.__members__.keys():
             module = ImagesDataBases.__members__[data_base_name_key].value
             data_base = module()
-            train_data, train_labels, val_data, val_labels, test_data, test_labels = data_base.load_data()
+            train_data, train_labels, test_data, test_labels = data_base.load_data()
 
             if iid:
                 distribution = IidDataDistribution(data_base)

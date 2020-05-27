@@ -2,9 +2,9 @@ import abc
 import numpy as np
 
 
-def extract_validation_samples(data, labels, dim):
+def split_train_test(data, labels, dim):
     """
-    Method that randomly choose the validation data from data and labels.
+    Method that randomly choose the train and test sets from data and labels.
 
     # Arguments:
         data: Numpy matrix with data for extract the validation data
@@ -19,13 +19,13 @@ def extract_validation_samples(data, labels, dim):
     data = data[randomize, ]
     labels = labels[randomize]
 
-    validation_data = data[0:dim, ]
-    validation_labels = labels[0:dim]
+    test_data = data[0:dim, ]
+    test_labels = labels[0:dim]
 
     rest_data = data[dim:, ]
     rest_labels = labels[dim:]
 
-    return rest_data, rest_labels, validation_data, validation_labels
+    return rest_data, rest_labels, test_data, test_labels
 
 
 class DataBase(abc.ABC):
@@ -105,7 +105,7 @@ class LabeledDatabase(DataBase):
     def load_data(self):
         test_size = round(len(self._data) * (1 - self._train_percentage))
         self._train_data, self._train_labels, \
-            self._test_data, self._test_labels = extract_validation_samples(self._data, self._labels, test_size)
+            self._test_data, self._test_labels = split_train_test(self._data, self._labels, test_size)
 
         self.shuffle()
 
