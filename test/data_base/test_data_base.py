@@ -17,13 +17,13 @@ class TestDataBase(DataBase):
         self._test_labels = np.random.rand(10)
 
 
-def test_extract_validation_samples():
+def test_split_train_test():
     data = np.random.rand(50).reshape([10, -1])
     labels = np.random.rand(10)
     dim = 4
 
     rest_data, rest_labels, \
-        validation_data, validation_labels = shfl.data_base.data_base.extract_validation_samples(data, labels, dim)
+        validation_data, validation_labels = shfl.data_base.data_base.split_train_test(data, labels, dim)
 
     ndata = np.concatenate([rest_data,validation_data])
     nlabels = np.concatenate([rest_labels,validation_labels])
