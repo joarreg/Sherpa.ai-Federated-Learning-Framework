@@ -20,6 +20,7 @@ class KMeansModel(TrainableModel):
         self._k_means = KMeans(n_clusters=n_clusters, init=init, n_init=n_init)
         self._init = init
         self._n_features = n_features
+        self._n_init = n_init
 
         if type(init) is np.ndarray:
             self._k_means.cluster_centers_ = init
