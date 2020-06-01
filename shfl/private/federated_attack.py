@@ -1,5 +1,5 @@
 import abc
-from shfl.private.federated_operation import FederatedTransformation, apply_federated_transformation
+from shfl.private.federated_operation import FederatedTransformation
 import random
 import numpy as np
 

@@ -1,4 +1,5 @@
 import numpy as np
+import unittest.mock
 from unittest.mock import Mock
 import pytest
 
@@ -53,6 +54,10 @@ def test_train_model_wrong_data():
         data_node.train_model("random_array")
 
 
+copy_mock = Mock()
+
+
+@unittest.mock.patch("copy.deepcopy", unittest.mock.MagicMock(return_value=copy_mock))
 def test_train_model_data():
     random_array = np.random.rand(30)
     random_array_labels = np.random.rand(30)
@@ -62,7 +67,8 @@ def test_train_model_data():
     data_node.model = model_mock
     data_node.set_private_data("random_array", labeled_data)
     data_node.train_model("random_array")
-    model_mock.train.assert_called_once()
+    model_mock.train.assert_not_called()
+    copy_mock.train.assert_called_once()
 
 
 def test_get_model():
@@ -72,22 +78,26 @@ def test_get_model():
     assert data_node.model is None
 
 
+@unittest.mock.patch("copy.deepcopy", unittest.mock.MagicMock(return_value=copy_mock))
 def test_predict():
     random_array = np.random.rand(30)
     model_mock = Mock()
     data_node = DataNode()
     data_node.model = model_mock
     data_node.predict(random_array)
-    model_mock.predict.assert_called_once_with(random_array)
+    model_mock.predict.assert_not_called()
+    copy_mock.predict.assert_called_once_with(random_array)
 
 
+@unittest.mock.patch("copy.deepcopy", unittest.mock.MagicMock(return_value=copy_mock))
 def test_set_params():
     random_array = np.random.rand(30)
     model_mock = Mock()
     data_node = DataNode()
     data_node.model = model_mock
     data_node.set_model_params(random_array)
-    model_mock.set_model_params.assert_called_once_with(random_array)
+    model_mock.set_model_params.assert_not_called()
+    copy_mock.set_model_params.assert_called_once_with(copy_mock)
 
 
 def test_evaluate():

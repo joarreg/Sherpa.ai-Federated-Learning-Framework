@@ -11,7 +11,7 @@ from shfl.private.federated_operation import Normalize
 
 from enum import Enum
 import numpy as np
-import keras
+import tensorflow as tf
 
 
 class Reshape(FederatedTransformation):
@@ -92,19 +92,19 @@ class FederatedImagesClassifier(FederatedGovernment):
 
     @staticmethod
     def model_builder():
-        model = keras.models.Sequential()
-        model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), padding='same', activation='relu', strides=1,
+        model = tf.keras.models.Sequential()
+        model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3), padding='same', activation='relu', strides=1,
                                       input_shape=(28, 28, 1)))
-        model.add(keras.layers.MaxPooling2D(pool_size=2, strides=2, padding='valid'))
-        model.add(keras.layers.Dropout(0.4))
-        model.add(keras.layers.Conv2D(32, kernel_size=(3, 3), padding='same', activation='relu', strides=1))
-        model.add(keras.layers.MaxPooling2D(pool_size=2, strides=2, padding='valid'))
-        model.add(keras.layers.Dropout(0.3))
-        model.add(keras.layers.Flatten())
-        model.add(keras.layers.Dense(128, activation='relu'))
-        model.add(keras.layers.Dropout(0.1))
-        model.add(keras.layers.Dense(64, activation='relu'))
-        model.add(keras.layers.Dense(10, activation='softmax'))
+        model.add(tf.keras.layers.MaxPooling2D(pool_size=2, strides=2, padding='valid'))
+        model.add(tf.keras.layers.Dropout(0.4))
+        model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3), padding='same', activation='relu', strides=1))
+        model.add(tf.keras.layers.MaxPooling2D(pool_size=2, strides=2, padding='valid'))
+        model.add(tf.keras.layers.Dropout(0.3))
+        model.add(tf.keras.layers.Flatten())
+        model.add(tf.keras.layers.Dense(128, activation='relu'))
+        model.add(tf.keras.layers.Dropout(0.1))
+        model.add(tf.keras.layers.Dense(64, activation='relu'))
+        model.add(tf.keras.layers.Dense(10, activation='softmax'))
 
         model.compile(optimizer="rmsprop", loss="categorical_crossentropy", metrics=["accuracy"])
 

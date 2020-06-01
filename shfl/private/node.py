@@ -38,7 +38,7 @@ class DataNode:
         # Arguments:
             model: Instance of a class implementing ~TrainableModel
         """
-        self._model = model
+        self._model = copy.deepcopy(model)
 
     @property
     def private_data(self):
@@ -142,7 +142,7 @@ class DataNode:
         # Arguments:
             model_params: Parameters to set in the model
         """
-        self._model.set_model_params(model_params)
+        self._model.set_model_params(copy.deepcopy(model_params))
 
     def train_model(self, training_data_key):
         """

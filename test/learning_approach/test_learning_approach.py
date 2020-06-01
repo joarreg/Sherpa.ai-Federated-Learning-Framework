@@ -6,6 +6,7 @@ from shfl.data_distribution.data_distribution_iid import IidDataDistribution
 from shfl.data_base.data_base import DataBase
 from shfl.private.data import UnprotectedAccess
 
+
 class TestLearningApproach(LearningApproach):
     def __init__(self, model_builder, federated_data, aggregator, access):
         super(TestLearningApproach, self).__init__(model_builder, federated_data, aggregator, access)

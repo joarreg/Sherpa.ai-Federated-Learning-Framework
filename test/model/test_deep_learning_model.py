@@ -49,7 +49,7 @@ def test_deep_learning_model_initialized():
     model.add(tf.keras.layers.Dense(1))
     model.compile(optimizer='rmsprop', loss='binary_crossentropy')
 
-    dpl = TestDeepLearningModel(model, initialized=True)
+    dpl = TestDeepLearningModel(model)
 
     weights = np.concatenate([w.ravel() for w in model.get_weights()])
     weights_model = np.concatenate([w.ravel() for w in dpl._model.get_weights()])
