@@ -1,5 +1,4 @@
 import numpy as np
-import unittest.mock
 from unittest.mock import Mock
 
 from shfl.learning_approach.federated_government import FederatedGovernment

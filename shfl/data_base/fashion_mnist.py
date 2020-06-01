@@ -1,4 +1,4 @@
-from keras.datasets import fashion_mnist
+from tensorflow.keras.datasets import fashion_mnist
 
 from shfl.data_base.data_base import DataBase
 

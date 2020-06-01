@@ -1,4 +1,4 @@
-from keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping
 from shfl.model.model import TrainableModel
 import tensorflow as tf
 import copy
@@ -95,8 +95,7 @@ class DeepLearningModel(TrainableModel):
         memo[id(self)] = result
         for k, v in self.__dict__.items():
             if k == "_model":
-                model = tf.keras.models.model_from_config({'class_name': v.__class__.__name__,
-                                                           'config': v.get_config()})
+                model = tf.keras.models.clone_model(v)
                 model.compile(optimizer=v.optimizer.__class__.__name__, loss=v.loss,
                               metrics=v.metrics_names[1:])
 
