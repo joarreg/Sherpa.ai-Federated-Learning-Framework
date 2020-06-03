@@ -1,11 +1,25 @@
 import numpy as np
 from unittest.mock import Mock
 
-from shfl.learning_approach.federated_government import FederatedGovernment
+from shfl.federated_government.federated_government import FederatedGovernment
 from shfl.data_base.data_base import DataBase
 from shfl.data_distribution.data_distribution_iid import IidDataDistribution
 from shfl.private.data import UnprotectedAccess
 from shfl.private.federated_operation import split_train_test
+
+
+class TestFederatedGovernment(FederatedGovernment):
+    def __init__(self, model_builder, federated_data, aggregator, access):
+        super(TestFederatedGovernment, self).__init__(model_builder, federated_data, aggregator, access)
+
+    def train_all_clients(self):
+        pass
+
+    def aggregate_weights(self):
+        pass
+
+    def run_rounds(self, n, test_data, test_label):
+        pass
 
 
 class TestDataBase(DataBase):
@@ -142,6 +156,22 @@ def test_aggregate_weights():
 
     fdg._model.set_model_params.assert_called_once_with(weights)
 
+
+def test_federated_government_private_data():
+    model_builder = Mock
+    aggregator = Mock()
+    database = TestDataBase()
+    database.load_data()
+    db = IidDataDistribution(database)
+    federated_data, test_data, test_labels = db.get_federated_data(3)
+
+    la = TestFederatedGovernment(model_builder, federated_data, aggregator, UnprotectedAccess())
+
+    for node in la._federated_data:
+        assert isinstance(node._model, model_builder)
+
+    assert isinstance(la.global_model, model_builder)
+    assert aggregator.id == la._aggregator.id
 
 def test_run_rounds():
     model_builder = Mock
