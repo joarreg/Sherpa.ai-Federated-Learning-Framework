@@ -13,5 +13,7 @@ from shfl.differential_privacy.norm import L2SensitivityNorm
 from shfl.differential_privacy.probability_distribution import ProbabilityDistribution
 from shfl.differential_privacy.probability_distribution import NormalDistribution
 from shfl.differential_privacy.probability_distribution import GaussianMixture
+from shfl.differential_privacy.dp_sampling import SampleWithoutReplacement
+from shfl.differential_privacy.dp_sampling import SampleWithReplacement
 
 

@@ -1,5 +1,3 @@
-import numpy as np
-
 from shfl.federated_aggregator.federated_aggregator import FederatedAggregator
 
 
