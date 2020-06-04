@@ -18,7 +18,7 @@ nav:
   - Data Distribution: data_distribution.md
   - Model: model.md
   - Federated Aggregator: federated_aggregator.md
-  - Learning Approach: learning_approach.md
+  - Learning Approach: federated_government.md
   - Differential Privacy:
       - Mechanisms: differential_privacy/mechanisms.md
       - Sensitivity Sampler: differential_privacy/sensitivity_sampler.md

@@ -2,7 +2,7 @@ from shfl import differential_privacy
 from shfl import private
 from shfl import model
 from shfl import data_base
-from shfl import learning_approach
+from shfl import federated_government
 from shfl import data_distribution
 from shfl import federated_aggregator
 
@@ -99,11 +99,9 @@ PAGES = [
         ]
     },
     {
-        'page': 'learning_approach.md',
+        'page': 'federated_government.md',
         'classes': [
-            (learning_approach.learning_approach.LearningApproach, ["train_all_clients", "aggregate_weights",
-                                                                    "run_rounds"]),
-            learning_approach.federated_government.FederatedGovernment
+            federated_government.federated_government.FederatedGovernment
         ]
     },
     {

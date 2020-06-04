@@ -1,10 +1,26 @@
-from shfl.learning_approach.learning_approach import LearningApproach
-
-
-class FederatedGovernment(LearningApproach):
+class FederatedGovernment:
     """
-    Class used to represent Federated Government (see: [Learning Approach](../learning_approach))).
+    Class used to represent the central class FederatedGoverment.
+
+    # Arguments:
+       model_builder: Function that return a trainable model (see: [Model](../../model))
+       federated_data: Federated data to use. (see: [FederatedData](../../private/federated_operation/#federateddata-class))
+       aggregator: Federated aggregator function (see: [Federated Aggregator](../../federated_aggregator))
+       model_param_access: Policy to access model's parameters, by default non-protected (see: [DataAccessDefinition](../data/#dataaccessdefinition))
     """
+
+    def __init__(self, model_builder, federated_data, aggregator, model_params_access=None):
+        self._federated_data = federated_data
+        self._model = model_builder()
+        self._aggregator = aggregator
+        for data_node in federated_data:
+            data_node.model = model_builder()
+            if model_params_access is not None:
+                data_node.configure_model_params_access(model_params_access)
+
+    @property
+    def global_model(self):
+        return self._model
 
     def evaluate_global_model(self, data_test, label_test):
         """
@@ -43,7 +59,7 @@ class FederatedGovernment(LearningApproach):
 
     def train_all_clients(self):
         """
-        Implementation of the abstract method of class [Learning Approach](../learning_approach/#learningapproach-class)
+        Implementation of the abstract method of class [Learning Approach](../federated_government/#learningapproach-class)
         """
         for data_node in self._federated_data:
             data_node.train_model()
