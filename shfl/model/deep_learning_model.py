@@ -96,8 +96,10 @@ class DeepLearningModel(TrainableModel):
         for k, v in self.__dict__.items():
             if k == "_model":
                 model = tf.keras.models.clone_model(v)
+                # TODO: A private property is beeing accesed to copy metrics because from tensorflow 2.2 metrics are
+                #  only available after fit. Different approach should be used.
                 model.compile(optimizer=v.optimizer.__class__.__name__, loss=v.loss,
-                              metrics=v.metrics_names[1:])
+                              metrics=v.compiled_metrics._user_metrics)
 
                 model.set_weights(v.get_weights())
                 setattr(result, k, model)
