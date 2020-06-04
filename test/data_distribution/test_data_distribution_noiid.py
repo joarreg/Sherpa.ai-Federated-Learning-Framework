@@ -12,12 +12,10 @@ class TestDataBase(DataBase):
         super(TestDataBase, self).__init__()
 
     def load_data(self):
-        self._train_data = np.random.rand(250).reshape([50, 5])
+        self._train_data = np.random.rand(500).reshape([100, 5])
         self._test_data = np.random.rand(250).reshape([50, 5])
-        self._validation_data = np.random.rand(250).reshape([50, 5])
-        self._train_labels = tf.keras.utils.to_categorical(np.random.randint(0, 3, 50))
+        self._train_labels = tf.keras.utils.to_categorical(np.random.randint(0, 3, 100))
         self._test_labels = tf.keras.utils.to_categorical(np.random.randint(0, 3, 50))
-        self._validation_labels = tf.keras.utils.to_categorical(np.random.randint(0, 3, 50))
 
 
 def test_choose_labels():
@@ -47,10 +45,6 @@ def test_make_data_federated():
     data_distribution = NonIidDataDistribution(data)
 
     train_data, train_label = data_distribution._database.train
-    validation_data, validation_label = data_distribution._database.validation
-
-    train_data = np.concatenate((train_data, validation_data), axis=0)
-    train_label = np.concatenate((train_label, validation_label), axis=0)
 
     num_nodes = 3
     percent = 60
@@ -141,13 +135,8 @@ def test_get_federated_data():
         y_c.append(federated_data[i].query().label)
 
     x_c = np.array(x_c)
-    y_c = np.array(y_c)
+    x, y = dt._database.train
 
-    train_data, train_labels = dt._database.train
-    validation_data, validation_labels = dt._database.validation
-
-    x = np.concatenate([train_data, validation_data], axis=0)
-    y = np.concatenate([train_labels, validation_labels], axis=0)
     y = tf.keras.utils.to_categorical(y)
 
     idx = []

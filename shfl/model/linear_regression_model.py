@@ -92,11 +92,11 @@ class LinearRegressionModel(TrainableModel):
         """
         if data.ndim == 1:
             if self._n_features != 1:
-                raise AssertionError("Data need to have the same number of features described by the model " + str(self._n_features)
-                                     + ". Current data have only 1 feature.")
+                raise AssertionError("Data need to have the same number of features described by the model "
+                                     + str(self._n_features) + ". Current data have only 1 feature.")
         elif data.shape[1] != self._n_features:
-            raise AssertionError("Data need to have the same number of features described by the model " + str(self._n_features) +
-                                 ". Current data has " + str(data.shape[1]) + " features.")
+            raise AssertionError("Data need to have the same number of features described by the model "
+                                 + str(self._n_features) + ". Current data has " + str(data.shape[1]) + " features.")
 
     def _check_labels(self, labels):
         """
@@ -104,15 +104,16 @@ class LinearRegressionModel(TrainableModel):
         """
         if labels.ndim == 1:
             if self._n_targets != 1:
-                raise AssertionError("Labels need to have the same number of targets described by the model " + str(self._n_targets)
-                                     + ". Current labels have only 1 target.")
+                raise AssertionError("Labels need to have the same number of targets described by the model "
+                                     + str(self._n_targets) + ". Current labels have only 1 target.")
         elif labels.shape[1] != self._n_targets:
-                raise AssertionError("Labels need to have the same number of targets described by the model " + str(self._n_targets)
-                                 + ". Current labels have " + str(labels.shape[1]) + " targets.")
-                
+            raise AssertionError("Labels need to have the same number of targets described by the model " +
+                                 str(self._n_targets) + ". Current labels have " + str(labels.shape[1]) + " targets.")
+
     def _check_initialization(self, n):
         if not isinstance(n, int):
-            raise AssertionError("n_features and n_targets must be a positive integer number. Provided value " + str(n) + ".")
+            raise AssertionError("n_features and n_targets must be a positive integer number. Provided value "
+                                 + str(n) + ".")
         if n < 1:
-            raise AssertionError("n_features and n_targets must be equal or greater that 1. Provided value " + str(n) + ".")
-            
+            raise AssertionError("n_features and n_targets must be equal or greater that 1. Provided value "
+                                 + str(n) + ".")

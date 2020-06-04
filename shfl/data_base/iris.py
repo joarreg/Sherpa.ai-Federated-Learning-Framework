@@ -2,14 +2,14 @@ import sklearn.datasets
 from shfl.data_base import data_base as db
 
 
-class CaliforniaHousing(db.DataBase):
+class Iris(db.DataBase):
     """
     This database loads the \
-    [California housing dataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.fetch_california_housing.html#sklearn.datasets.fetch_california_housing)
-    from sklearn, mainly for regression tasks.
+    [Irisdataset](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_iris.html)
+    from sklearn, mainly for clustering tasks.
     """
     def load_data(self):
-        all_data = sklearn.datasets.fetch_california_housing()
+        all_data = sklearn.datasets.load_iris()
         data = all_data["data"]
         labels = all_data["target"]
 

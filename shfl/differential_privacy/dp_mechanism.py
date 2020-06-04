@@ -1,6 +1,7 @@
 import numpy as np
 import scipy
-from math import sqrt, log
+from math import sqrt
+from math import log
 
 from shfl.private.data import DPDataAccessDefinition
 from shfl.private.query import IdentityFunction
@@ -78,7 +79,7 @@ class RandomizedResponseBinary(DPDataAccessDefinition):
     # Arguments
         f0: float in [0,1] representing the probability of getting 0 when the input is 0
         f1: float in [0,1] representing the probability of getting 1 when the input is 1
-        
+
     # References
         - [Using Randomized Response for Differential PrivacyPreserving Data Collection](http://csce.uark.edu/~xintaowu/publ/DPL-2014-003.pdf)
     """
@@ -95,11 +96,11 @@ class RandomizedResponseBinary(DPDataAccessDefinition):
                              .format(epsilon, log(max(f0 / (1 - f1), f1 / (1 - f0)))))
         self._f0 = f0
         self._f1 = f1
-        self._epsilon_delta = (epsilon, 0)
+        self._epsilon = epsilon
 
     @property
     def epsilon_delta(self):
-        return self._epsilon_delta
+        return self._epsilon, 0
     
     def apply(self, data):
         """
@@ -160,7 +161,7 @@ class LaplaceMechanism(DPDataAccessDefinition):
         self._sensitivity = sensitivity
         self._epsilon = epsilon
         self._query = query
-        
+
     @property
     def epsilon_delta(self):
         return self._epsilon, 0
@@ -170,7 +171,7 @@ class LaplaceMechanism(DPDataAccessDefinition):
         size = _get_data_size(query_result)
         b = self._sensitivity/self._epsilon
 
-        return data + np.random.laplace(loc=0.0, scale=b, size=size)
+        return query_result + np.random.laplace(loc=0.0, scale=b, size=size)
 
 
 class GaussianMechanism(DPDataAccessDefinition):
@@ -210,7 +211,7 @@ class GaussianMechanism(DPDataAccessDefinition):
         self._sensitivity = sensitivity
         self._epsilon_delta = epsilon_delta
         self._query = query
-    
+
     @property
     def epsilon_delta(self):
         return self._epsilon_delta
@@ -220,7 +221,7 @@ class GaussianMechanism(DPDataAccessDefinition):
         size = _get_data_size(query_result)
         std = sqrt(2 * np.log(1.25/self._epsilon_delta[1])) * self._sensitivity / self._epsilon_delta[0]
 
-        return data + np.random.normal(loc=0.0, scale=std, size=size)
+        return query_result + np.random.normal(loc=0.0, scale=std, size=size)
 
 
 class ExponentialMechanism(DPDataAccessDefinition):
@@ -235,7 +236,7 @@ class ExponentialMechanism(DPDataAccessDefinition):
         delta_u: float for the sensitivity of the utility function.
         epsilon: float for the epsilon you want to apply.
         size: integer for the number of queries to perform at once. If not given it defaults to one.
-        
+
     # References
         - [The algorithmic foundations of differential privacy](
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
@@ -247,7 +248,7 @@ class ExponentialMechanism(DPDataAccessDefinition):
         self._delta_u = delta_u
         self._epsilon = epsilon
         self._size = size
-    
+
     @property
     def epsilon_delta(self):
         return self._epsilon, 0
