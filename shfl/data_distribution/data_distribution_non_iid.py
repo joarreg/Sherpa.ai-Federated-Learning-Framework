@@ -41,7 +41,7 @@ class NonIidDataDistribution(DataDistribution):
 
         return random_labels
 
-    def make_data_federated(self, data, labels, num_nodes, percent, weights):
+    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling="with_replacement"):
         """
         Method that makes data and labels argument federated in a non-iid scenario.
 
@@ -51,6 +51,7 @@ class NonIidDataDistribution(DataDistribution):
             num_nodes: Number of nodes to create
             percent: Percent of the data (between 0 and 100) to be distributed (default is 100)
             weights: Array of weights for weighted distribution (default is None)
+            sampling: methodology between with or without sampling (default "without_sampling")
 
         # Returns:
               * **federated_data, federated_labels**
@@ -58,37 +59,73 @@ class NonIidDataDistribution(DataDistribution):
         if weights is None:
             weights = np.full(num_nodes, 1/num_nodes)
 
-        weights = np.array([float(i) / sum(weights) for i in weights])
+        # Shuffle data
+        randomize = np.arange(len(labels))
+        np.random.shuffle(randomize)
+        data = data[randomize,]
+        labels = labels[randomize]
 
-        federated_data = []
-        federated_label = []
+        # Select percent
+        data = data[0:int(percent * len(data) / 100), ]
+        labels = labels[0:int(percent * len(labels) / 100)]
 
         # We generate random classes for each client
         total_labels = np.unique(labels.argmax(axis=-1))
         random_classes = self.choose_labels(num_nodes, len(total_labels))
 
-        # Select percent
-        data = data[0:int(percent*len(data)/100), ]
-        labels = labels[0:int(percent*len(labels)/100)]
+        federated_data = []
+        federated_label = []
 
-        for i in range(0, num_nodes):
-            labels_to_use = random_classes[i]
+        if sampling == "with_replacement":
+            for i in range(0, num_nodes):
+                labels_to_use = random_classes[i]
 
-            idx = np.array([True if i in labels_to_use else False for i in labels.argmax(axis=-1)])
-            data_aux = data[idx]
-            labels_aux = labels[idx]
+                idx = np.array([True if i in labels_to_use else False for i in labels.argmax(axis=-1)])
+                data_aux = data[idx]
+                labels_aux = labels[idx]
 
-            randomize = np.arange(len(labels_aux))
-            np.random.shuffle(randomize)
-            data_aux = data_aux[randomize, ]
-            labels_aux = labels_aux[randomize]
+                randomize = np.arange(len(labels_aux))
+                np.random.shuffle(randomize)
+                data_aux = data_aux[randomize, ]
+                labels_aux = labels_aux[randomize]
 
-            percent_per_client = min(int(weights[i]*len(data)), len(data_aux))
+                percent_per_client = min(int(weights[i]*len(data)), len(data_aux))
 
-            federated_data.append(np.array(data_aux[0:percent_per_client, ]))
-            federated_label.append(np.array(labels_aux[0:percent_per_client, ]))
+                federated_data.append(np.array(data_aux[0:percent_per_client, ]))
+                federated_label.append(np.array(labels_aux[0:percent_per_client, ]))
 
-        federated_data = np.array(federated_data)
-        federated_label = np.array(federated_label)
+            federated_data = np.array(federated_data)
+            federated_label = np.array(federated_label)
+
+        else:
+            if sum(weights) > 1:
+                weights = np.array([float(i) / sum(weights) for i in weights])
+
+            for i in range(0, num_nodes):
+                labels_to_use = random_classes[i]
+
+                idx = np.array([True if i in labels_to_use else False for i in labels.argmax(axis=-1)])
+                data_aux = data[idx]
+                rest_data = data[~idx]
+                labels_aux = labels[idx]
+                rest_labels = labels[~idx]
+
+                randomize = np.arange(len(labels_aux))
+                np.random.shuffle(randomize)
+                data_aux = data_aux[randomize, ]
+                labels_aux = labels_aux[randomize]
+
+                percent_per_client = min(int(weights[i] * len(data)), len(data_aux))
+
+                federated_data.append(np.array(data_aux[0:percent_per_client, ]))
+                rest_data = np.append(rest_data, data_aux[percent_per_client:, ], axis=0)
+                federated_label.append(np.array(labels_aux[0:percent_per_client, ]))
+                rest_labels = np.append(rest_labels, labels_aux[percent_per_client:, ], axis=0)
+
+                data = rest_data
+                labels = rest_labels
+
+            federated_data = np.array(federated_data)
+            federated_label = np.array(federated_label)
 
         return federated_data, federated_label
