@@ -15,7 +15,7 @@ class DataDistribution(abc.ABC):
     def __init__(self, database):
         self._database = database
 
-    def get_federated_data(self, num_nodes, percent=100, weights=None):
+    def get_federated_data(self, num_nodes, percent=100, weights=None, sampling="without_replacement"):
         """
         Method that split the whole data between the established number of nodes.
 
@@ -34,7 +34,7 @@ class DataDistribution(abc.ABC):
         federated_train_data, federated_train_label = self.make_data_federated(train_data,
                                                                                train_label,
                                                                                num_nodes, percent,
-                                                                               weights)
+                                                                               weights, sampling)
 
         federated_data = FederatedData()
         for node in range(num_nodes):
@@ -44,7 +44,7 @@ class DataDistribution(abc.ABC):
         return federated_data, test_data, test_label
 
     @abc.abstractmethod
-    def make_data_federated(self, data, labels, num_nodes, percent, weights):
+    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling):
         """
         Method that must implement every data distribution extending this class
 
