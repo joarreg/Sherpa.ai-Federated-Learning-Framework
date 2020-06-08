@@ -77,10 +77,6 @@ def test_make_data_federated_wrong_weights():
     data_distribution = IidDataDistribution(data)
 
     train_data, train_label = data_distribution._database.train
-    validation_data, validation_label = data_distribution._database.validation
-
-    train_data = np.concatenate((train_data, validation_data), axis=0)
-    train_label = np.concatenate((train_label, validation_label), axis=0)
 
     num_nodes = 3
     percent = 60
