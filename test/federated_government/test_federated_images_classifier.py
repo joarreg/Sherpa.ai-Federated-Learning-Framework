@@ -1,4 +1,4 @@
-from shfl.learning_approach.federated_images_classifier import FederatedImagesClassifier, ImagesDataBases
+from shfl.federated_government.federated_images_classifier import FederatedImagesClassifier, ImagesDataBases
 from shfl.model.deep_learning_model import DeepLearningModel
 from shfl.federated_aggregator.federated_aggregator import FederatedAggregator
 from shfl.private.federated_operation import FederatedData

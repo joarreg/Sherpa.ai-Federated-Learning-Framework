@@ -1,4 +1,4 @@
-from shfl.learning_approach.federated_government import FederatedGovernment
+from shfl.federated_government.federated_government import FederatedGovernment
 from shfl.federated_aggregator.fedavg_aggregator import FedAvgAggregator
 from shfl.data_distribution.data_distribution_iid import IidDataDistribution
 from shfl.data_distribution.data_distribution_non_iid import NonIidDataDistribution

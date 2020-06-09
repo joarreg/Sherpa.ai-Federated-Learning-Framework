@@ -9,7 +9,7 @@ class IidDataDistribution(DataDistribution):
         [Data Distribution](../Data Distribution)
     """
 
-    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling="without_sampling"):
+    def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling="without_replacement"):
         """
         Method that makes data and labels argument federated in an iid scenario.
 
@@ -18,7 +18,7 @@ class IidDataDistribution(DataDistribution):
             labels: Labels to federate
             num_nodes: Number of nodes to create
             percent: Percent of the data (between 0 and 100) to be distributed
-            weights: Array of weights for weighted distribution
+            weights: Array of weights for weighted distribution (default is None)
             sampling: methodology between with or without sampling (default "without_sampling")
 
         # Returns:
@@ -31,7 +31,7 @@ class IidDataDistribution(DataDistribution):
         # Shuffle data
         randomize = np.arange(len(labels))
         np.random.shuffle(randomize)
-        data = data[randomize,]
+        data = data[randomize, ]
         labels = labels[randomize]
 
         # Select percent
@@ -41,8 +41,9 @@ class IidDataDistribution(DataDistribution):
         federated_data = []
         federated_label = []
 
-        if sampling == "without_sampling":
-            weights = np.array([float(i)/sum(weights) for i in weights])
+        if sampling == "without_replacement":
+            if sum(weights) > 1:
+                weights = np.array([float(i)/sum(weights) for i in weights])
 
             sum_used = 0
             percentage_used = 0

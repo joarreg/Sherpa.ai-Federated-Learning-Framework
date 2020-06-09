@@ -73,6 +73,46 @@ def test_make_data_federated():
     assert (np.sort(all_label) == np.sort(train_label[idx])).all()
 
 
+def test_make_data_federated_wrong_weights():
+    random.seed(123)
+    np.random.seed(123)
+
+    data = TestDataBase()
+    data.load_data()
+    data_distribution = NonIidDataDistribution(data)
+
+    train_data, train_label = data_distribution._database.train
+
+    num_nodes = 3
+    percent = 60
+    # weights = np.full(num_nodes, 1/num_nodes)
+    weights = [0.5, 0.55, 0.1]
+    federated_data, federated_label = data_distribution.make_data_federated(train_data,
+                                                                            train_label,
+                                                                            num_nodes,
+                                                                            percent,
+                                                                            weights,
+                                                                            'without_replacement')
+
+    weights = np.array([float(i) / sum(weights) for i in weights])
+
+    all_data = np.concatenate(federated_data)
+    all_label = np.concatenate(federated_label)
+
+    idx = []
+    for data in all_data:
+        idx.append(np.where((data == train_data).all(axis=1))[0][0])
+
+    seed_weights = [26, 16, 1]
+    for i, weight in enumerate(weights):
+        assert federated_data[i].shape[0] == seed_weights[i]
+
+    #assert all_data.shape[0] == 60
+    assert num_nodes == federated_data.shape[0] == federated_label.shape[0]
+    assert (np.sort(all_data.ravel()) == np.sort(train_data[idx, ].ravel())).all()
+    assert (np.sort(all_label) == np.sort(train_label[idx])).all()
+
+
 def test_get_federated_data():
     data = TestDataBase()
     data.load_data()
