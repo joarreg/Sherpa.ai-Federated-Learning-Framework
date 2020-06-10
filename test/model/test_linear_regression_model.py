@@ -1,8 +1,5 @@
 import numpy as np
-from unittest.mock import Mock
 import pytest
-
-
 from shfl.model.linear_regression_model import LinearRegressionModel
 
 

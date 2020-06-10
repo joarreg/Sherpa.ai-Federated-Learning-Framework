@@ -276,6 +276,8 @@ def check_epsilon_delta(epsilon_delta):
 def _get_data_size(data):
     if np.isscalar(data):
         size = 1
+    elif type(data) is np.ndarray:
+        size = data.shape
     else:
         size = len(data)
 

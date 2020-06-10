@@ -9,8 +9,9 @@ class LogisticRegressionModel(TrainableModel):
     This class offers support for scikit-learn logistic regression model. It implements [TrainableModel](../Model/#trainablemodel-class)
 
     # Arguments:
-        n_features: number of features (independent variables)
-        n_classes: number of classes to predict (default is 1)
+        n_features: integer number of features (independent variables).
+        classes: array of classes to predict. At least 2 classes must be provided.
+        model_inputs: optional dictionary containing the [model input parameters](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
     """
     def __init__(self, n_features, classes, model_inputs={}):
         self._check_initialization(n_features, classes)
@@ -21,7 +22,7 @@ class LogisticRegressionModel(TrainableModel):
         n_classes = len(classes)
         if n_classes == 2:
             n_classes = 1
-        self.set_model_params(np.zeros((len(classes), n_features + 1)))
+        self.set_model_params(np.zeros((n_classes, n_features + 1)))
         
     def train(self, data, labels):
         """
@@ -29,7 +30,7 @@ class LogisticRegressionModel(TrainableModel):
 
         # Arguments
             data: Data, array-like of shape (n_samples, n_features)
-            labels: Class, array-like of shape (n_samples,) or (n_samples, n_classes)
+            labels: Target classes, array-like of shape (n_samples,) 
         """
         self._check_data(data)
         self._check_labels(labels)
@@ -56,7 +57,7 @@ class LogisticRegressionModel(TrainableModel):
         
         Arguments:
             data: Data, array-like of shape (n_samples, n_features)
-            labels: Class, array-like of shape (n_samples,) or (n_samples, n_classes)
+            labels: Target classes, array-like of shape (n_samples,) 
         """
         self._check_data(data)
         self._check_labels(labels)
@@ -104,12 +105,14 @@ class LogisticRegressionModel(TrainableModel):
                 
     def _check_initialization(self, n_features, classes):
         if not isinstance(n_features, int):
-            raise AssertionError("n_features must be a positive integer number. Provided value " + str(n) + ".")
+            raise AssertionError("n_features must be a positive integer number. Provided " + str(n_features) + " features.")
         if n_features < 0:
-            raise AssertionError("It must verify that n_features > 0. Provided value " + str(n) + ".")
+            raise AssertionError("It must verify that n_features > 0. Provided value " + str(n_features) + ".")
         if len(classes) < 2:
-            raise AssertionError("It must verify that the number of classes > 2. Provided " + str(len(classes)) + " classes.")
+            raise AssertionError("It must verify that the number of classes > 1. Provided " + str(len(classes)) + " classes.")
         if len(np.unique(classes)) != len(classes):
-            raise AssertionError("No duplicated classes allowed. Provided " + str(len(classes) - len(np.unique(classes))) + " duplicated classes.")
+            classes = list(classes)
+            duplicated_classes = [i_class for i_class in classes if classes.count(i_class) > 1]
+            raise AssertionError("No duplicated classes allowed. Class(es) duplicated: " + str(duplicated_classes) )
            
             
