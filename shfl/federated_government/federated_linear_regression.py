@@ -1,6 +1,5 @@
 from shfl.federated_government.federated_government import FederatedGovernment
 from shfl.data_distribution.data_distribution_iid import IidDataDistribution
-from shfl.data_distribution.data_distribution_non_iid import NonIidDataDistribution
 from shfl.federated_aggregator.fedavg_aggregator import FedAvgAggregator
 from shfl.model.linear_regression_model import LinearRegressionModel
 from shfl.data_base.california_housing import CaliforniaHousing
@@ -28,7 +27,7 @@ class FederatedLinearRegression(FederatedGovernment):
         percent: percentage of the database to distribute among nodes.
     """
 
-    def __init__(self, data_base_name_key, iid=True, num_nodes=20, percent=100):
+    def __init__(self, data_base_name_key, num_nodes=20, percent=100):
         if data_base_name_key in LinearRegressionDataBases.__members__.keys():
             module = LinearRegressionDataBases.__members__[data_base_name_key].value
             data_base = module()
@@ -36,10 +35,7 @@ class FederatedLinearRegression(FederatedGovernment):
 
             self._num_features = train_data.shape[1]
 
-            if iid:
-                distribution = IidDataDistribution(data_base)
-            else:
-                distribution = NonIidDataDistribution(data_base)
+            distribution = IidDataDistribution(data_base)
 
             federated_data, self._test_data, self._test_labels = distribution.get_federated_data(num_nodes=num_nodes,
                                                                                                  percent=percent)
