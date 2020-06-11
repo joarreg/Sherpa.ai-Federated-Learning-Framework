@@ -67,6 +67,22 @@ class LogisticRegressionModel(TrainableModel):
         cks = metrics.cohen_kappa_score(labels, prediction)
         
         return bas, cks
+    
+    def performance(self, data, labels):
+        """
+        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        
+        Arguments:
+            data: Data, array-like of shape (n_samples, n_features)
+            labels: Target classes, array-like of shape (n_samples,) 
+        """
+        self._check_data(data)
+        self._check_labels(labels)
+        
+        prediction = self.predict(data)
+        bas = metrics.balanced_accuracy_score(labels, prediction)
+        
+        return bas
 
     def get_model_params(self):
         """
