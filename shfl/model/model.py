@@ -58,7 +58,7 @@ class TrainableModel(abc.ABC):
         """
 
     @abc.abstractmethod
-    def performance(self):
+    def performance(self, data, labels):
         """
         This method must return the performance of the prediction in terms of the most representative metric
         for those labels.
