@@ -87,6 +87,7 @@ def test_logistic_regression_model_train_evaluate():
     lgr = LogisticRegressionModel(n_features=np.shape(train_data)[1], classes=np.unique(train_labels), model_inputs={'max_iter':150})
     lgr.train(data=train_data, labels=train_labels)
     evaluation = np.array(lgr.evaluate(data=test_data, labels=test_labels))
+    performance = lgr.performance(data=test_data, labels=test_labels)
     prediction = lgr.predict(data=test_data)
     model_params = lgr.get_model_params()
     
@@ -97,6 +98,7 @@ def test_logistic_regression_model_train_evaluate():
     assert np.array_equal(prediction, prediction_ref)
     assert np.array_equal(evaluation, np.array((metrics.balanced_accuracy_score(test_labels, prediction_ref),\
                                                metrics.cohen_kappa_score(test_labels, prediction_ref))))
+    assert performance == metrics.balanced_accuracy_score(test_labels, prediction_ref)
     
     
 def test_logistic_regression_model_set_get_params():
