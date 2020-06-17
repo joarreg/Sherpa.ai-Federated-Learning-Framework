@@ -4,18 +4,18 @@ import pytest
 
 
 def test_reproducibility():
-    Reproducibility.getInstance().delete_instance()
+    Reproducibility.get_instance().delete_instance()
 
     seed = 1234
     Reproducibility(seed)
 
-    assert Reproducibility.getInstance().seed == seed
-    assert Reproducibility.getInstance().seeds['server'] == seed
+    assert Reproducibility.get_instance().seed == seed
+    assert Reproducibility.get_instance().seeds['server'] == seed
     assert np.random.get_state()[1][0] == seed
 
 
 def test_reproducibiliry_singleton():
-    Reproducibility.getInstance().delete_instance()
+    Reproducibility.get_instance().delete_instance()
 
     seed = 1234
     Reproducibility(seed)
@@ -25,12 +25,12 @@ def test_reproducibiliry_singleton():
 
 
 def test_set_seed():
-    Reproducibility.getInstance().delete_instance()
+    Reproducibility.get_instance().delete_instance()
 
     seed = 1234
     Reproducibility(seed)
 
     id = 'ID0'
-    Reproducibility.getInstance().set_seed(id)
+    Reproducibility.get_instance().set_seed(id)
 
-    assert Reproducibility.getInstance().seeds[id]
+    assert Reproducibility.get_instance().seeds[id]

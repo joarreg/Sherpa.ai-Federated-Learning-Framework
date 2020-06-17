@@ -10,13 +10,13 @@ class Reproducibility:
     call/get a seed.
 
     Server initialize it with Reproducibility(seed) before all executions
-    For get a seed, the client has to put Reproducibility.getInstance().set_seed(ID)
+    For get a seed, the client has to put Reproducibility.get_instance().set_seed(ID)
 
     Is important to know that the reproducibility only works if you execute the experiment in CPU. Many ops in GPU
     like convolutions are not deterministic and the don't replicate.
 
     # Methods:
-        getInstance():
+        get_instance():
             Return the singleton instance
         set_seed():
             The clients call this method for set a seed. They have to know their own ID's
@@ -34,7 +34,7 @@ class Reproducibility:
     __instance = None
 
     @staticmethod
-    def getInstance():
+    def get_instance():
         """
         Static access method.
 
