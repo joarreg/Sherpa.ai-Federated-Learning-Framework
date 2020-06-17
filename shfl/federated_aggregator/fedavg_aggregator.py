@@ -24,10 +24,8 @@ class FedAvgAggregator(FederatedAggregator):
         """
 
         clients_params_array = np.array(clients_params)
+        shape = clients_params_array.shape[1]
 
-        num_clients = clients_params_array.shape[0]
-        num_layers = clients_params_array.shape[1]
-
-        aggregated_weights = np.array([np.mean(clients_params_array[:, layer], axis=0) for layer in range(num_layers)])
+        aggregated_weights = np.array([np.mean(clients_params_array[:, layer], axis=0) for layer in range(shape)])
 
         return aggregated_weights
