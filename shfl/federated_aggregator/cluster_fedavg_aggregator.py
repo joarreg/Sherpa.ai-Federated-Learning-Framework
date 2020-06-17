@@ -21,7 +21,7 @@ class ClusterFedAvgAggregator(FederatedAggregator):
         # Returns
             aggregated_weights: aggregator weights representing the global learning model
         """
-        clients_params_array = np.concatenate((clients_params))
+        clients_params_array = np.concatenate(clients_params)
 
         n_clusters = clients_params[0].shape[0]
         model_aggregator = KMeans(n_clusters=n_clusters, init='k-means++')
