@@ -28,6 +28,7 @@ class L1SensitivityNorm(SensitivityNorm):
         x = x_1 - x_2
         return np.sum(np.abs(x))
 
+
 class L2SensitivityNorm(SensitivityNorm):
     """
     Implements the L2 norm of the difference between x_1 and x_2

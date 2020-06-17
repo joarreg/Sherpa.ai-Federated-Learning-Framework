@@ -1,6 +1,7 @@
 import abc
 import numpy as np
 
+
 class LabeledData:
     """
     Class to represent labeled data
@@ -68,7 +69,7 @@ class DPDataAccessDefinition(DataAccessDefinition):
         """
         if len(epsilon_delta) != 2:
             raise ValueError("epsilon_delta parameter should be a tuple with two elements, but {} were given"
-                            .format(len(epsilon_delta)))
+                             .format(len(epsilon_delta)))
         if epsilon_delta[0] < 0:
             raise ValueError("Epsilon have to be greater than zero")
         if epsilon_delta[1] < 0:

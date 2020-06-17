@@ -415,10 +415,6 @@ def generate(sources_dir):
                     os.path.join(str(sources_dir), 'index.md'))
     shutil.copyfile(os.path.join(str(shfl_dir), 'install.md'),
                     os.path.join(str(sources_dir), 'install.md'))
-    #shutil.copyfile(os.path.join(str(shfl_dir), 'CONTRIBUTING.md'),
-    #                os.path.join(str(sources_dir), 'contributing.md'))
-    #copy_examples(os.path.join(str(shfl_dir), 'examples'),
-    #              os.path.join(str(sources_dir), 'examples'))
 
 
 if __name__ == '__main__':

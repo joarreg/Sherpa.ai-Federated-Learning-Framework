@@ -72,7 +72,6 @@ class Reproducibility:
         random.seed(self.__seeds[id])
         tf.random.set_seed(self.__seeds[id])
 
-
     @property
     def seed(self):
         return self.__seed
@@ -82,7 +81,7 @@ class Reproducibility:
         return self.__seeds
 
     def delete_instance(self):
-        if Reproducibility.__instance != None:
+        if Reproducibility.__instance is not None:
             del self.__seed
             del self.__seeds
             Reproducibility.__instance = None

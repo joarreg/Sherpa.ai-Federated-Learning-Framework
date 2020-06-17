@@ -64,6 +64,7 @@ class Sampler(DPDataAccessDefinition):
             sampled_data: sample of size self._sample_size
         """
 
+
 class SampleWithoutReplacement(Sampler):
     """
         It implements the sample with replacement technique (Theorem 9 from the reference) which reduces

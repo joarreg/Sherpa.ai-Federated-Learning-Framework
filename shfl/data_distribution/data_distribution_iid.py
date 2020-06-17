@@ -61,7 +61,7 @@ class IidDataDistribution(DataDistribution):
                 federated_label.append(np.array(labels[:int((weights[client]) * len(labels))]))
 
                 np.random.shuffle(randomize)
-                data = data[randomize,]
+                data = data[randomize, ]
                 labels = labels[randomize]
 
         federated_data = np.array(federated_data)

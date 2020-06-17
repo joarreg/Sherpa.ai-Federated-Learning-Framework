@@ -12,7 +12,7 @@ class LinearRegressionModel(TrainableModel):
         n_features: number of features (independent variables)
         n_targets: number of targets to predict (default is 1)
     """
-    def __init__(self, n_features, n_targets = 1):
+    def __init__(self, n_features, n_targets=1):
         self._check_initialization(n_features)
         self._check_initialization(n_targets)
         self._model = LinearRegression()
@@ -88,7 +88,7 @@ class LinearRegressionModel(TrainableModel):
             stack_params = np.hstack((np.array(self._model.intercept_), self._model.coef_))
             stack_params = stack_params.reshape(1, -1)
         elif self._n_targets > 1:
-            stack_params = np.hstack((np.array(self._model.intercept_).reshape(-1,1), self._model.coef_))
+            stack_params = np.hstack((np.array(self._model.intercept_).reshape(-1, 1), self._model.coef_))
         return stack_params
 
     def set_model_params(self, params):
@@ -99,7 +99,7 @@ class LinearRegressionModel(TrainableModel):
             self._model.intercept_ = params[0][0]               
             self._model.coef_ = params[0][1:]
         elif self._n_targets > 1:
-            self._model.intercept_ = params[:,0]
+            self._model.intercept_ = params[:, 0]
             self._model.coef_ = params[:, 1:]
             
     def _check_data(self, data):

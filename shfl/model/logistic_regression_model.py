@@ -97,7 +97,7 @@ class LogisticRegressionModel(TrainableModel):
         """
         Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
         """
-        self._model.intercept_ = params[:,0]
+        self._model.intercept_ = params[:, 0]
         self._model.coef_ = params[:, 1:]
 
     def _check_data(self, data):
@@ -132,4 +132,4 @@ class LogisticRegressionModel(TrainableModel):
         if len(np.unique(classes)) != len(classes):
             classes = list(classes)
             duplicated_classes = [i_class for i_class in classes if classes.count(i_class) > 1]
-            raise AssertionError("No duplicated classes allowed. Class(es) duplicated: " + str(duplicated_classes) )
+            raise AssertionError("No duplicated classes allowed. Class(es) duplicated: " + str(duplicated_classes))

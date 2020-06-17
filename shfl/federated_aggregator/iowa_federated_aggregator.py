@@ -76,7 +76,7 @@ class IowaFederatedAggregator(WeightedFedAvgAggregator):
 
         if self._dynamic:
             max_distance = self._performance[0] - self._performance[-1]
-            vector_distances = np.array( [self._performance[0] - self._performance[i] for i in range(num_clients)])
+            vector_distances = np.array([self._performance[0] - self._performance[i] for i in range(num_clients)])
 
             is_outlier = np.array([vector_distances[i] > self._k * max_distance for i in range(num_clients)])
             num_outliers = len(is_outlier[is_outlier is True])

@@ -61,10 +61,10 @@ class IowaFederatedGovernment(FederatedGovernment):
         """
         randomize = np.arange(len(test_label))
         np.random.shuffle(randomize)
-        test_data = test_data[randomize,]
+        test_data = test_data[randomize, ]
         test_label = test_label[randomize]
 
-        # Split between validation and test
+        # Split between validation and test
         validation_data = test_data[:int(0.15*len(test_label)), ]
         validation_label = test_label[:int(0.15*len(test_label))]
 

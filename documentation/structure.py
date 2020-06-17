@@ -33,7 +33,7 @@ PAGES = [
             private.node.DataNode.evaluate,
         ],
     },
-{
+    {
         'page': 'private/data.md',
         'classes': [
             private.data.DataAccessDefinition,

@@ -71,7 +71,7 @@ class NonIidDataDistribution(DataDistribution):
         # Shuffle data
         randomize = np.arange(len(labels))
         np.random.shuffle(randomize)
-        data = data[randomize,]
+        data = data[randomize, ]
         labels = labels[randomize]
 
         # Select percent
