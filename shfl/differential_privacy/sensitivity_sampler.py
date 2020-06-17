@@ -56,13 +56,15 @@ class SensitivitySampler:
         gs = np.sort(gs)
         return gs[k-1], np.mean(gs)
 
-    def _sensitivity_norm(self, query, sensitivity_norm, x1, x2):
+    @staticmethod
+    def _sensitivity_norm(query, sensitivity_norm, x1, x2):
         value_1 = query.get(x1)
         value_2 = query.get(x2)
 
         return sensitivity_norm.compute(value_1, value_2)
 
-    def _sensitivity_sampler_config(self, m, gamma):
+    @staticmethod
+    def _sensitivity_sampler_config(m, gamma):
         if m is None:
             lambert_value = np.real(special.lambertw(-gamma / (2 * np.exp(0.5)), 1))
             rho = np.exp(lambert_value + 0.5)

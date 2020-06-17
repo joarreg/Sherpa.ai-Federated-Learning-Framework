@@ -126,7 +126,8 @@ class LinearRegressionModel(TrainableModel):
             raise AssertionError("Labels need to have the same number of targets described by the model " +
                                  str(self._n_targets) + ". Current labels have " + str(labels.shape[1]) + " targets.")
 
-    def _check_initialization(self, n):
+    @staticmethod
+    def _check_initialization(n):
         if not isinstance(n, int):
             raise AssertionError("n_features and n_targets must be a positive integer number. Provided value "
                                  + str(n) + ".")

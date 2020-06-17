@@ -11,7 +11,8 @@ class NonIidDataDistribution(DataDistribution):
         [Data Distribution](../Data Distribution)
     """
 
-    def choose_labels(self, num_nodes, total_labels):
+    @staticmethod
+    def choose_labels(num_nodes, total_labels):
         """
         Method that randomly choose labels used for each client in non-iid scenario.
 

@@ -120,8 +120,9 @@ class LogisticRegressionModel(TrainableModel):
         if not np.array_equal(self._model.classes_, classes):
             raise AssertionError("Labels need to have the same classes described by the model, " + str(self._model.classes_)
                                  + ". Labels of this node are " + str(classes) + " .")
-                
-    def _check_initialization(self, n_features, classes):
+
+    @staticmethod
+    def _check_initialization(n_features, classes):
         if not isinstance(n_features, int):
             raise AssertionError("n_features must be a positive integer number. Provided " + str(n_features) + " features.")
         if n_features < 0:
@@ -132,5 +133,3 @@ class LogisticRegressionModel(TrainableModel):
             classes = list(classes)
             duplicated_classes = [i_class for i_class in classes if classes.count(i_class) > 1]
             raise AssertionError("No duplicated classes allowed. Class(es) duplicated: " + str(duplicated_classes) )
-           
-            
