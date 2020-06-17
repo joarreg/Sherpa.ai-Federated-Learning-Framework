@@ -33,10 +33,10 @@ class FederatedDataNode(DataNode):
         super().__init__()
         self._federated_data_identifier = federated_data_identifier
 
-    def query(self, private_property=None):
+    def query(self, private_property=None, **kwargs):
         if private_property is None:
             private_property = self._federated_data_identifier
-        return super().query(private_property)
+        return super().query(private_property, **kwargs)
 
     def configure_data_access(self, data_access_definition):
         super().configure_data_access(self._federated_data_identifier, data_access_definition)
