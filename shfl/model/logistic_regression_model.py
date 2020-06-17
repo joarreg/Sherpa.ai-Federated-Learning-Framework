@@ -13,7 +13,9 @@ class LogisticRegressionModel(TrainableModel):
         classes: array of classes to predict. At least 2 classes must be provided.
         model_inputs: optional dictionary containing the [model input parameters](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
     """
-    def __init__(self, n_features, classes, model_inputs={}):
+    def __init__(self, n_features, classes, model_inputs=None):
+        if model_inputs is None:
+            model_inputs = {}
         self._check_initialization(n_features, classes)
         self._model = LogisticRegression(**model_inputs)
         self._n_features = n_features
