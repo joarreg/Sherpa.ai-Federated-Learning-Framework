@@ -14,6 +14,8 @@ class WeightedFedAvgAggregator(FederatedAggregator):
     def aggregate_weights(self, clients_params):
         """
         Implementation of abstract method of class [AggregateWeightsFunction](../Federate Aggregator/#federatedaggregator-class)
+        # Arguments:
+            clients_params: list of multi-dimensional (numeric) arrays. Each entry in the list contains the model's parameters of one client.
 
         # Returns
             aggregated_weights: aggregator weights representing the global learning model
