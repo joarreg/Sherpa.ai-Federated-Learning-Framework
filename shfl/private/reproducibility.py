@@ -41,7 +41,7 @@ class Reproducibility:
         Return:
             Singleton instance class
         """
-        if Reproducibility.__instance == None:
+        if Reproducibility.__instance is None:
             Reproducibility()
         return Reproducibility.__instance
 
@@ -49,8 +49,8 @@ class Reproducibility:
         """
         Virtually private constructor.
         """
-        if Reproducibility.__instance != None:
-             raise Exception("This class is a singleton")
+        if Reproducibility.__instance is not None:
+            raise Exception("This class is a singleton")
         else:
             self.__seed = seed
             self.__seeds = {'server': self.__seed}
