@@ -5,7 +5,6 @@ from shfl.model.linear_regression_model import LinearRegressionModel
 from shfl.data_base.california_housing import CaliforniaHousing
 
 from enum import Enum
-import numpy as np
 
 
 class LinearRegressionDataBases(Enum):

@@ -2,7 +2,6 @@ import abc
 import numpy as np
 from math import log
 from math import exp
-from scipy.special import comb
 from functools import reduce
 from operator import mul
 
