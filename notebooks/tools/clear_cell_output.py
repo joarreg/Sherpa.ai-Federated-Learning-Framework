@@ -53,14 +53,16 @@ def replace_relative_links(nb):
     """make all relative links to files, global by replacing them with github ones"""
     for cell in _cells(nb):
         if cell['cell_type'] == 'markdown':
-            cell['source'] = cell['source'].replace("(../../", "(https://github.com/sherpaai/Sherpa.FL/blob/master/")
+            cell['source'] = cell['source'].replace(
+                "(../../", "(https://github.com/sherpaai/Sherpa.FL/blob/master/")
     return nb
+
 
 if __name__ == '__main__':
     for filename in sys.argv[1:]:
         with io.open(filename, 'r', encoding='utf8') as f:
             nb = read(f, as_version=NO_CONVERT)
         nb = strip_output(nb)
-        nb = replace_relative_links(nb)
+        # nb = replace_relative_links(nb)
         with io.open(filename, 'w', encoding='utf8') as f:
             write(nb, f)
