@@ -170,7 +170,10 @@ class LaplaceMechanism(DPDataAccessDefinition):
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
 
-    def __init__(self, sensitivity, epsilon, query=IdentityFunction()):
+    def __init__(self, sensitivity, epsilon, query=None):
+        if query is None:
+            query = IdentityFunction()
+
         self._check_epsilon_delta((epsilon, 0))
         self._check_sensitivity_positive(sensitivity)
 
@@ -232,7 +235,10 @@ class GaussianMechanism(DPDataAccessDefinition):
            https://www.cis.upenn.edu/~aaroth/Papers/privacybook.pdf)
     """
 
-    def __init__(self, sensitivity, epsilon_delta, query=IdentityFunction()):
+    def __init__(self, sensitivity, epsilon_delta, query=None):
+        if query is None:
+            query = IdentityFunction()
+            
         self._check_epsilon_delta(epsilon_delta)
         if epsilon_delta[0] >= 1:
             raise ValueError(
