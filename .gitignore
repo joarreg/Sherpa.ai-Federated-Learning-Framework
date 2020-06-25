@@ -5,8 +5,8 @@
 shfl.egg-info/
 .coverage*
 .directory
-documentation/sources/*
-documentation/site/*
+docs/sources/*
+docs/site/*
 venv/*
 notebooks/data/*
 test_git_ignored/*

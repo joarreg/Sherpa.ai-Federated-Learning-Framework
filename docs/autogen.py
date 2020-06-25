@@ -12,7 +12,7 @@ try:
 except ImportError:
     import pathlib2 as pathlib
 
-from documentation.structure import PAGES
+from structure import PAGES
 
 
 shfl_dir = pathlib.Path(__file__).resolve().parents[1]
@@ -291,7 +291,7 @@ def get_module_docstring(filepath):
 
 
 def copy_examples(examples_dir, destination_dir):
-    """Copy the examples directory in the documentation.
+    """Copy the examples directory in the docs.
     Prettify files by extracting the docstrings written in Markdown.
     """
     pathlib.Path(destination_dir).mkdir(exist_ok=True)
@@ -324,11 +324,11 @@ def copy_examples(examples_dir, destination_dir):
 
 
 def generate(sources_dir):
-    """Generates the markdown files for the documentation.
+    """Generates the markdown files for the docs.
     # Arguments
         sources_dir: Where to put the markdown files.
     """
-    template_dir = os.path.join(str(shfl_dir), 'documentation', 'templates')
+    template_dir = os.path.join(str(shfl_dir), 'docs', 'templates')
 
     print('Cleaning up existing sources directory.')
     if os.path.exists(sources_dir):
@@ -415,7 +415,9 @@ def generate(sources_dir):
                     os.path.join(str(sources_dir), 'index.md'))
     shutil.copyfile(os.path.join(str(shfl_dir), 'install.md'),
                     os.path.join(str(sources_dir), 'install.md'))
+    shutil.copyfile(os.path.join(str(shfl_dir), 'CONTRIBUTING.md'),
+                    os.path.join(str(sources_dir), 'CONTRIBUTING.md'))
 
 
 if __name__ == '__main__':
-    generate(os.path.join(str(shfl_dir), 'documentation', 'sources'))
+    generate(os.path.join(str(shfl_dir), 'docs', 'sources'))
