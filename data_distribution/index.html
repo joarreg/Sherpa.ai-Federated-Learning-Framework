@@ -1,0 +1,818 @@
+
+
+
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      <meta http-equiv="x-ua-compatible" content="ie=edge">
+      
+      
+      
+      
+        <meta name="lang:clipboard.copy" content="Copy to clipboard">
+      
+        <meta name="lang:clipboard.copied" content="Copied to clipboard">
+      
+        <meta name="lang:search.language" content="en">
+      
+        <meta name="lang:search.pipeline.stopwords" content="True">
+      
+        <meta name="lang:search.pipeline.trimmer" content="True">
+      
+        <meta name="lang:search.result.none" content="No matching documents">
+      
+        <meta name="lang:search.result.one" content="1 matching document">
+      
+        <meta name="lang:search.result.other" content="# matching documents">
+      
+        <meta name="lang:search.tokenizer" content="[\s\-]+">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1, mkdocs-material-4.6.3">
+    
+    
+      
+        <title>Data Distribution - Sherpa.FL</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/application.adb8469c.css">
+      
+      
+    
+    
+      <script src="../assets/javascripts/modernizr.86422ebf.js"></script>
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style>
+      
+    
+    <link rel="stylesheet" href="../assets/fonts/material-icons.css">
+    
+    
+    
+      
+    
+    
+  </head>
+  
+    <body dir="ltr">
+  
+    <svg class="md-svg">
+      <defs>
+        
+        
+      </defs>
+    </svg>
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" data-md-component="overlay" for="__drawer"></label>
+    
+      <a href="#data-distribution" tabindex="0" class="md-skip">
+        Skip to content
+      </a>
+    
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid">
+    <div class="md-flex">
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <a href=".." title="Sherpa.FL" aria-label="Sherpa.FL" class="md-header-nav__button md-logo">
+          
+            <i class="md-icon"></i>
+          
+        </a>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        <label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label>
+      </div>
+      <div class="md-flex__cell md-flex__cell--stretch">
+        <div class="md-flex__ellipsis md-header-nav__title" data-md-component="title">
+          
+            <span class="md-header-nav__topic">
+              Sherpa.FL
+            </span>
+            <span class="md-header-nav__topic">
+              
+                Data Distribution
+              
+            </span>
+          
+        </div>
+      </div>
+      <div class="md-flex__cell md-flex__cell--shrink">
+        
+          <label class="md-icon md-icon--search md-header-nav__button" for="__search"></label>
+          
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" aria-label="search" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active">
+      <label class="md-icon md-search__icon" for="__search"></label>
+      <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">
+        &#xE5CD;
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="result">
+          <div class="md-search-result__meta">
+            Type to start searching
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+        
+      </div>
+      
+    </div>
+  </nav>
+</header>
+    
+    <div class="md-container">
+      
+        
+      
+      
+      <main class="md-main" role="main">
+        <div class="md-main__inner md-grid" data-md-component="container">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" data-md-level="0">
+  <label class="md-nav__title md-nav__title--site" for="__drawer">
+    <a href=".." title="Sherpa.FL" class="md-nav__button md-logo">
+      
+        <i class="md-icon"></i>
+      
+    </a>
+    Sherpa.FL
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href=".." title="Home" class="md-nav__link">
+      Home
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../getting-started/" title="Getting started" class="md-nav__link">
+      Getting started
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3">
+    
+    <label class="md-nav__link" for="nav-3">
+      Private
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-3">
+        Private
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../private/overview/" title="Overview" class="md-nav__link">
+      Overview
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../private/data_node/" title="DataNode" class="md-nav__link">
+      DataNode
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../private/data/" title="Data" class="md-nav__link">
+      Data
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../private/query/" title="Query" class="md-nav__link">
+      Query
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../private/federated_operation/" title="Federated Operation" class="md-nav__link">
+      Federated Operation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../private/federated_attack/" title="Federated Attack" class="md-nav__link">
+      Federated Attack
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../private/reproducibility/" title="Reproducibility" class="md-nav__link">
+      Reproducibility
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../databases/" title="Databases" class="md-nav__link">
+      Databases
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-toggle md-nav__toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Data Distribution
+      </label>
+    
+    <a href="./" title="Data Distribution" class="md-nav__link md-nav__link--active">
+      Data Distribution
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#datadistribution-class" class="md-nav__link">
+    DataDistribution class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datadistribution-methods" class="md-nav__link">
+    DataDistribution methods
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_federated_data" class="md-nav__link">
+    get_federated_data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make_data_federated" class="md-nav__link">
+    make_data_federated
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iiddatadistribution-class" class="md-nav__link">
+    IidDataDistribution class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noniiddatadistribution-class" class="md-nav__link">
+    NonIidDataDistribution class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noniiddatadistribution-methods" class="md-nav__link">
+    NonIidDataDistribution methods
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choose_labels" class="md-nav__link">
+    choose_labels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../model/" title="Model" class="md-nav__link">
+      Model
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../federated_aggregator/" title="Federated Aggregator" class="md-nav__link">
+      Federated Aggregator
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../federated_government/" title="Learning Approach" class="md-nav__link">
+      Learning Approach
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-toggle md-nav__toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9">
+    
+    <label class="md-nav__link" for="nav-9">
+      Differential Privacy
+    </label>
+    <nav class="md-nav" data-md-component="collapsible" data-md-level="1">
+      <label class="md-nav__title" for="nav-9">
+        Differential Privacy
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../differential_privacy/mechanisms/" title="Mechanisms" class="md-nav__link">
+      Mechanisms
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../differential_privacy/sensitivity_sampler/" title="Sensitivity Sampler" class="md-nav__link">
+      Sensitivity Sampler
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../differential_privacy/norm/" title="Norm" class="md-nav__link">
+      Norm
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../differential_privacy/probability_distribution/" title="Probability Distribution" class="md-nav__link">
+      Probability Distribution
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../differential_privacy/composition/" title="Composition" class="md-nav__link">
+      Composition
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../differential_privacy/sampling/" title="Sampling" class="md-nav__link">
+      Sampling
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">Table of contents</label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#datadistribution-class" class="md-nav__link">
+    DataDistribution class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#datadistribution-methods" class="md-nav__link">
+    DataDistribution methods
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_federated_data" class="md-nav__link">
+    get_federated_data
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#make_data_federated" class="md-nav__link">
+    make_data_federated
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#iiddatadistribution-class" class="md-nav__link">
+    IidDataDistribution class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noniiddatadistribution-class" class="md-nav__link">
+    NonIidDataDistribution class
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#noniiddatadistribution-methods" class="md-nav__link">
+    NonIidDataDistribution methods
+  </a>
+  
+    <nav class="md-nav">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#choose_labels" class="md-nav__link">
+    choose_labels
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+      
+      
+      
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="data-distribution">Data distribution</h1>
+<p>Data distribution overview</p>
+<p><span style="float:right;"><a href="https://github.com/sherpaai/Sherpa.FL/blob/master/shfl/data_distribution/data_distribution.py#L7">[source]</a></span></p>
+<h2 id="datadistribution-class">DataDistribution class</h2>
+<pre><code class="python">shfl.data_distribution.data_distribution.DataDistribution(database)
+</code></pre>
+
+<p>Abstract class for data distribution</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>database</strong>: Database to distribute. (see: <a href="../../databases">Databases</a>)</li>
+</ul>
+<hr />
+<h2 id="datadistribution-methods">DataDistribution methods</h2>
+<h3 id="get_federated_data">get_federated_data</h3>
+<pre><code class="python">get_federated_data(num_nodes, percent=100, weights=None, sampling='without_replacement')
+</code></pre>
+
+<p>Method that split the whole data between the established number of nodes.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>num_nodes</strong>: Number of nodes to create</li>
+<li><strong>percent</strong>: Percent of the data (between 0 and 100) to be distributed (default is 100)</li>
+<li><strong>weights</strong>: Array of weights for weighted distribution (default is None)</li>
+<li><strong>sampling</strong>: methodology between with or without sampling (default "without_sampling")</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong>federated_data, test_data, test_label</strong></li>
+</ul>
+<hr />
+<h3 id="make_data_federated">make_data_federated</h3>
+<pre><code class="python">make_data_federated(data, labels, num_nodes, percent, weights, sampling)
+</code></pre>
+
+<p>Method that must implement every data distribution extending this class</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>data</strong>: Array of data</li>
+<li><strong>labels</strong>: Labels</li>
+</ul>
+<p>num_nodes : Number of nodes</p>
+<ul>
+<li><strong>percent</strong>: Percent of the data (between 0 and 100) to be distributed (default is 100)</li>
+<li><strong>weights</strong>: Array of weights for weighted distribution (default is None)</li>
+<li><strong>sampling</strong>: methodology between with or without sampling (default "without_sampling")</li>
+</ul>
+<p><strong>Returns:</strong></p>
+<ul>
+<li><strong>federated_data</strong>: Data for each client</li>
+<li><strong>federated_label</strong>: Labels for each client</li>
+</ul>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/sherpaai/Sherpa.FL/blob/master/shfl/data_distribution/data_distribution_iid.py#L6">[source]</a></span></p>
+<h2 id="iiddatadistribution-class">IidDataDistribution class</h2>
+<pre><code class="python">shfl.data_distribution.data_distribution.IidDataDistribution(database)
+</code></pre>
+
+<p>Implementation of an independent and identically distributed data distribution using         <a href="../Data Distribution">Data Distribution</a></p>
+<hr />
+<p><span style="float:right;"><a href="https://github.com/sherpaai/Sherpa.FL/blob/master/shfl/data_distribution/data_distribution_non_iid.py#L8">[source]</a></span></p>
+<h2 id="noniiddatadistribution-class">NonIidDataDistribution class</h2>
+<pre><code class="python">shfl.data_distribution.data_distribution.NonIidDataDistribution(database)
+</code></pre>
+
+<p>Implementation of a non-independent and identically distributed data distribution using         <a href="../Data Distribution">Data Distribution</a></p>
+<p>In this data distribution we simulate the scenario in which clients have non-identical distribution since
+they know partially the total classes of the problem.</p>
+<p>This distribution only works with classification problems.</p>
+<hr />
+<h2 id="noniiddatadistribution-methods">NonIidDataDistribution methods</h2>
+<h3 id="choose_labels">choose_labels</h3>
+<pre><code class="python">choose_labels(total_labels)
+</code></pre>
+
+<p>Method that randomly choose labels used for each client in non-iid scenario.</p>
+<p><strong>Arguments:</strong></p>
+<ul>
+<li><strong>num_nodes</strong>: Number of nodes</li>
+<li><strong>total_labels</strong>: Number of labels</li>
+</ul>
+<h1 id="returns">Returns:</h1>
+<p>labels_to_use</p>
+                
+                  
+                
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid">
+        
+          <a href="../databases/" title="Databases" class="md-flex md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-back md-footer-nav__button"></i>
+            </div>
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Previous
+                </span>
+                Databases
+              </span>
+            </div>
+          </a>
+        
+        
+          <a href="../model/" title="Model" class="md-flex md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-flex__cell md-flex__cell--stretch md-footer-nav__title">
+              <span class="md-flex__ellipsis">
+                <span class="md-footer-nav__direction">
+                  Next
+                </span>
+                Model
+              </span>
+            </div>
+            <div class="md-flex__cell md-flex__cell--shrink">
+              <i class="md-icon md-icon--arrow-forward md-footer-nav__button"></i>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        powered by
+        <a href="https://www.mkdocs.org" target="_blank" rel="noopener">MkDocs</a>
+        and
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs</a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/application.c33a9706.js"></script>
+      
+      <script>app.initialize({version:"1.1",url:{base:".."}})</script>
+      
+    
+  </body>
+</html>
