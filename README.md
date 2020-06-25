@@ -21,10 +21,6 @@ Sherpa.FL is a project of [Sherpa.ai](http://sherpa.ai) in collaboration with th
 
 See the [install](install.md) documentation for instructions on how to install Sherpa.FL.
 
-## Getting Started
-
-See the [get started](docs/get_started.md) documentation for a brief introduction to using Sherpa.FL.
-
 ## Contributing
 
 If you are interested in contributing to Sherpa.FL with tutorials, datasets, models, aggregation mechanisms or any other code others could benefit of please be sure to review the [contributing guidelines](CONTRIBUTING.md).
