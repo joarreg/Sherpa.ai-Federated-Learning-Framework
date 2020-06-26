@@ -6,7 +6,7 @@ import copy
 
 class DeepLearningModel(TrainableModel):
     """
-    This class offers support for Keras and tensorflow models. It implements [TrainableModel](../Model/#trainablemodel-class)
+    This class offers support for Keras and tensorflow models. It implements [TrainableModel](../model/#trainablemodel-class)
 
     # Arguments:
         model: Compiled model, ready to train
@@ -24,7 +24,7 @@ class DeepLearningModel(TrainableModel):
 
     def train(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments
             data: Data with shape NxD (N: Number of elements; D: Dimensions)
@@ -39,7 +39,7 @@ class DeepLearningModel(TrainableModel):
 
     def predict(self, data):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             data: Data with shape NxD (N: Number of elements; D: Dimensions)
@@ -53,7 +53,7 @@ class DeepLearningModel(TrainableModel):
 
     def evaluate(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             data: Data with shape NxD (N: Number of elements; D: Dimensions)
@@ -69,7 +69,7 @@ class DeepLearningModel(TrainableModel):
 
     def performance(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             data: Data with shape NxD (N: Number of elements; D: Dimensions)
@@ -85,7 +85,7 @@ class DeepLearningModel(TrainableModel):
 
     def get_model_params(self):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Returns
             weights: Returns the model weights.
@@ -94,7 +94,7 @@ class DeepLearningModel(TrainableModel):
 
     def set_model_params(self, params):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             params: array with the model weights

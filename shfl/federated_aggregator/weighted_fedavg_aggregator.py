@@ -8,12 +8,12 @@ class WeightedFedAvgAggregator(FederatedAggregator):
     Implementation of Weighted Federated Avegaring Aggregator. The aggregation of the parameters is based in the number of data \
     in every node.
 
-    It implements [Federated Aggregator](../Federated Aggregator)
+    It implements [Federated Aggregator](../federated_aggregator/#federatedaggregator-class)
     """
 
     def aggregate_weights(self, clients_params):
         """
-        Implementation of abstract method of class [AggregateWeightsFunction](../Federate Aggregator/#federatedaggregator-class)
+        Implementation of abstract method of class [AggregateWeightsFunction](../federated_aggregator/#federatedaggregator-class)
 
         # Arguments:
             clients_params: list of multi-dimensional (numeric) arrays. Each entry in the list contains the model's parameters of one client.

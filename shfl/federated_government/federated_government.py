@@ -6,7 +6,7 @@ class FederatedGovernment:
        model_builder: Function that return a trainable model (see: [Model](../../model))
        federated_data: Federated data to use. (see: [FederatedData](../../private/federated_operation/#federateddata-class))
        aggregator: Federated aggregator function (see: [Federated Aggregator](../../federated_aggregator))
-       model_param_access: Policy to access model's parameters, by default non-protected (see: [DataAccessDefinition](../data/#dataaccessdefinition))
+       model_param_access: Policy to access model's parameters, by default non-protected (see: [DataAccessDefinition](../private/data/#dataaccessdefinition-class))
 
     # Properties:
         global_model: Return the global model.
@@ -62,14 +62,14 @@ class FederatedGovernment:
 
     def train_all_clients(self):
         """
-        Implementation of the abstract method of class [Learning Approach](../federated_government/#learningapproach-class)
+        Train all the clients
         """
         for data_node in self._federated_data:
             data_node.train_model()
 
     def aggregate_weights(self):
         """
-        Implementation of the abstract method of class [Learning Approach](../Learning Approach/#learningapproach-class)
+        Aggregate weights from all data nodes in the server model
         """
         weights = []
         for data_node in self._federated_data:
@@ -82,8 +82,6 @@ class FederatedGovernment:
 
     def run_rounds(self, n, test_data, test_label):
         """
-        Implementation of the abstract method of class [Learning Approach](../Learning Approach/#learningapproach-class)
-
         Run one more round beginning in the actual state testing in test data and federated_local_test.
 
         # Arguments:

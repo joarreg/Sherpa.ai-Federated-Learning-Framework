@@ -35,7 +35,7 @@ class ImagesDataBases(Enum):
 class FederatedImagesClassifier(FederatedGovernment):
     """
     Class used to represent a high-level federated image classification
-    (see: [FederatedGoverment](../federated_goverment/#federatedgoverment-class)).
+    (see: [FederatedGoverment](../federated_government/#federatedgovernment-class)).
 
     # Arguments:
         data_base_name_key: key of the enumeration of valid data bases (see: [ImagesDataBases](./#imagesdatabases-class))
@@ -72,7 +72,7 @@ class FederatedImagesClassifier(FederatedGovernment):
 
     def run_rounds(self, n=5):
         """
-        Overriding of the method of run_rounds of [FederatedGoverment](../federated_goverment/#federatedgoverment-class)).
+        Overriding of the method of run_rounds of [FederatedGoverment](../federated_government/#federatedgovernment-class)).
 
         Run one more round beginning in the actual state testing in test data and federated_local_test.
 
@@ -100,7 +100,7 @@ class FederatedImagesClassifier(FederatedGovernment):
 
         # Returns:
             model: Instance of DeepLearningModel /
-            [DeepLearningModel](../../model/deep_learning_model/#deeplearningmodel-class)).
+            [DeepLearningModel](../model/#deeplearningmodel-class)).
         """
         model = tf.keras.models.Sequential()
         model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3), padding='same', activation='relu', strides=1,

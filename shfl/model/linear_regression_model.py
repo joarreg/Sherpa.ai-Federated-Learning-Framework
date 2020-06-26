@@ -6,7 +6,7 @@ from sklearn import metrics
 
 class LinearRegressionModel(TrainableModel):
     """
-    This class offers support for scikit-learn linear regression model. It implements [TrainableModel](../Model/#trainablemodel-class)
+    This class offers support for scikit-learn linear regression model. It implements [TrainableModel](../model/#trainablemodel-class)
 
     # Arguments:
         n_features: number of features (independent variables)
@@ -22,7 +22,7 @@ class LinearRegressionModel(TrainableModel):
         
     def train(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments
             data: Data, array-like of shape (n_samples, n_features)
@@ -35,7 +35,7 @@ class LinearRegressionModel(TrainableModel):
 
     def predict(self, data):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             data: Data, array-like of shape (n_samples, n_features)
@@ -51,7 +51,7 @@ class LinearRegressionModel(TrainableModel):
     
     def evaluate(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
         Metrics for evaluating model's performance.
         
         # Arguments:
@@ -75,7 +75,7 @@ class LinearRegressionModel(TrainableModel):
 
     def performance(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             data: Data, array-like of shape (n_samples, n_features)
@@ -94,7 +94,7 @@ class LinearRegressionModel(TrainableModel):
 
     def get_model_params(self):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Returns:
             stack_params: array with all params stacked.
@@ -108,7 +108,7 @@ class LinearRegressionModel(TrainableModel):
 
     def set_model_params(self, params):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             params: representation of model params to assign

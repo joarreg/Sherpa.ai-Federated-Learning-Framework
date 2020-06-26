@@ -97,7 +97,7 @@ class DataNode:
 
         # Arguments:
             name: Identifier for the data that will be configured
-            data_access_definition: Policy to access data (see: [DataAccessDefinition](../data/#dataaccessdefinition))
+            data_access_definition: Policy to access data (see: [DataAccessDefinition](../data/#dataaccessdefinition-class))
         """
         self._private_data_access_policies[name] = copy.deepcopy(data_access_definition)
 
@@ -107,7 +107,7 @@ class DataNode:
 
         # Arguments:
             data_access_definition: Policy to access parameters \
-            (see: [DataAccessDefinition](../data/#dataaccessdefinition))
+            (see: [DataAccessDefinition](../data/#dataaccessdefinition-class))
         """
         self._model_access_policy = copy.deepcopy(data_access_definition)
 

@@ -8,7 +8,7 @@ from shfl.data_distribution.data_distribution import DataDistribution
 class NonIidDataDistribution(DataDistribution):
     """
     Implementation of a non-independent and identically distributed data distribution using \
-        [Data Distribution](../Data Distribution)
+        [Data Distribution](../data_distribution/#datadistribution-class)
 
     In this data distribution we simulate the scenario in which clients have non-identical distribution since
     they know partially the total classes of the problem.

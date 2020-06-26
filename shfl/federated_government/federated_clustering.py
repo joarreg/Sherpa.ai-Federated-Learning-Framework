@@ -19,7 +19,7 @@ class ClusteringDataBases(Enum):
 class FederatedClustering(FederatedGovernment):
     """
     Class used to represent a high-level federated clustering using k-means
-    (see: [FederatedGoverment](../federated_goverment/#federatedgoverment-class)).
+    (see: [FederatedGoverment](../federated_government/#federatedgovernment-class)).
 
     # Arguments:
         data_base_name_key: key of the enumeration of valid data bases (see: [ClusteringDataBases](./#clusteringdatabases-class))
@@ -55,7 +55,7 @@ class FederatedClustering(FederatedGovernment):
 
     def run_rounds(self, n=5):
         """
-        Overriding of the method of run_rounds of [FederatedGoverment](../federated_goverment/#federatedgoverment-class)).
+        Overriding of the method of run_rounds of [FederatedGovernment](../federated_government/#federatedgovernment-class)).
 
         Run one more round beginning in the actual state testing in test data and federated_local_test.
 

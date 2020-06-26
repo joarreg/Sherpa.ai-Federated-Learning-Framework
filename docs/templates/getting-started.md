@@ -11,7 +11,7 @@ We have also develop a set of notebooks covering some of the most common use cas
 aspects over different aspects. The full list of notebooks is [here](https://github.com/sherpaai/Sherpa.FL/tree/master/notebooks)
 
 Even if are mainly interested in differential privacy a good point to start with Sherpa.FL is to follow the following 
-[notebook](https://github.com/sherpaai/Sherpa.FL/blob/master/notebooks/basic_concepts.ipynb) where are explained the 
+[notebook](https://github.com/sherpaai/Sherpa.FL/blob/master/notebooks/federated_learning/federated_learning_basic_concepts.ipynb) where are explained the 
 main concepts that are used all the time in the tutorials and in the documentation.
 
 The notebooks assume familiarity with python and some of the most popular libraries like numpy or keras/tensorflow. The 
@@ -24,7 +24,7 @@ code that you will write with Sherpa.FL.
 * Package [data_base](../databases) introduces some datasets to work with.
 * Package [data_distribution](../data_distribution) provides some modules to distribute data among nodes.
 * Package [federated_aggregator](../federated_aggregator) has different algorithms to aggregate models.
-* Package [learning_approach](../learning_approach) defines the communication and the kind of relationships between 
+* Package [federated_government](../federated_government) defines the communication and the kind of relationships between 
 nodes.
 * Package [model](../model) provides a set of common models that you might want to use.
 * Package [differential_privacy](../differential_privacy/overview) introduces different differential privacy algorithms to 

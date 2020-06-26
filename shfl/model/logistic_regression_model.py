@@ -6,7 +6,7 @@ from sklearn import metrics
 
 class LogisticRegressionModel(TrainableModel):
     """
-    This class offers support for scikit-learn logistic regression model. It implements [TrainableModel](../Model/#trainablemodel-class)
+    This class offers support for scikit-learn logistic regression model. It implements [TrainableModel](../model/#trainablemodel-class)
 
     # Arguments:
         n_features: integer number of features (independent variables).
@@ -28,7 +28,7 @@ class LogisticRegressionModel(TrainableModel):
         
     def train(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments
             data: Data, array-like of shape (n_samples, n_features)
@@ -41,7 +41,7 @@ class LogisticRegressionModel(TrainableModel):
 
     def predict(self, data):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         Arguments:
             data: Data, array-like of shape (n_samples, n_features)
@@ -54,7 +54,7 @@ class LogisticRegressionModel(TrainableModel):
     
     def evaluate(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
         Metrics for evaluating model's performance.
         
         Arguments:
@@ -72,7 +72,7 @@ class LogisticRegressionModel(TrainableModel):
     
     def performance(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
         
         Arguments:
             data: Data, array-like of shape (n_samples, n_features)
@@ -88,14 +88,14 @@ class LogisticRegressionModel(TrainableModel):
 
     def get_model_params(self):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
         """
         
         return np.column_stack((self._model.intercept_, self._model.coef_))
 
     def set_model_params(self, params):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
         """
         self._model.intercept_ = params[:,0]
         self._model.coef_ = params[:, 1:]

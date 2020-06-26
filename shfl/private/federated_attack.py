@@ -6,7 +6,7 @@ import numpy as np
 
 class FederatedDataAttack(abc.ABC):
     """
-    Interface defining method to apply an FederatedAttack over [FederatedData](../Federated Operation/#federateddata-class)
+    Interface defining method to apply an FederatedAttack over [FederatedData](../federated_operation/#federateddata-class)
     """
 
     @abc.abstractmethod
@@ -25,12 +25,12 @@ class ShuffleNode(FederatedTransformation):
     Implementation of Federated Transformation for shuffling labels of labeled data in order to implement \
     data poisoning attack.
 
-    This class implements interface [FederatedTransformation](../Federated Operation/#federatedtransformation-class).
+    This class implements interface [FederatedTransformation](../federated_operation/#federatedtransformation-class).
 
     """
     def apply(self, labeled_data):
         """
-        Method that implements apply abstract method of [FederatedTransformation](../Federated Operation/#federatedtransformation-class) \
+        Method that implements apply abstract method of [FederatedTransformation](../federated_operation/#federatedtransformation-class) \
         shuffling labels of labeled_data
         """
         random.shuffle(labeled_data.label)

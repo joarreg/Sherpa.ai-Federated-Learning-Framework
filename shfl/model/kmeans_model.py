@@ -6,7 +6,7 @@ from sklearn import metrics
 
 class KMeansModel(TrainableModel):
     """
-    This class offers support for scikit-learn K-Means model. It implements [TrainableModel](../Model/#trainablemodel-class)
+    This class offers support for scikit-learn K-Means model. It implements [TrainableModel](../model/#trainablemodel-class)
 
     # Arguments:
         n_clusters: number of clusters.
@@ -29,7 +29,7 @@ class KMeansModel(TrainableModel):
 
     def train(self, data, labels=None):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments
             data: Data, array-like of shape (n_samples, n_features)
@@ -39,7 +39,7 @@ class KMeansModel(TrainableModel):
 
     def predict(self, data):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             data: Data, array-like of shape (n_samples, n_features)
@@ -52,7 +52,7 @@ class KMeansModel(TrainableModel):
 
     def evaluate(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
         Metrics for evaluating model's performance.
 
         # Arguments:
@@ -79,7 +79,7 @@ class KMeansModel(TrainableModel):
 
     def performance(self, data, labels):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             data: Data, array-like of shape (n_samples, n_features)
@@ -96,7 +96,7 @@ class KMeansModel(TrainableModel):
 
     def get_model_params(self):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Returns:
             centers: array with cluster centers kmeans model.
@@ -105,7 +105,7 @@ class KMeansModel(TrainableModel):
 
     def set_model_params(self, params):
         """
-        Implementation of abstract method of class [TrainableModel](../Model/#trainablemodel-class)
+        Implementation of abstract method of class [TrainableModel](../model/#trainablemodel-class)
 
         # Arguments:
             params: representation of model params to assign

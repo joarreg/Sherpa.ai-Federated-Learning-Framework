@@ -49,7 +49,7 @@ class FederatedDataNode(DataNode):
         Adds a DataAccessDefinition for some concrete private data.
 
         # Arguments:
-            data_access_definition: Policy to access data (see: [DataAccessDefinition](../data/#dataaccessdefinition))
+            data_access_definition: Policy to access data (see: [DataAccessDefinition](../data/#dataaccessdefinition-class))
         """
         super().configure_data_access(self._federated_data_identifier, data_access_definition)
 
@@ -158,7 +158,7 @@ class FederatedData:
         Creates the same policy to access data over all the data nodes
 
         # Arguments:
-            data_access_definition: (see: [DataAccessDefinition](../data/#dataaccessdefinition))
+            data_access_definition: (see: [DataAccessDefinition](../data/#dataaccessdefinition-class))
         """
         for data_node in self._data_nodes:
             data_node.configure_data_access(data_access_definition)

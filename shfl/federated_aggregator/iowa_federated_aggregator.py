@@ -5,7 +5,7 @@ import numpy as np
 
 class IowaFederatedAggregator(WeightedFedAvgAggregator):
     """
-    Class of the IOWA version of [WeightedFedAvgAggregator](./weighted_fedavg_aggregator/#weightedfedavgaggregator-class)
+    Class of the IOWA version of [WeightedFedAvgAggregator](../federated_aggregator/#weightedfedavgaggregator-class)
     """
 
     def __init__(self):

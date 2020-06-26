@@ -6,7 +6,7 @@ from shfl.data_distribution.data_distribution import DataDistribution
 class IidDataDistribution(DataDistribution):
     """
     Implementation of an independent and identically distributed data distribution using \
-        [Data Distribution](../Data Distribution)
+        [Data Distribution](../data_distribution/#datadistribution-class)
     """
 
     def make_data_federated(self, data, labels, num_nodes, percent, weights, sampling="without_replacement"):
