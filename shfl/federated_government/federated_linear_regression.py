@@ -20,7 +20,7 @@ class FederatedLinearRegression(FederatedGovernment):
     (see: [FederatedGoverment](../federated_government/#federatedgovernment-class)).
 
     # Arguments:
-        data_base_name_key: key of the enumeration of valid data bases (see: [ClusteringDataBases](./#clusteringdatabases-class))
+        data_base_name_key: key of the enumeration of valid data bases (see: [LinearRegressionDatabases](../federated_government/#linearregressiondatabases-class))
         iid: boolean which specifies if the distribution if IID (True) or non-IID (False) (True by default)
         num_nodes: number of clients.
         percent: percentage of the database to distribute among nodes.
