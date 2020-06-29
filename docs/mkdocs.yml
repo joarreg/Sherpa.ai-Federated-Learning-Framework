@@ -1,4 +1,4 @@
-site_name: Sherpa.FL
+site_name: Sherpa.ai Federated Learning Framework
 docs_dir: sources
 theme:
   name: "material"

@@ -54,7 +54,7 @@ def replace_relative_links(nb):
     for cell in _cells(nb):
         if cell['cell_type'] == 'markdown':
             cell['source'] = cell['source'].replace(
-                "(../../", "(https://github.com/sherpaai/Sherpa.FL/blob/master/")
+                "(../../", "(https://github.com/sherpaai/Sherpa.ai-Federated-Learning-Framework/blob/master/")
     return nb
 
 

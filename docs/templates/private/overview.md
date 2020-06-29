@@ -1,7 +1,7 @@
 # Private
 
 This package contains most of the core elements of the framework that are used in almost every code that you will write 
-with Sherpa.FL. 
+with Sherpa.ai Federated Learning Framework. 
 
 Maybe the most important element in the framework is the [DataNode](../data_node). A DataNode represents a 
 device or element containing private data. In real world scenarios this data is typically property of a user or company.

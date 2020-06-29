@@ -79,7 +79,7 @@ def class_to_source_link(cls):
     path += '.py'
     line = inspect.getsourcelines(cls)[-1]
     link = ('https://github.com/sherpaai/'
-            'Sherpa.FL/blob/master/' + path + '#L' + str(line))
+            'Sherpa.ai-Federated-Learning-Framework/blob/master/' + path + '#L' + str(line))
     return '[[source]](' + link + ')'
 
 
@@ -343,7 +343,7 @@ def generate(sources_dir):
     with open(os.path.join(sources_dir, 'index.md'), 'w', encoding='utf-8') as f:
         f.write(index)
 
-    print('Generating docs for Sherpa.FL')
+    print('Generating docs for Sherpa.ai Federated Learning Framework')
     for page_data in PAGES:
         classes = read_page_data(page_data, 'classes')
 
