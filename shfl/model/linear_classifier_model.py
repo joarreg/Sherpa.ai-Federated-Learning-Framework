@@ -157,6 +157,5 @@ class LogisticRegressionModel(LinearClassifierModel):
 
 class LinearSVCModel(LinearClassifierModel):
     def __init__(self, n_features, classes, model_inputs=None):
-        super().__init__(n_features=n_features, classes=classes, model=LinearSVC)
-        
+        super().__init__(n_features=n_features, classes=classes, model_inputs=model_inputs, model=LinearSVC)
         
