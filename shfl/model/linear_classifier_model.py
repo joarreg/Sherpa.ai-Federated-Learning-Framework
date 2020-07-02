@@ -152,10 +152,28 @@ class LinearClassifierModel(TrainableModel):
 
 
 class LogisticRegressionModel(LinearClassifierModel):
+    """
+    This class offers support for scikit-learn LogisticRegression classifier. 
+    It implements [TrainableModel](../Model/#trainablemodel-class)
+
+    # Arguments:
+        n_features: integer number of features (independent variables).
+        classes: array of classes to predict. At least 2 classes must be provided.
+        model_inputs: optional dictionary containing the [model input parameters](https://scikit-learn.org/stable/modules/generated/sklearn.linear_model.LogisticRegression.html)
+    """
     pass
 
 
 class LinearSVCModel(LinearClassifierModel):
+    """
+    This class offers support for scikit-learn SVM LinearSVC classifier. 
+    It implements [TrainableModel](../Model/#trainablemodel-class)
+
+    # Arguments:
+        n_features: integer number of features (independent variables).
+        classes: array of classes to predict. At least 2 classes must be provided.
+        model_inputs: optional dictionary containing the [model input parameters](https://scikit-learn.org/stable/modules/generated/sklearn.svm.LinearSVC.html)
+    """
     def __init__(self, n_features, classes, model_inputs=None):
         super().__init__(n_features=n_features, classes=classes, model_inputs=model_inputs, model=LinearSVC)
         
