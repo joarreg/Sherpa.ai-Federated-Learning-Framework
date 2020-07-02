@@ -1,0 +1,9 @@
+.md-header {
+	background: linear-gradient(175deg, #4B9AA6 0%, #31698E 61%, #1C2B4A 100%);
+}
+.md-header-nav__button.md-logo img, .md-header-nav__button.md-logo svg {
+	width:auto;
+}
+.md-nav__title .md-nav__button.md-logo img, .md-nav__title .md-nav__button.md-logo svg {
+	width:auto;
+}

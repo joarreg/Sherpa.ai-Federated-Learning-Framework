@@ -2,6 +2,9 @@ site_name: Sherpa.ai Federated Learning Framework
 docs_dir: sources
 theme:
   name: "material"
+  logo: "logo.png"
+extra_css:
+  - stylesheets/sherpa.css  
 plugins:
   - search
   - mkdocstrings

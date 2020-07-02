@@ -417,6 +417,12 @@ def generate(sources_dir):
                     os.path.join(str(sources_dir), 'install.md'))
     shutil.copyfile(os.path.join(str(shfl_dir), 'CONTRIBUTING.md'),
                     os.path.join(str(sources_dir), 'CONTRIBUTING.md'))
+    shutil.copyfile(os.path.join(str(shfl_dir), 'docs/logo.png'),
+                    os.path.join(str(sources_dir), 'logo.png'))
+    if not os.path.exists(os.path.join(str(sources_dir), 'stylesheets')):
+        os.makedirs(os.path.join(str(sources_dir), 'stylesheets'))
+    shutil.copyfile(os.path.join(str(shfl_dir), 'docs/sherpa.css'),
+                    os.path.join(str(sources_dir), 'stylesheets/sherpa.css'))
 
 
 if __name__ == '__main__':
