@@ -58,16 +58,17 @@ def test_linear_classifier_model_train_wrong_input_data():
     with pytest.raises(AssertionError):
         lgr.train(data, label)
         
-    # Wrong classes input label:
+    # Wrong classes input label on train and predict:
     n_features = 2
     classes = ['a', 'b']
     lgr = LogisticRegressionModel(n_features=n_features, classes=classes)    
-    data = np.random.rand(num_data, n_features)
     label = np.random.choice(a=classes, size=num_data, replace=True)
     label[0] = 'c'
     with pytest.raises(AssertionError):
-        lgr.train(data, label)
-    
+        lgr._check_labels_train(label)
+    with pytest.raises(AssertionError):
+        lgr._check_labels_predict(label)
+      
     
 def test_linear_classifier_model_set_get_params():
     n_features = 9
@@ -77,8 +78,8 @@ def test_linear_classifier_model_set_get_params():
     lgr.set_model_params(params)
     
     assert np.array_equal(lgr.get_model_params(), params)
-    
-    
+           
+
 def test_logistic_regression_model_train_evaluate():
     from sklearn.datasets import load_iris
     from sklearn.linear_model import LogisticRegression

@@ -39,7 +39,7 @@ class LinearClassifierModel(TrainableModel):
             labels: Target classes, array-like of shape (n_samples,) 
         """
         self._check_data(data)
-        self._check_labels(labels)
+        self._check_labels_train(labels)
         
         self._model.fit(data, labels)
 
@@ -50,11 +50,8 @@ class LinearClassifierModel(TrainableModel):
         Arguments:
             data: Data, array-like of shape (n_samples, n_features)
         """
-        self._check_data(data)
         
-        prediction = self._model.predict(data)
-        
-        return prediction
+        return self._model.predict(data)
     
     def evaluate(self, data, labels):
         """
@@ -66,7 +63,7 @@ class LinearClassifierModel(TrainableModel):
             labels: Target classes, array-like of shape (n_samples,) 
         """
         self._check_data(data)
-        self._check_labels(labels)
+        self._check_labels_predict(labels)
         
         prediction = self.predict(data)
         bas = metrics.balanced_accuracy_score(labels, prediction)
@@ -83,7 +80,7 @@ class LinearClassifierModel(TrainableModel):
             labels: Target classes, array-like of shape (n_samples,) 
         """
         self._check_data(data)
-        self._check_labels(labels)
+        self._check_labels_predict(labels)
         
         prediction = self.predict(data)
         bas = metrics.balanced_accuracy_score(labels, prediction)
@@ -116,18 +113,31 @@ class LinearClassifierModel(TrainableModel):
             raise AssertionError("Data need to have the same number of features described by the model, " + str(self._n_features) +
                                  ". Current data has " + str(data.shape[1]) + " features.")
 
-    def _check_labels(self, labels):
+    def _check_labels_train(self, labels):
         """
         Method that checks whether the classes are correct. 
-        The classes in client's data must be the same as the input ones.
+        When training, the classes in client's data must be the same as the input ones.
         
         # Arguments:
             labels: array with classes
         """
         classes = np.unique(np.asarray(labels))
         if not np.array_equal(self._model.classes_, classes):
-            raise AssertionError("Labels need to have the same classes described by the model, " + str(self._model.classes_)
+            raise AssertionError("When training, labels need to have the same classes described by the model, " + str(self._model.classes_)
                                  + ". Labels of this node are " + str(classes) + " .")
+            
+    def _check_labels_predict(self, labels):
+        """
+        Method that checks whether the classes are correct. 
+        When predicting, the classes in data must be a subset of the trained ones.
+        
+        # Arguments:
+            labels: array with classes
+        """
+        classes = np.unique(np.asarray(labels))
+        if not set(classes) <= set(self._model.classes_):
+            raise AssertionError("When predicting, labels need to be a subset of the classes described by the model, " + str(self._model.classes_)
+                                 + ". Labels in the given data are " + str(classes) + " .")
     
     @staticmethod
     def _check_initialization(n_features, classes):
