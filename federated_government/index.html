@@ -963,9 +963,9 @@
 
 <p>Class used to represent the central class FederatedGoverment.</p>
 <p><strong>Arguments:</strong></p>
-<p>model_builder: Function that return a trainable model (see: <a href="../../model">Model</a>)
-   federated_data: Federated data to use. (see: <a href="../../private/federated_operation/#federateddata-class">FederatedData</a>)
-   aggregator: Federated aggregator function (see: <a href="../../federated_aggregator">Federated Aggregator</a>)
+<p>model_builder: Function that return a trainable model (see: <a href="../model">Model</a>)
+   federated_data: Federated data to use. (see: <a href="../private/federated_operation/#federateddata-class">FederatedData</a>)
+   aggregator: Federated aggregator function (see: <a href="../federated_aggregator">Federated Aggregator</a>)
    model_param_access: Policy to access model's parameters, by default non-protected (see: <a href="../private/data/#dataaccessdefinition-class">DataAccessDefinition</a>)</p>
 <p><strong>Properties:</strong></p>
 <ul>
@@ -1059,9 +1059,8 @@
 <p>Create a Tensorflow Model for image classification.</p>
 <p><strong>Returns:</strong></p>
 <ul>
-<li><strong>model</strong>: Instance of DeepLearningModel /</li>
+<li><strong>model</strong>: Instance of DeepLearningModel <a href="../model/#deeplearningmodel-class">DeepLearningModel</a>).</li>
 </ul>
-<p><a href="../model/#deeplearningmodel-class">DeepLearningModel</a>).</p>
 <hr />
 <p><span style="float:right;"><a href="https://github.com/sherpaai/Sherpa.ai-Federated-Learning-Framework/blob/master/shfl/federated_government/federated_images_classifier.py#L17">[source]</a></span></p>
 <h2 id="reshape-class">Reshape class</h2>
@@ -1111,9 +1110,8 @@
 <p>Create a Linear Regression Model.</p>
 <p><strong>Returns:</strong></p>
 <ul>
-<li><strong>model</strong>: Linear Regression Model /</li>
+<li><strong>model</strong>: Linear Regression Model <a href="../../model/#linearregressionmodel-class">LinearRegressionModel</a>).</li>
 </ul>
-<p><a href="../../model/#linearregressionmodel-class">LinearRegressionModel</a>).</p>
 <hr />
 <p><span style="float:right;"><a href="https://github.com/sherpaai/Sherpa.ai-Federated-Learning-Framework/blob/master/shfl/federated_government/federated_linear_regression.py#L10">[source]</a></span></p>
 <h2 id="linearregressiondatabases-class">LinearRegressionDataBases class</h2>
@@ -1174,9 +1172,9 @@
 <p>Class used to represent the IOWA Federated Government which implements <a href="../federated_government/#federatedgovernment-class">FederatedGovernment</a></p>
 <p><strong>Arguments:</strong></p>
 <ul>
-<li><strong>model_builder</strong>: Function that return a trainable model (see: <a href="../../model">Model</a>)</li>
-<li><strong>federated_data</strong>: Federated data to use. (see: <a href="../../private/federated_operation/#federateddata-class">FederatedData</a>)</li>
-<li><strong>aggregator</strong>: Federated aggregator function (see: <a href="../../federated_aggregator">Federated Aggregator</a>)</li>
+<li><strong>model_builder</strong>: Function that return a trainable model (see: <a href="../model">Model</a>)</li>
+<li><strong>federated_data</strong>: Federated data to use. (see: <a href="../private/federated_operation/#federateddata-class">FederatedData</a>)</li>
+<li><strong>aggregator</strong>: Federated aggregator function (see: <a href="../federated_aggregator">Federated Aggregator</a>)</li>
 <li><strong>model_param_access</strong>: Policy to access model's parameters, by default non-protected (see: <a href="../private/data/#dataaccessdefinition-class">DataAccessDefinition</a>)</li>
 <li><strong>dynamic</strong>: boolean indicating if we use the dynamic or static version (default True)</li>
 <li><strong>a</strong>: first argument of linguistic quantifier (default 0)</li>
