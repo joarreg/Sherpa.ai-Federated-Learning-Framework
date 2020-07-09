@@ -8,9 +8,9 @@ class IowaFederatedGovernment(FederatedGovernment):
     Class used to represent the IOWA Federated Government which implements [FederatedGovernment](../federated_government/#federatedgovernment-class)
 
     # Arguments:
-        model_builder: Function that return a trainable model (see: [Model](../../model))
-        federated_data: Federated data to use. (see: [FederatedData](../../private/federated_operation/#federateddata-class))
-        aggregator: Federated aggregator function (see: [Federated Aggregator](../../federated_aggregator))
+        model_builder: Function that return a trainable model (see: [Model](../model))
+        federated_data: Federated data to use. (see: [FederatedData](../private/federated_operation/#federateddata-class))
+        aggregator: Federated aggregator function (see: [Federated Aggregator](../federated_aggregator))
         model_param_access: Policy to access model's parameters, by default non-protected (see: [DataAccessDefinition](../private/data/#dataaccessdefinition-class))
         dynamic: boolean indicating if we use the dynamic or static version (default True)
         a: first argument of linguistic quantifier (default 0)

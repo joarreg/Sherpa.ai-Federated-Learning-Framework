@@ -34,7 +34,7 @@ class DataBase(abc.ABC):
 
     Load method must be implemented in order to create a database able to \
     interact with the system, in concrete with data distribution methods \
-    (see: [Data Distribution](../../data_distribution)).
+    (see: [Data Distribution](../data_distribution)).
 
     Load method should save data in the protected Attributes:
 

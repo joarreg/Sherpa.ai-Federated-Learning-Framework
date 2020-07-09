@@ -73,8 +73,7 @@ class FederatedLinearRegression(FederatedGovernment):
         Create a Linear Regression Model.
 
         # Returns:
-            model: Linear Regression Model /
-            [LinearRegressionModel](../../model/#linearregressionmodel-class)).
+            model: Linear Regression Model [LinearRegressionModel](../../model/#linearregressionmodel-class)).
         """
         model = LinearRegressionModel(n_features=self._num_features)
         return model

@@ -1,3 +1,10 @@
+body {
+	font-family: "Helvetica Neue","Roboto",Helvetica,Arial,sans-serif;";
+}
+
+main a, main a:link, main a:active, main a:visited {
+	color: #2276a1;
+}
 .md-header {
 	background: linear-gradient(175deg, #4B9AA6 0%, #31698E 61%, #1C2B4A 100%);
 }
