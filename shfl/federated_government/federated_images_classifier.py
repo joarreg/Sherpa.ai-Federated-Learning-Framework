@@ -99,8 +99,7 @@ class FederatedImagesClassifier(FederatedGovernment):
         Create a Tensorflow Model for image classification.
 
         # Returns:
-            model: Instance of DeepLearningModel /
-            [DeepLearningModel](../model/#deeplearningmodel-class)).
+            model: Instance of DeepLearningModel [DeepLearningModel](../model/#deeplearningmodel-class)).
         """
         model = tf.keras.models.Sequential()
         model.add(tf.keras.layers.Conv2D(32, kernel_size=(3, 3), padding='same', activation='relu', strides=1,

@@ -3,9 +3,9 @@ class FederatedGovernment:
     Class used to represent the central class FederatedGoverment.
 
     # Arguments:
-       model_builder: Function that return a trainable model (see: [Model](../../model))
-       federated_data: Federated data to use. (see: [FederatedData](../../private/federated_operation/#federateddata-class))
-       aggregator: Federated aggregator function (see: [Federated Aggregator](../../federated_aggregator))
+       model_builder: Function that return a trainable model (see: [Model](../model))
+       federated_data: Federated data to use. (see: [FederatedData](../private/federated_operation/#federateddata-class))
+       aggregator: Federated aggregator function (see: [Federated Aggregator](../federated_aggregator))
        model_param_access: Policy to access model's parameters, by default non-protected (see: [DataAccessDefinition](../private/data/#dataaccessdefinition-class))
 
     # Properties:
