@@ -2,9 +2,9 @@ body {
 	font-family: "Ubuntu",sans-serif;
 }
 
-main a, main a:link, main a:active, main a:visited {
+/*main a, main a:link, main a:active, main a:visited {
 	color: #2276a1;
-}
+}*/
 
 .md-nav {
     font-size: 14px;
@@ -30,6 +30,22 @@ main a, main a:link, main a:active, main a:visited {
     overflow: hidden;
 }
 
+.md-sidebar li ul:not(.list-grouped)>li.md-nav__item--active>label {
+    color: #2276a1;
+    transform: translateX(15px);
+    transition: transform .2s ease-in-out,color .2s ease-in-out;
+}
+
+.md-nav__item .md-nav__link--active {
+color: #2276a1;
+font-weight: 600;
+}
+
+.md-nav__link:focus,.md-nav__link:hover {
+    transition: color .2s ease-in-out;
+    color: #2276a1;
+}
+
 .md-typeset {
     font-size: 14px;
     line-height: 1.6;
@@ -44,4 +60,12 @@ main a, main a:link, main a:active, main a:visited {
 }
 .md-nav__title .md-nav__button.md-logo img, .md-nav__title .md-nav__button.md-logo svg {
 	width:auto;
+}
+
+.md-typeset h1 {
+	font-size: 1.8rem;
+line-height: 1.35;
+font-weight: 300;
+color: #2276a1;
+margin: 0;
 }
