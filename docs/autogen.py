@@ -458,7 +458,6 @@ def generate(sources_dir):
         os.makedirs(os.path.join(str(sources_dir), 'js'))
     shutil.copyfile(os.path.join(str(shfl_dir), 'docs/sherpa.js'),
                     os.path.join(str(sources_dir), 'js/sherpa.js'))
-    
 
 if __name__ == '__main__':
     generate(os.path.join(str(shfl_dir), 'docs', 'sources'))

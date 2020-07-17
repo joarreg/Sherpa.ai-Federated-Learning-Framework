@@ -7,7 +7,9 @@ extra_javascript:
   - js/sherpa.js
 theme:
   name: "material"
-  logo: "logo.png"
+extra_css:
+  - stylesheets/sherpa.css
+  - stylesheets/fonts.css
 plugins:
   - search
   - mkdocstrings
